@@ -9,6 +9,7 @@ SDL_Surface* affichage;
 
 int main()
 {
+<<<<<<< HEAD
   /* initialize SDL */
   SDL_Init(SDL_INIT_VIDEO);
   
@@ -19,6 +20,9 @@ int main()
     
 
     
+=======
+  init_window();    
+>>>>>>> 929ad76a9138d3d8d6b7ac75877e3d0df7ff8d02
   int a;
   printf("damien est u  n vrai beau goss!\n");
   scanf("%d",&a);
