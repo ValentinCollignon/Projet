@@ -9,18 +9,7 @@ SDL_Surface* affichage;
 
 int main()
 {
-<<<<<<< HEAD
-  init_window()
-  /* initialize SDL */
-  SDL_Init(SDL_INIT_VIDEO);
-  
-  
-    SDL_WM_SetCaption("LABY", NULL);
-    affichage = SDL_SetVideoMode(800, 600, 32, SDL_SWSURFACE);
-    
-    
-
-    
+  init_window();    
   int a;
   printf("damien est u  n vrai beau goss!\n");
   scanf("%d",&a);
