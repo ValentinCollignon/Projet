@@ -3,7 +3,7 @@
 #include "game.c"
 #include "initfile.c"
 
-//void test(int a);
+void test(int a);
 
 void init_window();
 
