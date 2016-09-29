@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <SDL.h>
 
-
+//http://anomaly.developpez.com/tutoriel/sdl/partie1/
 
 int main()
 {
