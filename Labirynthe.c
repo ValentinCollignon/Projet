@@ -2,15 +2,26 @@
 #include "game.h"
 
 
+
 int main()
 {
+  int game_over = 0;
   init_window();    
-
-  int a;
-  printf("damien est u  n vrai beau goss!\n");
-  scanf("%d",&a);
-  test(a);
-  atexit(SDL_Quit);	
+  while(game_over != 1)
+  {
+    SDL_Event event;
+    
+    /* look for an event */
+    if(SDL_PollEvent(&event))
+    {
+      HandleEvent(event);
+      
+    }
+    printf("pour quit : 1 puis entrée!\n");
+    scanf("%d",&game_over);
+    test(game_over);
+  }
+  end();
   return EXIT_SUCCESS;   
 
 }
