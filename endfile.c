@@ -5,5 +5,5 @@
 
 void end()
 {
-  atexit(SDL_Quit); 
+  SDL_Quit();
 }
