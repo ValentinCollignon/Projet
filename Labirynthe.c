@@ -19,15 +19,13 @@ int main()
     affichage = SDL_SetVideoMode(800, 600, 32, SDL_SWSURFACE);
     
     
-    atexit(SDL_Quit);
-    return EXIT_SUCCESS;
+
     
-    
-=======
-    int a;
-    printf("damien est u  n vrai beau goss!\n");
-    scanf("%d",&a);
-    test(a);
-    return EXIT_SUCCESS;   
->>>>>>> 403511e6a54439439d217ebc9b4e028cf8b79ac9
+  int a;
+  printf("damien est u  n vrai beau goss!\n");
+  scanf("%d",&a);
+  test(a);
+  atexit(SDL_Quit);	
+  return EXIT_SUCCESS;   
+
 }
