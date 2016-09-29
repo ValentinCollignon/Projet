@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <SDL.h>
 #include "game.h"
 
-void test(int a)
+void end()
 {
- printf("%d\n",a);
- 
+  atexit(SDL_Quit); 
 }
