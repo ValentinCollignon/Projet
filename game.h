@@ -4,6 +4,6 @@
 #include <stdlib.h>
 #include "game.c"
 
-void test(int a);
+//void test(int a);
 
 #endif

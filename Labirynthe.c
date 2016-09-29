@@ -9,14 +9,12 @@ SDL_Surface* affichage;
 
 int main()
 {
-<<<<<<< HEAD
-  init_window()
   /* initialize SDL */
   SDL_Init(SDL_INIT_VIDEO);
   
   
-    SDL_WM_SetCaption("LABY", NULL);
-    affichage = SDL_SetVideoMode(800, 600, 32, SDL_SWSURFACE);
+  SDL_WM_SetCaption("LABY", NULL);
+  affichage = SDL_SetVideoMode(800, 600, 32, SDL_SWSURFACE);
     
     
 
