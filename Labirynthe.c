@@ -1,6 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <SDL.h>
+#include "game.h"
 
 /*mise en place de la fenetre principale*/
 SDL_Surface* affichage;
@@ -10,6 +9,7 @@ SDL_Surface* affichage;
 
 int main()
 {
+<<<<<<< HEAD
   init_window()
   /* initialize SDL */
   SDL_Init(SDL_INIT_VIDEO);
@@ -23,4 +23,11 @@ int main()
     return EXIT_SUCCESS;
     
     
+=======
+    int a;
+    printf("damien est u  n vrai beau goss!\n");
+    scanf("%d",&a);
+    test(a);
+    return EXIT_SUCCESS;   
+>>>>>>> 403511e6a54439439d217ebc9b4e028cf8b79ac9
 }
