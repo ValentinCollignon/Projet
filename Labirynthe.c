@@ -2,10 +2,25 @@
 #include <stdlib.h>
 #include <SDL.h>
 
-//http://anomaly.developpez.com/tutoriel/sdl/partie1/
+/*mise en place de la fenetre principale*/
+SDL_Surface* affichage;
+
+
+
 
 int main()
 {
-    printf("damien est un vrai beau goss!\n");
-    return EXIT_SUCCESS;   
+  init_window()
+  /* initialize SDL */
+  SDL_Init(SDL_INIT_VIDEO);
+  
+  
+    SDL_WM_SetCaption("LABY", NULL);
+    affichage = SDL_SetVideoMode(800, 600, 32, SDL_SWSURFACE);
+    
+    
+    atexit(SDL_Quit);
+    return EXIT_SUCCESS;
+    
+    
 }
