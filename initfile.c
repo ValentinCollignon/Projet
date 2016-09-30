@@ -1,7 +1,5 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include <SDL.h>
-#include "game.h"
+#include "initfile.h"
 
 void init_window()
 {

@@ -1,7 +1,7 @@
+#include "endfile.h"
+#include "event.h"
+#include "initfile.h"
 #include <SDL.h>
-#include "game.h"
-
-
 
 int main()
 {

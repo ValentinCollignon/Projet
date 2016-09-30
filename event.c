@@ -1,6 +1,5 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include "game.h"
+#include <SDL.h>
+#include "event.h"
 
 
 void HandleEvent(SDL_Event event,int* game_over)
