@@ -11,7 +11,7 @@ void init_window()
   /* initialize SDL */
   SDL_Init(SDL_INIT_VIDEO);
    
-  SDL_WM_SetCaption("LABYT A BIBI", NULL);
+  SDL_WM_SetCaption("Labyrinthe", NULL);
   affichage = SDL_SetVideoMode(800, 600, 32, SDL_SWSURFACE);
   
 }
