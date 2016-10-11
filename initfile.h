@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <SDL.h>
 
+void gameover();
 void init_window();
 
 #endif

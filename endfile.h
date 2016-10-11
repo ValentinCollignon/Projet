@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <SDL.h>
 
+
 void end();
 
 #endif
