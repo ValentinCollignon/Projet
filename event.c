@@ -16,8 +16,10 @@ void HandleEvent(SDL_Event event,int* game_over)
       switch (event.key.keysym.sym) 
       {
 	case SDLK_ESCAPE:
+            *game_over=1;
+            break;
 	case SDLK_q:
-	  *game_over=1;
+            gameover();
 	  break;
 	
       }

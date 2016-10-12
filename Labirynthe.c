@@ -47,7 +47,6 @@ int main()
 {
     int game_over=0;
     init_window();
-    gameover();
     while(game_over != 1)
     {
         SDL_Event event;
@@ -57,8 +56,8 @@ int main()
             HandleEvent(event,&game_over);
             
         }
+        
     }
-    
     end();
     return EXIT_SUCCESS;   
 }
