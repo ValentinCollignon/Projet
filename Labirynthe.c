@@ -5,9 +5,6 @@
 
 
 
-
-
-
 int main()
 {
     int game_over=0;

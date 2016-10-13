@@ -1,11 +1,18 @@
 #include <SDL.h>
 #include "initfile.h"
 
+
 #define mapc 32
 #define mapl 32
 
+
+const int colors[] = {120, 120, 220};
+
+
+
 /*mise en place de la fenetre principale*/
 SDL_Surface * affichage;
+
 
 /* map*/
 char map[mapl*mapc+1] = "\
@@ -41,6 +48,7 @@ char map[mapl*mapc+1] = "\
 # ############# # #  #   #   # #\
 #               # #    #   # # #\
 ################################";
+
 
 void init_window()
 {
@@ -78,11 +86,15 @@ void gameover()
     colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
     rcgameover.x = 0;
     rcgameover.y = 0;
-    temp  = SDL_LoadBMP("image/game_over2.bmp");
+
+    temp  = SDL_LoadBMP("image/game_over.bmp");
+
     gamover = SDL_DisplayFormat(temp);
     SDL_FreeSurface(temp);
     SDL_SetColorKey(gamover, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
+    
     SDL_BlitSurface(gamover, NULL, affichage, &rcgameover);
+
     SDL_UpdateRect(affichage, 0, 0, 0, 0);
     /*printf("******************************************\n****************************************\n******************GAME*******************\n******************OVER*******************\n****************************************\n******************************************\n");
 */
@@ -124,6 +136,7 @@ void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 
 void draw_screen()
 {
+
   printf("test\n");
   SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 0, 0, 255));
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
@@ -143,8 +156,9 @@ void draw_screen()
             tmp.y = j*16;
             int z = ((i+j*mapc)%ncolors)*3;
             SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, colors[z], colors[z+1],colors[z+2]));
-        }
-    }
 
+        }
+        
+    }
 
 }
