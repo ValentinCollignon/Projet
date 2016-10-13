@@ -2,29 +2,33 @@
 #include "initfile.h"
 
 
-#define mapc 16
-#define mapl 16
+#define mapc 20
+#define mapl 20
 /*
 const int mapc = 32;
 const int mapl = 32;
 */
 char map[mapl*mapc+1] = "\
-################\
-#      #  #    #\
-#      #  #    #\
-#      #   #   #\
-#      #    #  #\
-#      #    #  #\
-#            # #\
-#      #    #  #\
-#      #   #   #\
-#      #       #\
-#      #   #   #\
-#      #   #   #\
-#      #   #   #\
-#      #   #   #\
-#      #   #   #\
-################";
+####################\
+#      #           #\
+#      # ####      #\
+#      ##          #\
+#      #   # #######\
+#      #  #  #     #\
+#             #    #\
+#      # #   #     #\
+#      # ####      #\
+#                  #\
+# #### ##   #      #\
+#       #          #\
+#   #   #####      #\
+#    #             #\
+#   #      # ##### #\
+#                  #\
+#      #####   #   #\
+#                  #\
+#                # #\
+####################";
 
 const int colors[] = {120, 120, 220};
 
@@ -59,6 +63,7 @@ void init_menu()
   SDL_SetColorKey(menu, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
   SDL_BlitSurface(menu, NULL, affichage, &rcmenu);
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
+  printf("fonction init_menu\n");
 }
 
 void gameover()
@@ -79,8 +84,8 @@ void gameover()
     SDL_BlitSurface(gamover, NULL, affichage, &rcgameover);
 
     SDL_UpdateRect(affichage, 0, 0, 0, 0);
-    /*printf("******************************************\n****************************************\n******************GAME*******************\n******************OVER*******************\n****************************************\n******************************************\n");
-*/
+    printf("fonction gameover\n");
+
   
 } 
 
