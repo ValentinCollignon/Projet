@@ -6,12 +6,31 @@ SDL_Surface * affichage;
 
 void init_window()
 {
+
   /* initialize SDL */
   SDL_Init(SDL_INIT_VIDEO);
    
   SDL_WM_SetCaption("Labyrinthe", NULL);
   affichage = SDL_SetVideoMode(800, 600, 32, SDL_SWSURFACE);
+  init_menu();
+
   
+}
+
+void init_menu()
+{
+  SDL_Surface *temp, *menu;
+  SDL_Rect rcmenu;
+  int colorkey;
+  colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
+  rcmenu.x = 0;
+  rcmenu.y = 0;
+  temp  = SDL_LoadBMP("image/menu.bmp");
+  menu = SDL_DisplayFormat(temp);
+  SDL_FreeSurface(temp);
+  SDL_SetColorKey(menu, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
+  SDL_BlitSurface(menu, NULL, affichage, &rcmenu);
+  SDL_UpdateRect(affichage, 0, 0, 0, 0);
 }
 /*
 int wait()

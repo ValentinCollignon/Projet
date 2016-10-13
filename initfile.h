@@ -7,5 +7,5 @@
 void gameover();
 void init_window();
 /*int wait();*/
-
+void init_menu();
 #endif
