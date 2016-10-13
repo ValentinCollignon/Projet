@@ -18,31 +18,31 @@ char map[maph*mapw+1] = "\
 # #       #      #     # #     #\
 # # ##### ###### ##### # ##### #\
 # ###   #            # #     # #\
-#     #  ########### # ####### #\
-#### ###  #                  # #\
+#     ############## # ####### #\
+#### ##                      # #\
 #               ##           # #\
 #                              #\
 #                            # #\
 #                            # #\
 #                            # #\
-#                            # #\
-#                         #### #\
-#               #####        # #\
-#                   #        # #\
-#                   #        # #\
-#                   #        # #\
-#                            # #\
-#                            # #\
-#                            # #\
-#                            # #\
-#                            # #\
-#                            # #\
-#                            # #\
-#                            # #\
-#                            # #\
-#                            # #\
-#                            # #\
-#                            # #\
+#          # ################# #\
+#          #                 # #\
+#          # ### #### ###### # #\
+#          # #        #    # # #\
+#          #        # # #### # #\
+#          # #### ### #      # #\
+#                     ###### # #\
+##################### ##   # # #\
+#    #   #   #        #  #   # #\
+# ##   #   #    # ############ #\
+#################     #   #  # #\
+#               ##### # # # ## #\
+# ########### # #     # # #  # #\
+# #         # ### ### # #### # #\
+# # ######### #   #          # #\
+# #           # # #  ######### #\
+# ############# # #  #   #   # #\
+#               # #    #   # # #\
 ################################";
 
 // https://www.libsdl.org/release/SDL-1.2.15/docs/html/guidevideo.html
@@ -129,7 +129,59 @@ bool Game::running() {
 
 void Game::handle_events() {
     SDL_Event event;
+    
     if (SDL_PollEvent(&event)) {
+        game_running_ = !(SDL_QUIT==event.type || (SDL_KEYDOWN==event.type && SDLK_ESCAPE==event.key.keysym.sym));
+    switch (event.type) 
+  {
+    /* close button clicked */
+      break;
+    /* handle the keyboard */
+    case SDL_KEYDOWN:
+      switch (event.key.keysym.sym) 
+      {
+	case SDLK_q:
+	case SDLK_LEFT:
+	  strafe_ = -1;
+	  break;
+	case SDLK_d:
+	case SDLK_RIGHT:
+	  strafe_ =  1;
+	  break;
+	case SDLK_s:
+	case SDLK_DOWN:
+	  walk_ = -1;
+	  break;
+	case SDLK_z:
+	case SDLK_UP:
+	  walk_ =  1;
+	  break;
+      }
+      break;
+    case SDL_KEYUP:
+      switch (event.key.keysym.sym) 
+      {
+	case SDLK_q:
+	case SDLK_LEFT:
+	  strafe_ = 0;
+	  break;
+	case SDLK_d:
+	case SDLK_RIGHT:
+	  strafe_ =  0;
+	  break;
+	case SDLK_s:
+	case SDLK_DOWN:
+	  walk_ = 0;
+	  break;
+	case SDLK_z:
+	case SDLK_UP:
+	  walk_ =  0;
+	  break;
+      }
+      break;
+     
+  }
+    /*if (SDL_PollEvent(&event)) {
         game_running_ = !(SDL_QUIT==event.type || (SDL_KEYDOWN==event.type && SDLK_ESCAPE==event.key.keysym.sym));
         if (SDL_KEYUP==event.type) {
             if ('q'==event.key.keysym.sym || 'd'==event.key.keysym.sym) strafe_ = 0;
@@ -141,6 +193,7 @@ void Game::handle_events() {
             if ('z'==event.key.keysym.sym) walk_ =  1;
             if ('s'==event.key.keysym.sym) walk_ = -1;
         }
+        */
         if (event.type == SDL_MOUSEMOTION) {
             a += event.motion.xrel * .01;
         }
@@ -148,8 +201,8 @@ void Game::handle_events() {
 
     // TODO proper delays
 
-    float nx = (x + strafe_*cos(a+M_PI/2)*.1 + walk_*cos(a)*.01);
-    float ny = (y + strafe_*sin(a+M_PI/2)*.1 + walk_*sin(a)*.2);
+    float nx = (x + strafe_*cos(a+M_PI/2)*.01 + walk_*cos(a)*.01);
+    float ny = (y + strafe_*sin(a+M_PI/2)*.01 + walk_*sin(a)*.01);
 
     if (int(nx)>=0 && int(nx)<mapw && int(ny)>=0 && int(ny)<maph && map[int(nx)+int(ny)*mapw]==' ') {
         x = nx;
