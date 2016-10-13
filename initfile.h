@@ -6,6 +6,6 @@
 
 void gameover();
 void init_window();
-/*int wait();*/
+void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 
 #endif
