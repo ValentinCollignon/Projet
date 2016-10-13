@@ -6,6 +6,6 @@
 
 void gameover();
 void init_window();
-int wait();
+/*int wait();*/
 
 #endif

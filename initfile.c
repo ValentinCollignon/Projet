@@ -13,7 +13,7 @@ void init_window()
   affichage = SDL_SetVideoMode(800, 600, 32, SDL_SWSURFACE);
   
 }
-
+/*
 int wait()
 {
  int i,j;
@@ -26,7 +26,7 @@ int wait()
 }
  return 0;
 }
-
+*/
 void gameover()
 {
     SDL_Surface *temp, *gamover;
@@ -42,3 +42,14 @@ void gameover()
     SDL_BlitSurface(gamover, NULL, affichage, &rcgameover);
     printf("******************************************\n****************************************\n******************GAME*******************\n******************OVER*******************\n****************************************\n******************************************\n");
 } 
+
+void putpixel(SDL_Surface *theScreen, int x, int y, Uint32 pixel)
+{
+  int bpp = theScreen->format->BytesPerPixel;
+  Uint8 *p = (Uint8*)theScreen->pixels + y * theScreen->pitch + x*bpp;
+  for (int i=0; i<bpp; i++) 
+  {
+    p[i] = ((Uint8*)&pixel)[i];
+    
+  }
+}
