@@ -1,5 +1,5 @@
 #include <SDL.h>
-
+#include "initfile.h"
 #include "event.h"
 
 

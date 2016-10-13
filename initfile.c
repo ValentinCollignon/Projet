@@ -35,10 +35,12 @@ void gameover()
     colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
     rcgameover.x = 0;
     rcgameover.y = 0;
-    temp  = SDL_LoadBMP("game_over.bmp");
+    temp  = SDL_LoadBMP("image/game_over.bmp");
     gamover = SDL_DisplayFormat(temp);
     SDL_FreeSurface(temp);
     SDL_SetColorKey(gamover, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
     SDL_BlitSurface(gamover, NULL, affichage, &rcgameover);
+    SDL_UpdateRect(affichage, 0, 0, 0, 0);
     printf("******************************************\n****************************************\n******************GAME*******************\n******************OVER*******************\n****************************************\n******************************************\n");
+    
 } 
