@@ -160,11 +160,11 @@ void draw_screen()
             
         }
     }
-
+    
 }
 
 void end()
 {
-  SDL_FreeSurface(&affichage);
+  SDL_FreeSurface(affichage);
   SDL_Quit();
 }

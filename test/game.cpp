@@ -179,7 +179,9 @@ void Game::handle_events() {
 	  break;
       }
       break;
-     
+    case SDL_MOUSEMOTION:
+      a += event.motion.xrel * .01;
+      break;
   }
     /*if (SDL_PollEvent(&event)) {
         game_running_ = !(SDL_QUIT==event.type || (SDL_KEYDOWN==event.type && SDLK_ESCAPE==event.key.keysym.sym));
@@ -193,10 +195,10 @@ void Game::handle_events() {
             if ('z'==event.key.keysym.sym) walk_ =  1;
             if ('s'==event.key.keysym.sym) walk_ = -1;
         }
-        */
+        
         if (event.type == SDL_MOUSEMOTION) {
             a += event.motion.xrel * .01;
-        }
+        }*/
     }
 
     // TODO proper delays

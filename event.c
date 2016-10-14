@@ -5,6 +5,9 @@
 
 void HandleEvent(SDL_Event event,int* game_over)
 {
+  float a=0;
+  float xplus;
+  float yplus;
   switch (event.type) 
   {
     /* close button clicked */
@@ -20,14 +23,48 @@ void HandleEvent(SDL_Event event,int* game_over)
 	    SDL_Delay(2000);
             *game_over=1;
             break;
-	case SDLK_q:
+	case SDLK_a:
             gameover();
 	  break;
 	case SDLK_RETURN:
 	case SDLK_KP_ENTER:
 	  draw_screen();
 	  break;
-	
+	case SDLK_q:
+	case SDLK_LEFT:
+	  break;
+	case SDLK_d:
+	case SDLK_RIGHT:
+	  break;
+	case SDLK_z:
+	case SDLK_UP:
+	  xplus=1;
+	  break;
+	case SDLK_s:
+	case SDLK_DOWN:
+	  xplus=-1;
+	  break;
       }
+      break;
+    case SDL_KEYUP:
+      switch (event.key.keysym.sym) 
+      {
+	case SDLK_q:
+	case SDLK_LEFT:
+	  break;
+	case SDLK_d:
+	case SDLK_RIGHT:
+	  break;
+	case SDLK_z:
+	case SDLK_UP:
+	  break;
+	case SDLK_s:
+	case SDLK_DOWN:
+	  break;
+      }
+      break;
+      case SDL_MOUSEMOTION:
+      a += event.motion.xrel * .01;
+      break;
   }
 }
