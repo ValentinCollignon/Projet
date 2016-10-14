@@ -104,9 +104,11 @@ void putpixel(SDL_Surface *theScreen, int x, int y, Uint32 pixel)
 
 void draw_screen()
 {
+
   SDL_Rect tmp;
   int ncolors, i, j, z, idx;
   float w;
+
     /* map*/
     map=lireMap("fichier_map/map.txt");
     
@@ -181,6 +183,8 @@ void deplacement(float a, float xplus, float yplus)
   SDL_Flip(affichage);
   
 }
+
+
 void end()
 {
   SDL_FreeSurface(affichage);
