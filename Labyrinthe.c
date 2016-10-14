@@ -1,4 +1,3 @@
-#include "endfile.h"
 #include "event.h"
 #include "initfile.h"
 #include <SDL.h>

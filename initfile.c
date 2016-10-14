@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include "initfile.h"
+#include <math.h>
 
 
 #define mapc 32
@@ -7,6 +8,7 @@
 
 
 const int colors[] = {120, 120, 220};
+const float fov = M_PI/3;
 
 
 
@@ -76,6 +78,7 @@ void init_menu()
   SDL_SetColorKey(menu, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
   SDL_BlitSurface(menu, NULL, affichage, &rcmenu);
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
+  printf("fonction init_menu\n");
 }
 
 void gameover()
@@ -87,50 +90,29 @@ void gameover()
     rcgameover.x = 0;
     rcgameover.y = 0;
 
-    temp  = SDL_LoadBMP("image/game_over.bmp");
+    temp  = SDL_LoadBMP("image/game_over2.bmp");
 
     gamover = SDL_DisplayFormat(temp);
     SDL_FreeSurface(temp);
+    SDL_FreeSurface(affichage);
     SDL_SetColorKey(gamover, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
     
     SDL_BlitSurface(gamover, NULL, affichage, &rcgameover);
 
     SDL_UpdateRect(affichage, 0, 0, 0, 0);
-    /*printf("******************************************\n****************************************\n******************GAME*******************\n******************OVER*******************\n****************************************\n******************************************\n");
-*/
+    printf("fonction gameover\n");
+
   
 } 
 
-void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
+void putpixel(SDL_Surface *theScreen, int x, int y, Uint32 pixel) 
 {
-    int bpp = surface->format->BytesPerPixel;
-    /* Here p is the address to the pixel we want to set */
-    Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
-
-    switch(bpp) {
-    case 1:
-        *p = pixel;
-        break;
-
-    case 2:
-        *(Uint16 *)p = pixel;
-        break;
-
-    case 3:
-        if(SDL_BYTEORDER == SDL_BIG_ENDIAN) {
-            p[0] = (pixel >> 16) & 0xff;
-            p[1] = (pixel >> 8) & 0xff;
-            p[2] = pixel & 0xff;
-        } else {
-            p[0] = pixel & 0xff;
-            p[1] = (pixel >> 8) & 0xff;
-            p[2] = (pixel >> 16) & 0xff;
-        }
-        break;
-
-    case 4:
-        *(Uint32 *)p = pixel;
-        break;
+    int bpp = theScreen->format->BytesPerPixel;
+    Uint8 *p = (Uint8*)theScreen->pixels + y * theScreen->pitch + x*bpp;
+    int i;
+    for (i=0; i<bpp; i++) 
+    {
+        p[i] = ((Uint8*)&pixel)[i];
     }
 }
 
@@ -160,11 +142,38 @@ void draw_screen()
             
         }
     }
-
+   /* regarde ca!!!!
+    for (i=0; i<w; i++) 
+    {
+      float t;
+      float ca = (1.-i/float(w)) * (a-fov/2.) + i/float(w)*(a+fov/2.);
+      for (t=0; t<20; t+=.05)
+      {
+	float cx = cos(ca)*t;
+        float cy = sin(ca)*t;
+        putpixel(affichage, w+cx*16, cy*16, 0); 
+        int idx = int(cx)+int(cy)*mapw;
+	if (map[idx]!=' ') 
+	{
+	  int h = affichage->h/t;
+          SDL_Rect tmp;
+          tmp.w = 1;
+          tmp.h = h;
+          tmp.x = i;
+          tmp.y = (affichage->h-h)/2;
+          int z = (idx%ncolors)*3;
+          SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, colors[z], colors[z+1],colors[z+2]));
+          break;
+	  
+	}
+        }
+    }
+    SDL_Flip(affichage);
+*/
 }
 
 void end()
 {
-  SDL_FreeSurface(&affichage);
+  SDL_FreeSurface(affichage);
   SDL_Quit();
 }
