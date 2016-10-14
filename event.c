@@ -3,7 +3,7 @@
 #include "event.h"
 
 
-void HandleEvent(SDL_Event event,int* game_over)
+void HandleEvent(SDL_Event event,int* game_over,int* mode)
 {
   float a=0;
   float xplus;
@@ -21,29 +21,34 @@ void HandleEvent(SDL_Event event,int* game_over)
 	case SDLK_ESCAPE:
 	    gameover();
 	    SDL_Delay(2000);
-            *game_over=1;
+            *game_over = 1;
             break;
 	case SDLK_a:
             gameover();
 	  break;
 	case SDLK_RETURN:
 	case SDLK_KP_ENTER:
-	  draw_screen(a);
+	  draw_screen();
+	  *mode = 1;
 	  break;
 	case SDLK_q:
 	case SDLK_LEFT:
+	  xplus = -1;
 	  break;
 	case SDLK_d:
 	case SDLK_RIGHT:
+	  xplus = 1;
 	  break;
 	case SDLK_z:
 	case SDLK_UP:
-	  xplus=1;
+	  yplus = 1;
 	  break;
 	case SDLK_s:
 	case SDLK_DOWN:
-	  xplus=-1;
+	  yplus = -1;
 	  break;
+	  default:
+	break;
       }
       break;
     case SDL_KEYUP:
@@ -51,20 +56,29 @@ void HandleEvent(SDL_Event event,int* game_over)
       {
 	case SDLK_q:
 	case SDLK_LEFT:
+	  xplus = 0;
 	  break;
 	case SDLK_d:
 	case SDLK_RIGHT:
+	  xplus = 0;
 	  break;
 	case SDLK_z:
 	case SDLK_UP:
+	  yplus = 0;
 	  break;
 	case SDLK_s:
 	case SDLK_DOWN:
+	  yplus = 0;
 	  break;
+	  default:
+	break;
       }
       break;
       case SDL_MOUSEMOTION:
       a += event.motion.xrel * .01;
       break;
+      default:
+	break;
   }
+  deplacement(a, xplus, yplus);
 }
