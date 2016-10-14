@@ -1,11 +1,12 @@
 #include <SDL.h>
 #include "initfile.h"
 #include <math.h>
-
+#include <stdlib.h>
 
 #define mapc 32
 #define mapl 32
 
+#define SIZE mapc*mapl+1
 
 const int colors[] = {120, 120, 220};
 const float fov = M_PI/3;
@@ -14,43 +15,28 @@ float y = 16.9;
 float a2=0;
 /*mise en place de la fenetre principale*/
 SDL_Surface * affichage;
+char* map;
 
+char* lireMap(char* nomFichier)
+{
+  char c;
+  char* ma_map=malloc(SIZE*sizeof(char));
+  int compt=0;
+  FILE * fichier = fopen(nomFichier, "r");
+  
+  do
+  {
+      c = fgetc(fichier); 
+      if(c!='\n')
+      {
+	ma_map[compt]=c;
+	compt++;
+      }
+  } while (c != EOF); 
 
-/* map*/
-char map[mapl*mapc+1] = "\
-################################\
-#                            # #\
-# ######### ###### ##### ##### #\
-# #       #      #     # #     #\
-# # ##### ###### ##### # ##### #\
-# ###   #            # #     # #\
-#     ############## # ####### #\
-#### ##                      # #\
-#               ##           # #\
-#                              #\
-#                            # #\
-#                            # #\
-#                            # #\
-#          # ################# #\
-#          #                 # #\
-#          # ### #### ###### # #\
-#          # #        #    # # #\
-#          #        # # #### # #\
-#          # #### ### #      # #\
-#                     ###### # #\
-##################### ##   # # #\
-#    #   #   #        #  #   # #\
-# ##   #   #    # ############ #\
-#################     #   #  # #\
-#               ##### # # # ## #\
-# ########### # #     # # #  # #\
-# #         # ### ### # #### # #\
-# # ######### #   #          # #\
-# #           # # #  ######### #\
-# ############# # #  #   #   # #\
-#               # #    #   # # #\
-################################";
-
+  fclose(fichier);
+  return ma_map;
+}
 
 void init_window()
 {
@@ -119,12 +105,15 @@ void putpixel(SDL_Surface *theScreen, int x, int y, Uint32 pixel)
 void draw_screen()
 {
 
-  SDL_Rect tmp;
+    /* map*/
+    map=lireMap("map/map.txt");
+
+    SDL_Rect tmp;
     int ncolors, i, j, z;
     float w;
     printf("fonction draw_screen\n");
     SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
-    SDL_UpdateRect(affichage, 0, 0, 0, 0);
+    
     /*draw map*/
     ncolors = sizeof(colors)/(sizeof(int)*3);
     w = affichage->w/2;

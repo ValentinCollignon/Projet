@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <SDL.h>
 
+char* lireMap(char* nomFichier);
 void gameover();
 void init_window();
 
