@@ -25,11 +25,13 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
             break;
 	case SDLK_a:
             gameover();
+	    *mode =0;
 	  break;
 	case SDLK_RETURN:
 	case SDLK_KP_ENTER:
 	  draw_screen();
 	  *mode = 1;
+	  SDL_WarpMouse(1024 / 2, 600 / 2);
 	  break;
 	case SDLK_q:
 	case SDLK_LEFT:
