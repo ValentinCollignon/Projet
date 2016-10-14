@@ -133,14 +133,14 @@ bool Game::running() {
 
 void Game::handle_events() {
     SDL_Event event;
-    
+    /*
     if (SDL_PollEvent(&event)) {
         game_running_ = !(SDL_QUIT==event.type || (SDL_KEYDOWN==event.type && SDLK_ESCAPE==event.key.keysym.sym));
     switch (event.type) 
   {
-    /* close button clicked */
+    close button clicked
       break;
-    /* handle the keyboard */
+    handle the keyboard 
     case SDL_KEYDOWN:
       switch (event.key.keysym.sym) 
       {
@@ -186,8 +186,8 @@ void Game::handle_events() {
     case SDL_MOUSEMOTION:
       a += event.motion.xrel * .01;
       break;
-  }
-    /*if (SDL_PollEvent(&event)) {
+  }*/
+    if (SDL_PollEvent(&event)) {
         game_running_ = !(SDL_QUIT==event.type || (SDL_KEYDOWN==event.type && SDLK_ESCAPE==event.key.keysym.sym));
         if (SDL_KEYUP==event.type) {
             if ('q'==event.key.keysym.sym || 'd'==event.key.keysym.sym) strafe_ = 0;
@@ -202,7 +202,7 @@ void Game::handle_events() {
         
         if (event.type == SDL_MOUSEMOTION) {
             a += event.motion.xrel * .01;
-        }*/
+        }
     }
 
     // TODO proper delays

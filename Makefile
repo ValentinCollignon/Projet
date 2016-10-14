@@ -1,7 +1,7 @@
 all:Labyrinthe
 
 Labyrinthe: event.o initfile.o Labyrinthe.o
-	gcc -o Labyrinthe endfile.o event.o initfile.o Labyrinthe.o  `sdl-config --cflags --libs` -lm
+	gcc -o Labyrinthe event.o initfile.o Labyrinthe.o  `sdl-config --cflags --libs` -lm
 
 event.o: event.c 
 	gcc -o event.o -c event.c `sdl-config --cflags --libs`-lm -W -Wall -ansi -pedantic 

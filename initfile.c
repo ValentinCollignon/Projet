@@ -104,13 +104,14 @@ void putpixel(SDL_Surface *theScreen, int x, int y, Uint32 pixel)
 
 void draw_screen()
 {
-
+  SDL_Rect tmp;
+  int ncolors, i, j, z, idx;
+  float w;
     /* map*/
-    map=lireMap("map/map.txt");
+    map=lireMap("fichier_map/map.txt");
+    
 
-    SDL_Rect tmp;
-    int ncolors, i, j, z;
-    float w;
+    
     printf("fonction draw_screen\n");
     SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
     
@@ -134,7 +135,7 @@ void draw_screen()
     }
 
    /* regarde ca!!!!*/
-   int idx;
+
    
     for (i=0; i<w; i++) 
     {
