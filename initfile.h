@@ -11,4 +11,5 @@ void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 
 void init_menu();
 void draw_screen();
+void end();
 #endif

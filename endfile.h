@@ -5,6 +5,5 @@
 #include <SDL.h>
 
 
-void end();
 
 #endif

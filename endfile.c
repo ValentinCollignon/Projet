@@ -3,7 +3,3 @@
 
 
 
-void end()
-{
-  SDL_Quit();
-}
