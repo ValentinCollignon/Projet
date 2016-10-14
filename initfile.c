@@ -1,8 +1,12 @@
 #include <SDL.h>
 #include "initfile.h"
 
+
+
 /*mise en place de la fenetre principale*/
 SDL_Surface * affichage;
+
+
 
 void init_window()
 {
@@ -13,8 +17,6 @@ void init_window()
   SDL_WM_SetCaption("Labyrinthe", NULL);
   affichage = SDL_SetVideoMode(800, 600, 32, SDL_SWSURFACE);
   init_menu();
-
-  
 }
 
 
@@ -48,7 +50,9 @@ void gameover()
     SDL_SetColorKey(gamover, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
     SDL_BlitSurface(gamover, NULL, affichage, &rcgameover);
     SDL_UpdateRect(affichage, 0, 0, 0, 0);
-    printf("******************************************\n****************************************\n******************GAME*******************\n******************OVER*******************\n****************************************\n******************************************\n");
+    /*printf("******************************************\n****************************************\n******************GAME*******************\n******************OVER*******************\n****************************************\n******************************************\n");
+*/
+  
 } 
 
 void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
@@ -82,4 +86,30 @@ void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
         *(Uint32 *)p = pixel;
         break;
     }
+}
+
+void draw_screen()
+{
+  printf("test\n");
+  SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 0, 0, 255));
+  SDL_UpdateRect(affichage, 0, 0, 0, 0);
+  /*fonction exemple*/
+  const int colors[] = {127, 127, 127};
+  int ncolors = sizeof(colors)/(sizeof(int)*3);
+
+  int w = affichage->w/2;
+  for (int i=0; i<mapw; i++) { // draw the map
+        for (int j=0; j<maph; j++) {
+            if (map[i+j*mapw]==' ') continue;
+            SDL_Rect tmp;
+            tmp.w = 16;
+            tmp.h = 16;
+            tmp.x = i*16 + w;
+            tmp.y = j*16;
+            int z = ((i+j*mapw)%ncolors)*3;
+            SDL_FillRect(affichage, &tmp, SDL_MapRGB(sdl_screen_->format, colors[z], colors[z+1],colors[z+2]));
+        }
+    }
+
+
 }
