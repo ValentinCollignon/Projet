@@ -7,7 +7,7 @@
 void gameover();
 void init_window();
 
-void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
+void putpixel(SDL_Surface *theScreen, int x, int y, Uint32 pixel);
 
 void init_menu();
 void draw_screen();
