@@ -144,7 +144,6 @@ void draw_screen()
         }
     }
 
-
 }
 void deplacement(float a, float xplus, float yplus)
 {
