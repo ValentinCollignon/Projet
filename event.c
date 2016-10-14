@@ -21,7 +21,7 @@ void HandleEvent(SDL_Event event,int* game_over)
 	case SDLK_ESCAPE:
 	    gameover();
 	    SDL_Delay(2000);
-            *game_over=1;
+            *game_over = 1;
             break;
 	case SDLK_a:
             gameover();
@@ -32,17 +32,19 @@ void HandleEvent(SDL_Event event,int* game_over)
 	  break;
 	case SDLK_q:
 	case SDLK_LEFT:
+	  xplus = -1;
 	  break;
 	case SDLK_d:
 	case SDLK_RIGHT:
+	  xplus = 1;
 	  break;
 	case SDLK_z:
 	case SDLK_UP:
-	  xplus=1;
+	  yplus = 1;
 	  break;
 	case SDLK_s:
 	case SDLK_DOWN:
-	  xplus=-1;
+	  yplus = -1;
 	  break;
       }
       break;
@@ -51,15 +53,19 @@ void HandleEvent(SDL_Event event,int* game_over)
       {
 	case SDLK_q:
 	case SDLK_LEFT:
+	  xplus = 0;
 	  break;
 	case SDLK_d:
 	case SDLK_RIGHT:
+	  xplus = 0;
 	  break;
 	case SDLK_z:
 	case SDLK_UP:
+	  yplus = 0;
 	  break;
 	case SDLK_s:
 	case SDLK_DOWN:
+	  yplus = 0;
 	  break;
       }
       break;
@@ -67,4 +73,5 @@ void HandleEvent(SDL_Event event,int* game_over)
       a += event.motion.xrel * .01;
       break;
   }
+  deplacement(a, xplus, yplus);
 }

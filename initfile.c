@@ -9,7 +9,8 @@
 
 const int colors[] = {120, 120, 220};
 const float fov = M_PI/3;
-
+float x = 16.9;
+float y = 16.9;
 
 
 /*mise en place de la fenetre principale*/
@@ -142,37 +143,22 @@ void draw_screen()
             
         }
     }
-   /* regarde ca!!!!
-    for (i=0; i<w; i++) 
-    {
-      float t;
-      float ca = (1.-i/float(w)) * (a-fov/2.) + i/float(w)*(a+fov/2.);
-      for (t=0; t<20; t+=.05)
-      {
-	float cx = cos(ca)*t;
-        float cy = sin(ca)*t;
-        putpixel(affichage, w+cx*16, cy*16, 0); 
-        int idx = int(cx)+int(cy)*mapw;
-	if (map[idx]!=' ') 
-	{
-	  int h = affichage->h/t;
-          SDL_Rect tmp;
-          tmp.w = 1;
-          tmp.h = h;
-          tmp.x = i;
-          tmp.y = (affichage->h-h)/2;
-          int z = (idx%ncolors)*3;
-          SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, colors[z], colors[z+1],colors[z+2]));
-          break;
-	  
-	}
-        }
-    }
-    SDL_Flip(affichage);
-*/
+
 
 }
+void deplacement(float a, float xplus, float yplus)
+{
+  int nx, ny;
+  nx = (x + xplus*cos(a+M_PI/2)*.01 + yplus*cos(a)*.01);
+  ny = (y + xplus*sin(a+M_PI/2)*.01 + yplus*sin(a)*.01);
 
+  if (nx>=0 && nx<mapc && ny>=0 && ny<mapl && map[nx+ny*mapl]==' ')
+  {
+    x = nx;
+    y = ny;
+    
+  }
+}
 void end()
 {
   SDL_FreeSurface(affichage);
