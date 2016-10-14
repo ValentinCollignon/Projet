@@ -28,7 +28,7 @@ void HandleEvent(SDL_Event event,int* game_over)
 	  break;
 	case SDLK_RETURN:
 	case SDLK_KP_ENTER:
-	  draw_screen();
+	  draw_screen(a);
 	  break;
 	case SDLK_q:
 	case SDLK_LEFT:

@@ -10,6 +10,6 @@ void init_window();
 void putpixel(SDL_Surface *theScreen, int x, int y, Uint32 pixel);
 
 void init_menu();
-void draw_screen();
+void draw_screen(float a);
 void end();
 #endif

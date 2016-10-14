@@ -9,8 +9,8 @@
 
 const int colors[] = {120, 120, 220};
 const float fov = M_PI/3;
-
-
+float x = 16.9;
+float y = 16.9;
 
 /*mise en place de la fenetre principale*/
 SDL_Surface * affichage;
@@ -116,11 +116,12 @@ void putpixel(SDL_Surface *theScreen, int x, int y, Uint32 pixel)
     }
 }
 
-void draw_screen()
+void draw_screen(float a)
 {
 
   SDL_Rect tmp;
-    int ncolors, i, j, w, z;
+    int ncolors, i, j, z;
+    float w;
     printf("fonction draw_screen\n");
     SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
     SDL_UpdateRect(affichage, 0, 0, 0, 0);
@@ -142,17 +143,19 @@ void draw_screen()
             
         }
     }
-   /* regarde ca!!!!
+   /* regarde ca!!!!*/
+   int idx;
+   
     for (i=0; i<w; i++) 
     {
       float t;
-      float ca = (1.-i/float(w)) * (a-fov/2.) + i/float(w)*(a+fov/2.);
+      float ca = (1.-i/w) * (a-fov/2.) + i/w*(a+fov/2.);
       for (t=0; t<20; t+=.05)
       {
-	float cx = cos(ca)*t;
-        float cy = sin(ca)*t;
+	int cx = x+cos(ca)*t;
+        int cy = y+sin(ca)*t;
         putpixel(affichage, w+cx*16, cy*16, 0); 
-        int idx = int(cx)+int(cy)*mapw;
+        idx = cx+cy*mapl;
 	if (map[idx]!=' ') 
 	{
 	  int h = affichage->h/t;
@@ -161,7 +164,7 @@ void draw_screen()
           tmp.h = h;
           tmp.x = i;
           tmp.y = (affichage->h-h)/2;
-          int z = (idx%ncolors)*3;
+          z = (idx%ncolors)*3;
           SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, colors[z], colors[z+1],colors[z+2]));
           break;
 	  
@@ -169,7 +172,7 @@ void draw_screen()
         }
     }
     SDL_Flip(affichage);
-*/
+
 
 }
 

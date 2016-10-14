@@ -60,7 +60,7 @@ void Game::draw() {
     const int colors[] = {127, 127, 127};
     int ncolors = sizeof(colors)/(sizeof(int)*3);
 
-    int w = sdl_screen_->w/2;
+    float w = sdl_screen_->w/2;
     for (int i=0; i<mapw; i++) { // draw the map
         for (int j=0; j<maph; j++) {
             if (map[i+j*mapw]==' ') continue;
@@ -73,12 +73,16 @@ void Game::draw() {
             SDL_FillRect(sdl_screen_, &tmp, SDL_MapRGB(sdl_screen_->format, colors[z], colors[z+1],colors[z+2]));
         }
     }
-
-    for (int i=0; i<w; i++) { // draw the "3D" view + visibility cone
-        float ca = (1.-i/float(w)) * (a-fov/2.) + i/float(w)*(a+fov/2.);
-        for (float t=0; t<20; t+=.05) {
-            float cx = x+cos(ca)*t;
-            float cy = y+sin(ca)*t;
+    int i;
+    float ca;
+    float t;
+    float cx;
+    float cy ;
+    for (i=0; i<w; i++) { // draw the "3D" view + visibility cone
+        ca = (1.-i/w) * (a-fov/2.) + i/w*(a+fov/2.);
+        for ( t=0; t<20; t+=.05) {
+            cx = x+cos(ca)*t;
+            cy = y+sin(ca)*t;
             putpixel(sdl_screen_, w+cx*16, cy*16, 0); // visibility cone at the map
 
             int idx = int(cx)+int(cy)*mapw;
