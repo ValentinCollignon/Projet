@@ -2,6 +2,7 @@
 #include "initfile.h"
 
 
+
 #define mapc 20
 #define mapl 20
 /*
@@ -30,12 +31,51 @@ char map[mapl*mapc+1] = "\
 #                # #\
 ####################";
 
+
+
 const int colors[] = {120, 120, 220};
+
 
 
 /*mise en place de la fenetre principale*/
 SDL_Surface * affichage;
 
+
+/* map
+char map[mapl*mapc+1] = "\
+################################\
+#                            # #\
+# ######### ###### ##### ##### #\
+# #       #      #     # #     #\
+# # ##### ###### ##### # ##### #\
+# ###   #            # #     # #\
+#     ############## # ####### #\
+#### ##                      # #\
+#               ##           # #\
+#                              #\
+#                            # #\
+#                            # #\
+#                            # #\
+#          # ################# #\
+#          #                 # #\
+#          # ### #### ###### # #\
+#          # #        #    # # #\
+#          #        # # #### # #\
+#          # #### ### #      # #\
+#                     ###### # #\
+##################### ##   # # #\
+#    #   #   #        #  #   # #\
+# ##   #   #    # ############ #\
+#################     #   #  # #\
+#               ##### # # # ## #\
+# ########### # #     # # #  # #\
+# #         # ### ### # #### # #\
+# # ######### #   #          # #\
+# #           # # #  ######### #\
+# ############# # #  #   #   # #\
+#               # #    #   # # #\
+################################";
+*/
 
 void init_window()
 {
@@ -124,27 +164,27 @@ void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 
 void draw_screen()
 {
-    SDL_Rect tmp;
-    int ncolors, i, j, w, z;
-    printf("fonction draw_screen\n");
-    SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
-    SDL_UpdateRect(affichage, 0, 0, 0, 0);
-    /*draw map*/
-    ncolors = sizeof(colors)/(sizeof(int)*3);
-    w = affichage->w/2;
-    tmp.w = 16;
-    tmp.h = 16;
-    for (i=0; i<mapl; i++) 
-    { 
-        for (j=0; j<mapc; j++) 
-        {
-            if (map[i+j*mapl]==' ') continue;
+
+  printf("fonction draw_screen\n");
+  SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 0, 0, 255));
+  SDL_UpdateRect(affichage, 0, 0, 0, 0);
+  /*fonction exemple*/
+  const int colors[] = {127, 127, 127};
+  int ncolors = sizeof(colors)/(sizeof(int)*3);
+
+  int w = affichage->w/2,i,j;
+  for ( i=0; i<mapc; i++) {
+    /*draw the map*/
+        for ( j=0; j<mapl; j++) {
+            if (map[i+j*mapc]==' ') continue;
+            SDL_Rect tmp;
+            tmp.w = 16;
+            tmp.h = 16;
             tmp.x = i*16 + w;
             tmp.y = j*16;
-            z = ((i+j*mapl)%ncolors)*3;
+            int z = ((i+j*mapc)%ncolors)*3;
             SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, colors[z], colors[z+1],colors[z+2]));
-            SDL_UpdateRect(affichage, 0, 0, 0, 0);
-            
+
         }
         
     }
