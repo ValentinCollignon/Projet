@@ -1,81 +1,49 @@
 #include <SDL.h>
 #include "initfile.h"
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 
-
-#define mapc 20
-#define mapl 20
-/*
-const int mapc = 32;
-const int mapl = 32;
-*/
-char map[mapl*mapc+1] = "\
-####################\
-#      #           #\
-#      # ####      #\
-#      ##          #\
-#      #   # #######\
-#      #  #  #     #\
-#             #    #\
-#      # #   #     #\
-#      # ####      #\
-#                  #\
-# #### ##   #      #\
-#       #          #\
-#   #   #####      #\
-#    #             #\
-#   #      # ##### #\
-#                  #\
-#      #####   #   #\
-#                  #\
-#                # #\
-####################";
-
-
+#define mapc 32
+#define mapl 32
+#define SIZE mapc*mapl+1
 
 const int colors[] = {120, 120, 220};
+const float fov = M_PI/3;
+float x = 16.3;
+float y = 16.2;
 
-
-
+/*SDL_Rect position;
+position.x = 16;
+position.y = 16;*/
+float a2=0;
 /*mise en place de la fenetre principale*/
 SDL_Surface * affichage;
+char* map;
 
 
-/* map
-char map[mapl*mapc+1] = "\
-################################\
-#                            # #\
-# ######### ###### ##### ##### #\
-# #       #      #     # #     #\
-# # ##### ###### ##### # ##### #\
-# ###   #            # #     # #\
-#     ############## # ####### #\
-#### ##                      # #\
-#               ##           # #\
-#                              #\
-#                            # #\
-#                            # #\
-#                            # #\
-#          # ################# #\
-#          #                 # #\
-#          # ### #### ###### # #\
-#          # #        #    # # #\
-#          #        # # #### # #\
-#          # #### ### #      # #\
-#                     ###### # #\
-##################### ##   # # #\
-#    #   #   #        #  #   # #\
-# ##   #   #    # ############ #\
-#################     #   #  # #\
-#               ##### # # # ## #\
-# ########### # #     # # #  # #\
-# #         # ### ### # #### # #\
-# # ######### #   #          # #\
-# #           # # #  ######### #\
-# ############# # #  #   #   # #\
-#               # #    #   # # #\
-################################";
-*/
+char* lireMap(char* nomFichier)
+{
+  char c;
+  char* ma_map=malloc(SIZE*sizeof(char));
+  int compt=0;
+  FILE * fichier = fopen(nomFichier, "r");
+  
+  do
+  {
+      c = fgetc(fichier); 
+      if(c!='\n')
+      {
+	ma_map[compt]=c;
+	compt++;
+      }
+  } while (c != EOF); 
+
+  fclose(fichier);
+  return ma_map;
+}
+
 
 void init_window()
 {
@@ -84,7 +52,7 @@ void init_window()
   SDL_Init(SDL_INIT_VIDEO);
    
   SDL_WM_SetCaption("Labyrinthe", NULL);
-  affichage = SDL_SetVideoMode(800, 600, 32, SDL_SWSURFACE);
+  affichage = SDL_SetVideoMode(1024, 600, 32, SDL_SWSURFACE);
   init_menu();
 }
 
@@ -115,10 +83,11 @@ void gameover()
     rcgameover.x = 0;
     rcgameover.y = 0;
 
-    temp  = SDL_LoadBMP("image/game_over.bmp");
+    temp  = SDL_LoadBMP("image/game_over2.bmp");
 
     gamover = SDL_DisplayFormat(temp);
     SDL_FreeSurface(temp);
+    SDL_FreeSurface(affichage);
     SDL_SetColorKey(gamover, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
     
     SDL_BlitSurface(gamover, NULL, affichage, &rcgameover);
@@ -129,64 +98,101 @@ void gameover()
   
 } 
 
-void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
+void putpixel(SDL_Surface *theScreen, int x, int y, Uint32 pixel) 
 {
-    int bpp = surface->format->BytesPerPixel;
-    /* Here p is the address to the pixel we want to set */
-    Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
-
-    switch(bpp) {
-    case 1:
-        *p = pixel;
-        break;
-
-    case 2:
-        *(Uint16 *)p = pixel;
-        break;
-
-    case 3:
-        if(SDL_BYTEORDER == SDL_BIG_ENDIAN) {
-            p[0] = (pixel >> 16) & 0xff;
-            p[1] = (pixel >> 8) & 0xff;
-            p[2] = pixel & 0xff;
-        } else {
-            p[0] = pixel & 0xff;
-            p[1] = (pixel >> 8) & 0xff;
-            p[2] = (pixel >> 16) & 0xff;
-        }
-        break;
-
-    case 4:
-        *(Uint32 *)p = pixel;
-        break;
+    int bpp = theScreen->format->BytesPerPixel;
+    Uint8 *p = (Uint8*)theScreen->pixels + y * theScreen->pitch + x*bpp;
+    int i;
+    for (i=0; i<bpp; i++) 
+    {
+        p[i] = ((Uint8*)&pixel)[i];
     }
 }
 
 void draw_screen()
 {
+    
+    SDL_Rect tmp;
+    int ncolors, i, j, z, idx;
+    float w;
+    printf("fonction draw_screen\n");
+    /* map*/
+    map=lireMap("map/map.txt");
+    printf("map lu\n");
+    SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
+    /*draw map*/
+    ncolors = sizeof(colors)/(sizeof(int)*3);
+    w = affichage->w/2;
+    tmp.w = 16;
+    tmp.h = 16;
+    for (i=0; i<mapl; i++) 
+    { 
+        for (j=0; j<mapc; j++) 
+        {
+            if (map[i+j*mapl]==' ') continue;
 
-  printf("fonction draw_screen\n");
-  SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 0, 0, 255));
-  SDL_UpdateRect(affichage, 0, 0, 0, 0);
-  /*fonction exemple*/
-  const int colors[] = {127, 127, 127};
-  int ncolors = sizeof(colors)/(sizeof(int)*3);
-
-  int w = affichage->w/2,i,j;
-  for ( i=0; i<mapc; i++) {
-    /*draw the map*/
-        for ( j=0; j<mapl; j++) {
-            if (map[i+j*mapc]==' ') continue;
-            SDL_Rect tmp;
-            tmp.w = 16;
-            tmp.h = 16;
             tmp.x = i*16 + w;
             tmp.y = j*16;
-            int z = ((i+j*mapc)%ncolors)*3;
+            z = ((i+j*mapl)%ncolors)*3;
             SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, colors[z], colors[z+1],colors[z+2]));
-
+                        
         }
+    }
+   
+    for (i=0; i<w; i++) 
+    {
+      float t;
+      float ca = (1.-i/w) * (a2-fov/2.) + i/w*(a2+fov/2.);
+      for (t=0; t<20; t+=.05)
+      {
+	int cx = x+cos(ca)*t;
+        int cy = y+sin(ca)*t;
+        putpixel(affichage, w+cx*16, cy*16, 0); 
+        idx = cx+cy*mapl;
+	if (map[idx]!=' ') 
+	{
+	  int h = affichage->h/t;
+          tmp.w = 1;
+          tmp.h = h;
+          tmp.x = i;
+          tmp.y = (affichage->h-h)/2;
+          z = (idx%ncolors)*3;
+          SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, colors[z], colors[z+1],colors[z+2]));
+          break;
+	  
+	}
+          
+    }
         
     }
+    SDL_Flip(affichage);
+}
 
+
+void deplacement(float a, SDL_Rect position)
+{/*
+    float nxx, nyy;
+    int nx, ny;
+    nxx = (position.x + position.x*cos(a+M_PI/2)*.01 + position.y*cos(a)*.01);
+    nyy = (position.y + position.x*sin(a+M_PI/2)*.01 + position.y*sin(a)*.01);
+    nx = nxx;
+    ny = nyy;
+  
+  
+  if (nx>=0 && nx<mapc && ny>=0 && ny<mapl && map[nx+ny*mapl]==' ')
+  {
+    position.x = nx;
+    position.y = ny;
+    
+  }*/
+  SDL_Flip(affichage);
+  printf("déplacement\n");
+
+}
+
+
+void end()
+{
+  SDL_FreeSurface(affichage);
+  SDL_Quit();
 }

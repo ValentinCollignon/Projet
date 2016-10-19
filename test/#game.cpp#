@@ -189,7 +189,11 @@ void Game::handle_events() {
   }*/
     if (SDL_PollEvent(&event)) {
         game_running_ = !(SDL_QUIT==event.type || (SDL_KEYDOWN==event.type && SDLK_ESCAPE==event.key.keysym.sym));
-        if (SDL_KEYUP==event.type) {
+
+	if (event.type == SDL_MOUSEMOTION) {
+	  a += event.motion.xrel * .01;
+	}
+	if (SDL_KEYUP==event.type) {
             if ('q'==event.key.keysym.sym || 'd'==event.key.keysym.sym) strafe_ = 0;
             if ('z'==event.key.keysym.sym || 's'==event.key.keysym.sym) walk_   = 0;
         }
