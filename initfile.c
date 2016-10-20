@@ -11,15 +11,10 @@
 
 const int colors[] = {120, 120, 120};
 const float fov = M_PI/3;
-<<<<<<< HEAD
-float x = 16.3;
-float y = 16.2;
-float a2 = 0;
-=======
 float x ;
 float y ;
 float a2=0;
->>>>>>> fb2f6f9ca81894e75a076d1ca9a8a9b4d5914dc3
+
 /*mise en place de la fenetre principale*/
 SDL_Surface * affichage;
 char* map;
@@ -140,7 +135,7 @@ void draw_screen()
             z = ((i+j*mapl)%ncolors)*3;
             SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, colors[z], colors[z+1],colors[z+2]));
 	    }
-	    if (map[i+j*mapl]=='+')
+	    if ((map[i+j*mapl]=='+') || (map[i+j*mapl]=='-'))
 	    {
             tmp.x = i*16 + w;
             tmp.y = j*16;
@@ -171,7 +166,7 @@ void draw_screen()
           SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, colors[z], colors[z+1],colors[z+2]));
           break;
 	}
-	if (map[idx]=='+') 
+	if ((map[idx]=='+') || (map[idx]=='-')) 
 	{
 	  int h = affichage->h/t;
           tmp.w = 1;
@@ -212,6 +207,12 @@ void deplacement(float a, SDL_Rect position,int*mode)
   if (map[nx+ny*mapl]=='+')
   {
     WIN(mode);
+  }
+  if (map[nx+ny*mapl]=='-')
+  {
+    x = 16.5;
+    y = 16.5;
+    
   }
 
 }
