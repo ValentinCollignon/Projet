@@ -56,12 +56,25 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	  break;
 	  default:
 	break;
+	  case SDLK_m:
+	    
+	    draw_minicarte();
+	    *mode =0;
+	    break;
       }
       break;
     
       case SDL_MOUSEMOTION:
       a += event.motion.xrel * .01;
       break;
+      case SDL_KEYUP:
+	switch (event.key.keysym.sym) 
+	{
+	  case SDLK_m:
+	    *mode =1;
+	    break;
+	}
+	break;
 
   }
 

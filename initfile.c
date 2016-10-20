@@ -108,7 +108,42 @@ void putpixel(SDL_Surface *theScreen, int x, int y, Uint32 pixel)
     }
 }
 
-void draw_screen()
+void draw_minicarte()
+{
+  SDL_Rect tmp;
+  int i,j;
+  float w;
+  w = affichage->w/4;
+  tmp.w = 8;
+  tmp.h = 8;
+  for (i=0; i<mapl; i++) 
+    { 
+        for (j=0; j<mapc; j++) 
+        {
+            if (map[i+j*mapl]=='#')
+	    {
+            tmp.x = i*8 + (w*3);
+            tmp.y = j*8;
+            
+            SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,255,0));
+	    }
+	    if ((map[i+j*mapl]=='+') || (map[i+j*mapl]=='-'))
+	    {
+            tmp.x = i*8 + (w*3);
+            tmp.y = j*8;
+            
+            SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0, 0,0));
+	    }   
+        }
+    }
+    
+    putpixel(affichage, (w*3)+1+x*8, y*8, 0);
+    putpixel(affichage, (w*3)+x*8, y*8, 0);
+    putpixel(affichage, (w*3)+x*8, 1+y*8, 0);
+    putpixel(affichage, (w*3)+x*8+1, y*8+1, 0);
+    SDL_Flip(affichage);
+}
+void draw_screen(int mini)
 {
     
     SDL_Rect tmp;
@@ -121,10 +156,11 @@ void draw_screen()
     SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
     /*draw map*/
     ncolors = sizeof(colors)/(sizeof(int)*3);
-    w = affichage->w/2;
+    w = affichage->w;
     tmp.w = 16;
     tmp.h = 16;
-    for (i=0; i<mapl; i++) 
+
+    /*for (i=0; i<mapl; i++) 
     { 
         for (j=0; j<mapc; j++) 
         {
@@ -143,7 +179,7 @@ void draw_screen()
             SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 255, 0,0));
 	    }   
         }
-    }
+    }*/
    
     for (i=0; i<w; i++) 
     {
@@ -153,7 +189,7 @@ void draw_screen()
       {
 	int cx = x+cos(ca)*t;
         int cy = y+sin(ca)*t;
-        putpixel(affichage, w+cx*16, cy*16, 15); 
+        /*putpixel(affichage, w+cx*16, cy*16, 15);*/
         idx = cx+cy*mapl;
 	if (map[idx]=='#') 
 	{
