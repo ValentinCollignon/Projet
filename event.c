@@ -3,13 +3,13 @@
 #include "event.h"
 
 float a=0;
-void HandleEvent(SDL_Event event, int* game_over, int* mode, SDL_Rect depl)
-
+Uint8 *keystate;
+void HandleEvent(SDL_Event event,int* game_over,int* mode)
 {
   
-  /*SDL_Rect depl;*/
-
-  switch (event.type) /*keystate = SDL_GetKeyState(NULL)*/
+  SDL_Rect depl;
+  /*keystate = SDL_GetKeyState(NULL);*/
+  switch (event.type) 
   {
     /* close button clicked */
     case SDL_QUIT:
@@ -38,55 +38,32 @@ void HandleEvent(SDL_Event event, int* game_over, int* mode, SDL_Rect depl)
 	  break;
 	case SDLK_q:
 	case SDLK_LEFT:
-	  depl.x -= 1;
+	  depl.x = -1;
           break;
 	case SDLK_d:
 	case SDLK_RIGHT:
-	  depl.x += 1;
+	  depl.x = 1;
           break;
 	case SDLK_z:
 	case SDLK_UP:
-	  depl.y += 1;
+	  depl.y = 1;
 	  break;
 	case SDLK_s:
 	case SDLK_DOWN:
-	  depl.y -= 1;
+	  depl.y = -1;
 	  break;
 	  default:
 	break;
       }
       break;
-    case SDL_KEYUP:
-      switch (event.key.keysym.sym) 
-      {
-	case SDLK_q:
-	case SDLK_LEFT:
-	  depl.x = 0;
-	  break;
-	case SDLK_d:
-	case SDLK_RIGHT:
-	  depl.x = 0;
-	  break;
-	case SDLK_z:
-	case SDLK_UP:
-	  depl.y = 0;
-	  break;
-	case SDLK_s:
-	case SDLK_DOWN:
-	  depl.y = 0;
-	  break;
-	  default:
-	break;
-      }
-      break;
+    
       case SDL_MOUSEMOTION:
       a += event.motion.xrel * .01;
       break;
-      default:
-	break;
+
   }
 
-  if (*mode ==1)
+  if (*mode == 1)
   {
     deplacement(a, depl);
   }

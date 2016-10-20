@@ -9,7 +9,7 @@
 #define mapl 32
 #define SIZE mapc*mapl+1
 
-const int colors[] = {120, 120, 220};
+const int colors[] = {120, 120, 120};
 const float fov = M_PI/3;
 float x = 16.3;
 float y = 16.2;
@@ -111,10 +111,9 @@ void draw_screen()
     SDL_Rect tmp;
     int ncolors, i, j, z, idx;
     float w;
-    printf("fonction draw_screen\n");
-    /* map*/
+    /*printf("x=%f\ny=%f\n",x,y);
+   map*/
     map=lireMap("map/map.txt");
-    printf("map lu\n");
     SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
     /*draw map*/
     ncolors = sizeof(colors)/(sizeof(int)*3);
@@ -143,7 +142,7 @@ void draw_screen()
       {
 	int cx = x+cos(ca)*t;
         int cy = y+sin(ca)*t;
-        putpixel(affichage, w+cx*16, cy*16, 0); 
+        putpixel(affichage, w+cx*16, cy*16, 15); 
         idx = cx+cy*mapl;
 	if (map[idx]!=' ') 
 	{
@@ -169,25 +168,30 @@ void deplacement(float a, SDL_Rect position)
 {
     float nxx, nyy;
     int nx, ny;
-    nxx = (x + position.x*cos(a+M_PI/2)*.01 + position.y*cos(a)*.01);
-    nyy = (y + position.x*sin(a+M_PI/2)*.01 + position.y*sin(a)*.01);
-    nx = nxx;
-    ny = nyy;
-    a2=a;/*transfert de l'angle a dans initfile*/
+    nxx = (position.x + position.x*cos(a+M_PI/2)*.01 + position.y*cos(a)*.01);
+    nyy = (position.y + position.x*sin(a+M_PI/2)*.01 + position.y*sin(a)*.01);
+    nx = x+nxx;
+    ny = y+nyy;
+    a2 = a;/*transfert de l'angle a dans initfile*/
   
-  if (nx>=0 && nx<mapc && ny>=0 && ny<mapl && map[nx+ny*mapl]==' ')
+  if (map[nx+ny*mapl]==' ')
   {
 
-    x = nxx;
-    y = nyy;
-    
+    printf("dans le if depl\n");
+    x += nxx;
+    y += nyy;
+    SDL_Flip(affichage);
   }
-  SDL_Flip(affichage);
-
   printf("déplacement\n");
 
 }
 
+void objet_cherche()
+{
+  
+
+  
+}
 
 void end()
 {
