@@ -6,8 +6,9 @@
 void HandleEvent(SDL_Event event,int* game_over,int* mode, SDL_Rect depl)
 {
   float a=0;
-  
-
+  float xplus, yplus;
+  xplus = depl.x;
+  yplus = depl.y;
   switch (event.type) 
   {
     /* close button clicked */
@@ -37,19 +38,19 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode, SDL_Rect depl)
 	  break;
 	case SDLK_q:
 	case SDLK_LEFT:
-	  depl.x--;
+	  xplus--;
           break;
 	case SDLK_d:
 	case SDLK_RIGHT:
-	  depl.x++;
+	  xplus++;
           break;
 	case SDLK_z:
 	case SDLK_UP:
-	  depl.y++;
+	  yplus++;
 	  break;
 	case SDLK_s:
 	case SDLK_DOWN:
-	  depl.y--;
+	  yplus--;
 	  break;
 	  default:
 	break;
@@ -57,32 +58,32 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode, SDL_Rect depl)
       break;
     case SDL_KEYUP:
       switch (event.key.keysym.sym) 
-      /*{
+      {
 	case SDLK_q:
 	case SDLK_LEFT:
-	  depl.x = 0;
+	  xplus = 0;
 	  break;
 	case SDLK_d:
 	case SDLK_RIGHT:
-	  depl.x = 0;
+	  xplus = 0;
 	  break;
 	case SDLK_z:
 	case SDLK_UP:
-	  depl.y = 0;
+	  yplus = 0;
 	  break;
 	case SDLK_s:
 	case SDLK_DOWN:
-	  depl.y = 0;
+	  yplus = 0;
 	  break;
 	  default:
 	break;
       }
-      break;*/
+      break;
       case SDL_MOUSEMOTION:
       a += event.motion.xrel * .01;
       break;
       default:
 	break;
   }
-  deplacement(a, depl);
+  /*deplacement(a, xplus, yplus);*/
 }
