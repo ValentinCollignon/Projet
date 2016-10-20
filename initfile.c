@@ -13,10 +13,6 @@ const int colors[] = {120, 120, 220};
 const float fov = M_PI/3;
 float x = 16.3;
 float y = 16.2;
-
-/*SDL_Rect position;
-position.x = 16;
-position.y = 16;*/
 float a2=0;
 /*mise en place de la fenetre principale*/
 SDL_Surface * affichage;
@@ -170,21 +166,21 @@ void draw_screen()
 
 
 void deplacement(float a, SDL_Rect position)
-{/*
+{
     float nxx, nyy;
     int nx, ny;
     nxx = (position.x + position.x*cos(a+M_PI/2)*.01 + position.y*cos(a)*.01);
     nyy = (position.y + position.x*sin(a+M_PI/2)*.01 + position.y*sin(a)*.01);
     nx = nxx;
     ny = nyy;
-  
+    a2=a;/*transfert de l'angle a dans initfile*/
   
   if (nx>=0 && nx<mapc && ny>=0 && ny<mapl && map[nx+ny*mapl]==' ')
   {
-    position.x = nx;
-    position.y = ny;
+    x = nxx;
+    y = nyy;
     
-  }*/
+  }
   SDL_Flip(affichage);
   printf("déplacement\n");
 
