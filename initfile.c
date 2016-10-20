@@ -3,7 +3,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include<time.h>
 
 #define mapc 32
 #define mapl 32
@@ -14,6 +14,7 @@ const float fov = M_PI/3;
 float x ;
 float y ;
 float a2=0;
+int nombre_objet=0;
 
 /*mise en place de la fenetre principale*/
 SDL_Surface * affichage;
@@ -120,20 +121,27 @@ void draw_minicarte()
     { 
         for (j=0; j<mapc; j++) 
         {
-            if (map[i+j*mapl]=='#')
+            if (map[i+j*mapl]!=' ')
 	    {
             tmp.x = i*8 + (w*3);
             tmp.y = j*8;
             
             SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,255,0));
 	    }
-	    if ((map[i+j*mapl]=='+') || (map[i+j*mapl]=='-'))
+	    if (((map[i+j*mapl]=='+') || (map[i+j*mapl]=='-')) && ( nombre_objet == 0))
 	    {
             tmp.x = i*8 + (w*3);
             tmp.y = j*8;
             
             SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0, 0,0));
 	    }   
+	    if (map[i+j*mapl]=='O')
+	    {
+            tmp.x = i*8 + (w*3);
+            tmp.y = j*8;
+            
+            SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,0,255));
+	    }
         }
     }
     
@@ -143,6 +151,7 @@ void draw_minicarte()
     putpixel(affichage, (w*3)+x*8+1, y*8+1, 0);
     SDL_Flip(affichage);
 }
+
 void draw_screen(int mini)
 {
     
@@ -152,7 +161,8 @@ void draw_screen(int mini)
     /*printf("x=%f\ny=%f\n",x,y);
    map*/
 
-    map=lireMap("map/map.txt");
+    
+    
     SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
     /*draw map*/
     ncolors = sizeof(colors)/(sizeof(int)*3);
@@ -191,7 +201,7 @@ void draw_screen(int mini)
         int cy = y+sin(ca)*t;
         /*putpixel(affichage, w+cx*16, cy*16, 15);*/
         idx = cx+cy*mapl;
-	if (map[idx]=='#') 
+	if (map[idx]!=' ') 
 	{
 	  int h = affichage->h/t;
           tmp.w = 1;
@@ -202,7 +212,7 @@ void draw_screen(int mini)
           SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, colors[z], colors[z+1],colors[z+2]));
           break;
 	}
-	if ((map[idx]=='+') || (map[idx]=='-')) 
+	if (((map[idx]=='+') || (map[idx]=='-')) &&( nombre_objet == 0) ) 
 	{
 	  int h = affichage->h/t;
           tmp.w = 1;
@@ -213,13 +223,23 @@ void draw_screen(int mini)
           SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 200, 200,100));
           break;
 	}
+	if (map[idx]=='O') 
+	{
+	  int h = affichage->h/t;
+          tmp.w = 1;
+          tmp.h = h;
+          tmp.x = i;
+          tmp.y = (affichage->h-h)/2;
+          z = (idx%ncolors)*3;
+          SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,0,255));
+	  break;
+	}
           
     }
         
     }
     SDL_Flip(affichage);
 }
-
 
 void deplacement(float a, SDL_Rect position,int*mode)
 {
@@ -237,7 +257,7 @@ void deplacement(float a, SDL_Rect position,int*mode)
     printf("dans le if depl\n");
     x += nxx;
     y += nyy;
-    SDL_Flip(affichage);
+    
   }
   printf("déplacement\n");
   if (map[nx+ny*mapl]=='+')
@@ -250,13 +270,30 @@ void deplacement(float a, SDL_Rect position,int*mode)
     y = 16.5;
     
   }
+  if (map[nx+ny*mapl]=='O')
+  {
+    x += nxx;
+    y += nyy;
+    nombre_objet -= 1;
+    map[nx+ny*mapl]=' ';
+    
+  }
 
 }
 
-
 void objet_cherche()
 {
-  
+  int xob=0;
+  int yob=0;
+  map=lireMap("map/map.txt");
+  srand(time(NULL));
+  while (map[xob+yob*mapl]!=' ')
+  {
+    xob=rand()%(32);
+    yob=rand()%(32);
+  }
+  nombre_objet += 1;
+  map[xob+yob*mapl]='O';
 }
 void WIN(int* mode)
 {

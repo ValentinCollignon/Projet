@@ -33,10 +33,14 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
           
 	case SDLK_RETURN:
 	case SDLK_KP_ENTER:
-	  draw_screen();
-	  *mode = 1;
-	  SDL_WarpMouse(1024 / 2, 600 / 2);
-	  SDL_ShowCursor (SDL_DISABLE);
+	  if (*mode == 0)
+	  {
+	    objet_cherche();
+	    draw_screen();
+	    *mode = 1;
+	    SDL_WarpMouse(1024 / 2, 600 / 2);
+	    SDL_ShowCursor (SDL_DISABLE);
+	  }
 	  break;
 	case SDLK_q:
 	case SDLK_LEFT:
