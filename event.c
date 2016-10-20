@@ -8,7 +8,9 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
   float a=0;
   float xplus;
   float yplus;
-  switch (event.type) 
+  
+  
+  switch (event.type) /*keystate = SDL_GetKeyState(NULL)*/
   {
     /* close button clicked */
     case SDL_QUIT:
