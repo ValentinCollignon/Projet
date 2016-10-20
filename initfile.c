@@ -9,10 +9,10 @@
 #define mapl 32
 #define SIZE mapc*mapl+1
 
-const int colors[] = {120, 120, 220};
+const int colors[] = {120, 120, 120};
 const float fov = M_PI/3;
-float x = 16.3;
-float y = 16.2;
+float x ;
+float y ;
 float a2=0;
 /*mise en place de la fenetre principale*/
 SDL_Surface * affichage;
@@ -55,6 +55,8 @@ void init_window()
 
 void init_menu()
 {
+  x = 16.3;
+  y = 16.3;
   SDL_Surface *temp, *menu;
   SDL_Rect rcmenu;
   int colorkey;
@@ -112,7 +114,7 @@ void draw_screen()
     int ncolors, i, j, z, idx;
     float w;
     /*printf("x=%f\ny=%f\n",x,y);
-    /* map*/
+    map*/
     map=lireMap("map/map.txt");
     SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
     /*draw map*/
@@ -124,13 +126,20 @@ void draw_screen()
     { 
         for (j=0; j<mapc; j++) 
         {
-            if (map[i+j*mapl]==' ') continue;
-
+            if (map[i+j*mapl]=='#')
+	    {
             tmp.x = i*16 + w;
             tmp.y = j*16;
             z = ((i+j*mapl)%ncolors)*3;
             SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, colors[z], colors[z+1],colors[z+2]));
-                        
+	    }
+	    if (map[i+j*mapl]=='+')
+	    {
+            tmp.x = i*16 + w;
+            tmp.y = j*16;
+            z = ((i+j*mapl)%ncolors)*3;
+            SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 255, 0,0));
+	    }   
         }
     }
    
@@ -144,7 +153,7 @@ void draw_screen()
         int cy = y+sin(ca)*t;
         putpixel(affichage, w+cx*16, cy*16, 0); 
         idx = cx+cy*mapl;
-	if (map[idx]!=' ') 
+	if (map[idx]=='#') 
 	{
 	  int h = affichage->h/t;
           tmp.w = 1;
@@ -154,7 +163,17 @@ void draw_screen()
           z = (idx%ncolors)*3;
           SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, colors[z], colors[z+1],colors[z+2]));
           break;
-	  
+	}
+	if (map[idx]=='+') 
+	{
+	  int h = affichage->h/t;
+          tmp.w = 1;
+          tmp.h = h;
+          tmp.x = i;
+          tmp.y = (affichage->h-h)/2;
+          z = (idx%ncolors)*3;
+          SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 200, 200,100));
+          break;
 	}
           
     }
@@ -164,7 +183,7 @@ void draw_screen()
 }
 
 
-void deplacement(float a, SDL_Rect position)
+void deplacement(float a, SDL_Rect position,int*mode)
 {
     float nxx, nyy;
     int nx, ny;
@@ -183,9 +202,38 @@ void deplacement(float a, SDL_Rect position)
   }
   SDL_Flip(affichage);
   printf("déplacement\n");
+  if (map[nx+ny*mapl]=='+')
+  {
+    WIN(mode);
+  }
 
 }
 
+void WIN(int* mode)
+{
+  SDL_Surface *temp, *win;
+  SDL_Rect rcwin;
+  int colorkey;
+  *mode = 0;
+  colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
+  rcwin.x = 0;
+  rcwin.y = 0;
+  temp  = SDL_LoadBMP("image/gameover.bmp");
+  win = SDL_DisplayFormat(temp);
+  SDL_FreeSurface(temp);
+  SDL_FreeSurface(affichage);
+  SDL_SetColorKey(win, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
+  
+  SDL_BlitSurface(win, NULL, affichage, &rcwin);
+
+  SDL_UpdateRect(affichage, 0, 0, 0, 0);
+  printf("fonction win\n");
+  SDL_Delay(2000);
+  SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
+  SDL_Flip(affichage);
+  init_menu();
+  
+}
 
 void end()
 {

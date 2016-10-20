@@ -6,8 +6,8 @@
 
 int main()
 {
-    int game_over=0;
-    int mode =0;
+    int game_over = 0;
+    int mode = 0;
     init_window();
     
     while(game_over != 1)

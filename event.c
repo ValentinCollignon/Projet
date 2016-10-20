@@ -28,6 +28,7 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	case SDLK_a:
             gameover();
 	    *mode =0;
+	    SDL_ShowCursor (SDL_ENABLE);
 	  break;
           
 	case SDLK_RETURN:
@@ -35,6 +36,7 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	  draw_screen();
 	  *mode = 1;
 	  SDL_WarpMouse(1024 / 2, 600 / 2);
+	  SDL_ShowCursor (SDL_DISABLE);
 	  break;
 	case SDLK_q:
 	case SDLK_LEFT:
@@ -64,6 +66,6 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
   }
   if (*mode ==1)
   {
-    deplacement(a, depl);
+    deplacement(a, depl,mode);
   }
 }
