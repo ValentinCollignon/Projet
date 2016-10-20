@@ -4,6 +4,6 @@
 #include <stdio.h>
 #include <SDL.h>
 
-void HandleEvent(SDL_Event event,int *game_over,int* mode);
+void HandleEvent(SDL_Event event,int *game_over,int* mode,SDL_Rect depl);
 
 #endif

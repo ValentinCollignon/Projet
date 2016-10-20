@@ -9,13 +9,17 @@ int main()
     int game_over=0;
     int mode =0;
     init_window();
+    SDL_Rect depl;
+    depl.x = 16;
+    depl.y = 16;
+    
     while(game_over != 1)
     {
         SDL_Event event;
-        /* look for an event */
+        /* look for an event*/ 
         if(SDL_PollEvent(&event))
         {
-            HandleEvent(event,&game_over,&mode);
+            HandleEvent(event,&game_over,&mode, depl);
             
         }
         if (mode==1)

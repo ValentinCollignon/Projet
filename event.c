@@ -2,14 +2,11 @@
 #include "initfile.h"
 #include "event.h"
 
-
-void HandleEvent(SDL_Event event,int* game_over,int* mode)
+float a=0;
+void HandleEvent(SDL_Event event,int* game_over,int* mode, SDL_Rect depl)
 {
-  float a=0;
-  float xplus;
-  float yplus;
   
-  
+
   switch (event.type) /*keystate = SDL_GetKeyState(NULL)*/
   {
     /* close button clicked */
@@ -25,10 +22,12 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	    SDL_Delay(2000);
             *game_over = 1;
             break;
+            
 	case SDLK_a:
             gameover();
 	    *mode =0;
 	  break;
+          
 	case SDLK_RETURN:
 	case SDLK_KP_ENTER:
 	  draw_screen();
@@ -37,19 +36,19 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	  break;
 	case SDLK_q:
 	case SDLK_LEFT:
-	  xplus = -1;
-	  break;
+	  depl.x = -1;
+          break;
 	case SDLK_d:
 	case SDLK_RIGHT:
-	  xplus = 1;
-	  break;
+	  depl.x = 1;
+          break;
 	case SDLK_z:
 	case SDLK_UP:
-	  yplus = 1;
+	  depl.y = 1;
 	  break;
 	case SDLK_s:
 	case SDLK_DOWN:
-	  yplus = -1;
+	  depl.y = -1;
 	  break;
 	  default:
 	break;
@@ -60,19 +59,19 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
       {
 	case SDLK_q:
 	case SDLK_LEFT:
-	  xplus = 0;
+	  depl.x = 0;
 	  break;
 	case SDLK_d:
 	case SDLK_RIGHT:
-	  xplus = 0;
+	  depl.x = 0;
 	  break;
 	case SDLK_z:
 	case SDLK_UP:
-	  yplus = 0;
+	  depl.y = 0;
 	  break;
 	case SDLK_s:
 	case SDLK_DOWN:
-	  yplus = 0;
+	  depl.y = 0;
 	  break;
 	  default:
 	break;
@@ -84,5 +83,6 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
       default:
 	break;
   }
-  deplacement(a, xplus, yplus);
+/*
+  deplacement(a, depl);*/
 }
