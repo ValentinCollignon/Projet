@@ -111,10 +111,9 @@ void draw_screen()
     SDL_Rect tmp;
     int ncolors, i, j, z, idx;
     float w;
-    printf("fonction draw_screen\n");
+    /*printf("x=%f\ny=%f\n",x,y);
     /* map*/
     map=lireMap("map/map.txt");
-    printf("map lu\n");
     SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
     /*draw map*/
     ncolors = sizeof(colors)/(sizeof(int)*3);
@@ -171,14 +170,15 @@ void deplacement(float a, SDL_Rect position)
     int nx, ny;
     nxx = (position.x + position.x*cos(a+M_PI/2)*.01 + position.y*cos(a)*.01);
     nyy = (position.y + position.x*sin(a+M_PI/2)*.01 + position.y*sin(a)*.01);
-    nx = nxx;
-    ny = nyy;
-    a2=a;/*transfert de l'angle a dans initfile*/
+    nx = x+nxx;
+    ny = y+nyy;
+    a2 = a;/*transfert de l'angle a dans initfile*/
   
-  if (nx>=0 && nx<mapc && ny>=0 && ny<mapl && map[nx+ny*mapl]==' ')
+  if (map[nx+ny*mapl]==' ')
   {
-    x = nxx;
-    y = nyy;
+    printf("dans le if depl");
+    x += nxx;
+    y += nyy;
     
   }
   SDL_Flip(affichage);

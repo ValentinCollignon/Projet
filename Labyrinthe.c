@@ -9,9 +9,6 @@ int main()
     int game_over=0;
     int mode =0;
     init_window();
-    SDL_Rect depl;
-    depl.x = 16.9;
-    depl.y = 16.9;
     
     while(game_over != 1)
     {
@@ -19,7 +16,7 @@ int main()
         /* look for an event*/ 
         if(SDL_PollEvent(&event))
         {
-            HandleEvent(event,&game_over,&mode, depl);
+            HandleEvent(event,&game_over,&mode);
             
         }
         if (mode==1)
