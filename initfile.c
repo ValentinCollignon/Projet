@@ -133,7 +133,7 @@ void draw_screen()
             z = ((i+j*mapl)%ncolors)*3;
             SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, colors[z], colors[z+1],colors[z+2]));
 	    }
-	    if (map[i+j*mapl]=='+')
+	    if ((map[i+j*mapl]=='+') || (map[i+j*mapl]=='-'))
 	    {
             tmp.x = i*16 + w;
             tmp.y = j*16;
@@ -164,7 +164,7 @@ void draw_screen()
           SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, colors[z], colors[z+1],colors[z+2]));
           break;
 	}
-	if (map[idx]=='+') 
+	if ((map[idx]=='+') || (map[idx]=='-')) 
 	{
 	  int h = affichage->h/t;
           tmp.w = 1;
@@ -205,6 +205,12 @@ void deplacement(float a, SDL_Rect position,int*mode)
   if (map[nx+ny*mapl]=='+')
   {
     WIN(mode);
+  }
+  if (map[nx+ny*mapl]=='-')
+  {
+    x = 16.5;
+    y = 16.5;
+    
   }
 
 }
