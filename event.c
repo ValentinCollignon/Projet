@@ -3,9 +3,11 @@
 #include "event.h"
 
 float a=0;
-void HandleEvent(SDL_Event event,int* game_over,int* mode, SDL_Rect depl)
+void HandleEvent(SDL_Event event, int* game_over, int* mode, SDL_Rect depl)
+
 {
   
+  /*SDL_Rect depl;*/
 
   switch (event.type) /*keystate = SDL_GetKeyState(NULL)*/
   {
@@ -36,19 +38,19 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode, SDL_Rect depl)
 	  break;
 	case SDLK_q:
 	case SDLK_LEFT:
-	  depl.x = -1;
+	  depl.x -= 1;
           break;
 	case SDLK_d:
 	case SDLK_RIGHT:
-	  depl.x = 1;
+	  depl.x += 1;
           break;
 	case SDLK_z:
 	case SDLK_UP:
-	  depl.y = 1;
+	  depl.y += 1;
 	  break;
 	case SDLK_s:
 	case SDLK_DOWN:
-	  depl.y = -1;
+	  depl.y -= 1;
 	  break;
 	  default:
 	break;
@@ -83,6 +85,10 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode, SDL_Rect depl)
       default:
 	break;
   }
-/*
-  deplacement(a, depl);*/
+
+  if (*mode ==1)
+  {
+    deplacement(a, depl);
+  }
+
 }
