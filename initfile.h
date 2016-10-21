@@ -12,6 +12,7 @@ void putpixel(SDL_Surface *theScreen, int x, int y, Uint32 pixel);
 void draw_minicarte();
 void draw_screen();
 void deplacement(float a, SDL_Rect position,int *mode);
+void objet_cherche();
 void WIN(int *mode);
 void end();
 #endif
