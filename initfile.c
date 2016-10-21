@@ -158,8 +158,7 @@ void draw_screen()
     SDL_Rect tmp;
     int ncolors, i, j, z, idx;
     float w;
-    /*printf("x=%f\ny=%f\n",x,y);
-   map*/
+    /*map*/
 
     
     
@@ -178,7 +177,6 @@ void draw_screen()
       {
 	int cx = x+cos(ca)*t;
         int cy = y+sin(ca)*t;
-        /*putpixel(affichage, w+cx*16, cy*16, 15);*/
         idx = cx+cy*mapl;
 	if (map[idx]=='O') 
 	{
@@ -187,7 +185,6 @@ void draw_screen()
           tmp.h = h;
           tmp.x = i;
           tmp.y = (affichage->h-h)/2;
-          /*z = (idx%ncolors)*3;*/
           SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,0,255));
 	  break;
 	}
@@ -236,13 +233,10 @@ void deplacement(float a, SDL_Rect position,int*mode)
   
   if (map[nx+ny*mapl]==' ')
   {
-
-    printf("dans le if depl\n");
     x += nxx;
     y += nyy;
     
   }
-  printf("déplacement\n");
   if ((map[nx+ny*mapl]=='+') && (nombre_objet == 0))
   {
     WIN(mode);
@@ -289,6 +283,37 @@ void portePalea()
   {
     xp=rand()%(32);
     yp=rand()%(32);
+    if ((map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if ((xp == 0) && (map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if ((xp == 31) && (map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if ((yp == 0) && (map[xp+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if ((yp == 31) && (map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if (((xp == 0) && (yp == 0)) || ((xp == 0) && (yp == 31)) || ((xp == 31) && (yp == 0)) || ((xp == 31) && (yp == 31)))
+    {
+      xp = 16;
+      yp = 16;
+    }
+      
   }
   map[xp+yp*mapl]='+';
 }
@@ -303,6 +328,36 @@ void porteNalea()
   {
     xp=rand()%(32);
     yp=rand()%(32);
+    if ((map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if ((xp == 0) && (map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if ((xp == 31) && (map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if ((yp == 0) && (map[xp+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if ((yp == 31) && (map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if (((xp == 0) && (yp == 0)) || ((xp == 0) && (yp == 31)) || ((xp == 31) && (yp == 0)) || ((xp == 31) && (yp == 31)))
+    {
+      xp = 16;
+      yp = 16;
+    }
   }
   map[xp+yp*mapl]='-';
 }
