@@ -170,27 +170,6 @@ void draw_screen()
     tmp.w = 16;
     tmp.h = 16;
 
-    /*for (i=0; i<mapl; i++) 
-    { 
-        for (j=0; j<mapc; j++) 
-        {
-            if (map[i+j*mapl]=='#')
-	    {
-            tmp.x = i*16 + w;
-            tmp.y = j*16;
-            z = ((i+j*mapl)%ncolors)*3;
-            SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, colors[z], colors[z+1],colors[z+2]));
-	    }
-	    if ((map[i+j*mapl]=='+') || (map[i+j*mapl]=='-'))
-	    {
-            tmp.x = i*16 + w;
-            tmp.y = j*16;
-            z = ((i+j*mapl)%ncolors)*3;
-            SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 255, 0,0));
-	    }   
-        }
-    }*/
-   
     for (i=0; i<w; i++) 
     {
       float t;
@@ -211,7 +190,9 @@ void draw_screen()
           z = (idx%ncolors)*3;
           SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,0,255));
 	  break;
-	}else{
+	}
+	else
+	{
 	  if (((map[idx]!=' ') && ( nombre_objet != 0)) || ((map[idx]=='#') && ( nombre_objet == 0)))
 	  {
 	    int h = affichage->h/t;
