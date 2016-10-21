@@ -152,7 +152,7 @@ void draw_minicarte()
     SDL_Flip(affichage);
 }
 
-void draw_screen(int mini)
+void draw_screen()
 {
     
     SDL_Rect tmp;
@@ -201,28 +201,6 @@ void draw_screen(int mini)
         int cy = y+sin(ca)*t;
         /*putpixel(affichage, w+cx*16, cy*16, 15);*/
         idx = cx+cy*mapl;
-	if (map[idx]!=' ') 
-	{
-	  int h = affichage->h/t;
-          tmp.w = 1;
-          tmp.h = h;
-          tmp.x = i;
-          tmp.y = (affichage->h-h)/2;
-          z = (idx%ncolors)*3;
-          SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, colors[z], colors[z+1],colors[z+2]));
-          break;
-	}
-	if (((map[idx]=='+') || (map[idx]=='-')) &&( nombre_objet == 0) ) 
-	{
-	  int h = affichage->h/t;
-          tmp.w = 1;
-          tmp.h = h;
-          tmp.x = i;
-          tmp.y = (affichage->h-h)/2;
-          z = (idx%ncolors)*3;
-          SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 200, 200,100));
-          break;
-	}
 	if (map[idx]=='O') 
 	{
 	  int h = affichage->h/t;
@@ -233,7 +211,31 @@ void draw_screen(int mini)
           z = (idx%ncolors)*3;
           SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,0,255));
 	  break;
+	}else{
+	  if (((map[idx]!=' ') && ( nombre_objet != 0)) || ((map[idx]=='#') && ( nombre_objet == 0)))
+	  {
+	    int h = affichage->h/t;
+	    tmp.w = 1;
+	    tmp.h = h;
+	    tmp.x = i;
+	    tmp.y = (affichage->h-h)/2;
+	    z = (idx%ncolors)*3;
+	    SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, colors[z], colors[z+1],colors[z+2]));
+	    break;
+	  }
+	  if (((map[idx]=='+') || (map[idx]=='-')) &&( nombre_objet == 0) ) 
+	  {
+	    int h = affichage->h/t;
+	    tmp.w = 1;
+	    tmp.h = h;
+	    tmp.x = i;
+	    tmp.y = (affichage->h-h)/2;
+	    z = (idx%ncolors)*3;
+	    SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 200, 200,100));
+	    break;
+	  }
 	}
+	
           
     }
         
@@ -243,13 +245,17 @@ void draw_screen(int mini)
 
 
 void deplacement(float a, SDL_Rect position,int*mode)
-a{
+
+{
+    /*float nx = (x + strafe_*cos(a+M_PI/2)*.01 + walk_*cos(a)*.01);
+    float ny = (y + strafe_*sin(a+M_PI/2)*.01 + walk_*sin(a)*.01);*/
+
     float nxx, nyy;
     int nx, ny;
-    nxx = (position.x + position.x*cos(a+M_PI/2)*.01 + position.y*cos(a)*.01);
-    nyy = (position.y + position.x*sin(a+M_PI/2)*.01 + position.y*sin(a)*.01);
-    nx = x+nxx;
-    ny = y+nyy;
+    nxx = (position.x*cos(a+M_PI/2)*.01 + position.y*cos(a)*.01);
+    nyy = (position.x*sin(a+M_PI/2)*.01 + position.y*sin(a)*.01);
+    nx = x + nxx;
+    ny = y + nyy;
     a2 = a;/*transfert de l'angle a dans initfile*/
   
   if (map[nx+ny*mapl]==' ')
@@ -262,14 +268,15 @@ a{
   }
 
   printf("déplacement\n");
-  if (map[nx+ny*mapl]=='+')
+  if ((map[nx+ny*mapl]=='+') && (nombre_objet == 0))
   {
     WIN(mode);
   }
-  if (map[nx+ny*mapl]=='-')
+  if ((map[nx+ny*mapl]=='-') && (nombre_objet == 0))
   {
     x = 16.5;
     y = 16.5;
+    objet_cherche();
     
   }
   if (map[nx+ny*mapl]=='O')
@@ -288,7 +295,7 @@ void objet_cherche()
 {
   int xob=0;
   int yob=0;
-  map=lireMap("map/map.txt");
+  
   srand(time(NULL));
   while (map[xob+yob*mapl]!=' ')
   {
@@ -297,6 +304,46 @@ void objet_cherche()
   }
   nombre_objet += 1;
   map[xob+yob*mapl]='O';
+}
+
+
+void portePalea()
+{
+  int xp=16;
+  int yp=16;
+  srand(time(NULL));
+  while (map[xp+yp*mapl]!='#')
+  {
+    xp=rand()%(32);
+    yp=rand()%(32);
+  }
+  map[xp+yp*mapl]='+';
+}
+
+void porteNalea()
+{
+  int xp=16;
+  int yp=16;
+  
+  srand(time(NULL));
+  while (map[xp+yp*mapl]!='#')
+  {
+    xp=rand()%(32);
+    yp=rand()%(32);
+  }
+  map[xp+yp*mapl]='-';
+}
+
+void creamap()
+{
+  int i;
+  map=lireMap("map/map.txt");
+  objet_cherche();
+  portePalea();
+  for (i=0;i<3;i++)
+  {
+    porteNalea();
+  }
 }
 
 void WIN(int* mode)
