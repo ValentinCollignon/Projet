@@ -15,7 +15,7 @@ const float fov = M_PI/3;
 float x ;
 float y ;
 float a2=0;
-int nombre_objet=0;
+int nombre_objet=0,level = 1,levelporteN = 1, compL = 1;
 
 /*mise en place de la fenetre principale*/
 SDL_Surface * affichage;
@@ -222,7 +222,7 @@ void draw_screen()
 void deplacement(float a, SDL_Rect position,int*mode)
 {
     float nxx, nyy;
-    int nx, ny;
+    int nx, ny, i;
     nxx = (position.x*cos(a+M_PI/2)*.01 + position.y*cos(a)*.01);
     nyy = (position.x*sin(a+M_PI/2)*.01 + position.y*sin(a)*.01);
     nx = x + nxx;
@@ -243,7 +243,10 @@ void deplacement(float a, SDL_Rect position,int*mode)
   {
     x = 16.5;
     y = 16.5;
-    objet_cherche();
+    for (i = 1 ;i <= level; i++)
+    {
+      objet_cherche();
+    }
     
   }
   if (map[nx+ny*mapl]=='O')
@@ -364,14 +367,14 @@ void mapalea()
 {
   int nummap;
   srand(time(NULL));
-  nummap=rand()%(2);
+  nummap=rand()%(1);
   switch (nummap)
   {
-    case 0:
+    case 1:
       map=lireMap("map/map.txt");
       break;
       
-    case 1:
+    case 0:
       map=lireMap("map/map_2.txt");
       break;
   }
@@ -381,9 +384,12 @@ void creamap()
 {
   int i;
   mapalea();
-  objet_cherche();
+  for (i = 1 ;i <= level; i++)
+  {
+    objet_cherche();
+  }
   portePalea();
-  for (i=0;i<3;i++)
+  for (i=1;i<=(levelporteN);i++)
   {
     porteNalea();
   }
@@ -434,6 +440,12 @@ void WIN(int* mode)
   SDL_Delay(2000);
   SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
   SDL_Flip(affichage);
+  level +=1;
+  if (level%5 == 0)
+  {
+    levelporteN = levelporteN * 2 + compL;
+    compL++;
+  }
   level_sup();
 
 }
