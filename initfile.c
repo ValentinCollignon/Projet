@@ -283,6 +283,37 @@ void portePalea()
   {
     xp=rand()%(32);
     yp=rand()%(32);
+    if ((map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if ((xp == 0) && (map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if ((xp == 31) && (map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if ((yp == 0) && (map[xp+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if ((yp == 31) && (map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if (((xp == 0) && (yp == 0)) || ((xp == 0) && (yp == 31)) || ((xp == 31) && (yp == 0)) || ((xp == 31) && (yp == 31)))
+    {
+      xp = 16;
+      yp = 16;
+    }
+      
   }
   map[xp+yp*mapl]='+';
 }
@@ -297,6 +328,36 @@ void porteNalea()
   {
     xp=rand()%(32);
     yp=rand()%(32);
+    if ((map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if ((xp == 0) && (map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if ((xp == 31) && (map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if ((yp == 0) && (map[xp+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if ((yp == 31) && (map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
+    {
+      xp = 16;
+      yp = 16;
+    }
+    if (((xp == 0) && (yp == 0)) || ((xp == 0) && (yp == 31)) || ((xp == 31) && (yp == 0)) || ((xp == 31) && (yp == 31)))
+    {
+      xp = 16;
+      yp = 16;
+    }
   }
   map[xp+yp*mapl]='-';
 }

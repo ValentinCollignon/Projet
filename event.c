@@ -3,7 +3,8 @@
 #include "event.h"
 
 float a=0;
-Uint8 *keystate;
+int pause = 0;
+
 void HandleEvent(SDL_Event event,int* game_over,int* mode)
 {
   
@@ -27,19 +28,31 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
             break;
             
 	case SDLK_a:
-            gameover();
-	    *mode =0;
+	  if (*mode == 1)
+	  {
+	    pause = 1;
+	    *mode = 0;
 	    SDL_ShowCursor (SDL_ENABLE);
+	    SDL_WM_GrabInput(SDL_GRAB_OFF);
+	  }
+	  
 	  break;
           
 	case SDLK_RETURN:
 	case SDLK_KP_ENTER:
-	  if (*mode == 0)
+	  if ((*mode == 0) && (pause == 0))
 	  {
 	    creamap();
 	    draw_screen();
 	    *mode = 1;
 	    SDL_WarpMouse(1024 / 2, 600 / 2);
+	    SDL_WM_GrabInput(SDL_GRAB_ON);
+	    SDL_ShowCursor (SDL_DISABLE);
+	  }
+	  if (pause == 1)
+	  {
+	    *mode = 1;
+	    SDL_WM_GrabInput(SDL_GRAB_ON);
 	    SDL_ShowCursor (SDL_DISABLE);
 	  }
 	  break;
