@@ -187,7 +187,7 @@ void draw_screen()
           tmp.h = h;
           tmp.x = i;
           tmp.y = (affichage->h-h)/2;
-          z = (idx%ncolors)*3;
+          /*z = (idx%ncolors)*3;*/
           SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,0,255));
 	  break;
 	}
@@ -226,8 +226,6 @@ void draw_screen()
 
 void deplacement(float a, SDL_Rect position,int*mode)
 {
-    /*float nx = (x + strafe_*cos(a+M_PI/2)*.01 + walk_*cos(a)*.01);
-    float ny = (y + strafe_*sin(a+M_PI/2)*.01 + walk_*sin(a)*.01);*/
     float nxx, nyy;
     int nx, ny;
     nxx = (position.x*cos(a+M_PI/2)*.01 + position.y*cos(a)*.01);

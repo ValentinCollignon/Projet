@@ -3,7 +3,6 @@
 #include "event.h"
 
 float a=0;
-Uint8 *keystate;
 void HandleEvent(SDL_Event event,int* game_over,int* mode)
 {
   
