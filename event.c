@@ -36,7 +36,7 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	case SDLK_KP_ENTER:
 	  if (*mode == 0)
 	  {
-	    objet_cherche();
+	    creamap();
 	    draw_screen();
 	    *mode = 1;
 	    SDL_WarpMouse(1024 / 2, 600 / 2);
@@ -78,7 +78,11 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	  case SDLK_m:
 	    *mode =1;
 	    break;
+	  default:
+	    break;
 	}
+	break;
+      default:
 	break;
 
   }
