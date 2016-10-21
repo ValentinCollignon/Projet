@@ -21,4 +21,5 @@ void level_sup();
 void WIN(int *mode);
 void end();
 void full();
+void initialisation();
 #endif

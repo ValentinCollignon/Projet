@@ -15,7 +15,7 @@ const float fov = M_PI/3;
 float x ;
 float y ;
 float a2=0;
-int nombre_objet=0,level = 1,levelporteN = 1, compL = 1;
+int nombre_objet=0,level = 1,levelporteN = 1, compL = 1, comptPorteN = 0;
 
 /*mise en place de la fenetre principale*/
 SDL_Surface * affichage;
@@ -80,19 +80,16 @@ void gameover()
     SDL_Surface *temp, *gamover;
     SDL_Rect rcgameover;
     int colorkey;
+    initialisation();
     colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
     rcgameover.x = 0;
     rcgameover.y = 0;
-
     temp  = SDL_LoadBMP("image/game_over2.bmp");
-
     gamover = SDL_DisplayFormat(temp);
     SDL_FreeSurface(temp);
     SDL_FreeSurface(affichage);
     SDL_SetColorKey(gamover, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
-    
     SDL_BlitSurface(gamover, NULL, affichage, &rcgameover);
-
     SDL_UpdateRect(affichage, 0, 0, 0, 0);
     printf("fonction gameover\n");
 
@@ -243,6 +240,12 @@ void deplacement(float a, SDL_Rect position,int*mode)
   {
     x = 16.5;
     y = 16.5;
+    comptPorteN ++;
+    if (comptPorteN == 2)
+    {
+      initialisation();
+      creamap();
+    }
     for (i = 1 ;i <= level; i++)
     {
       objet_cherche();
@@ -367,9 +370,12 @@ void mapalea()
 {
   int nummap;
   srand(time(NULL));
-  nummap=rand()%(1);
+  nummap=rand()%(3);
   switch (nummap)
   {
+    case 2:
+      map = lireMap("map/map_3.tkt");
+      break;
     case 1:
       map=lireMap("map/map.txt");
       break;
@@ -419,8 +425,7 @@ void level_sup()
   SDL_BlitSurface(levelsup, NULL, affichage, &rclevelsup);
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
   printf("fonction level_sup\n");
-  /*SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
-  SDL_Flip(affichage);*/
+
 }
 
 void WIN(int* mode)
@@ -458,4 +463,12 @@ void end()
 void full()
 {
   SDL_WM_ToggleFullScreen (affichage);
+}
+
+void initialisation()
+{
+ nombre_objet=0;
+ level = 1;
+ levelporteN = 1;
+ compL = 1; 
 }
