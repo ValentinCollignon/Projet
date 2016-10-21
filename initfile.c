@@ -402,6 +402,12 @@ void level_sup()
   int colorkey;
   x = pos_base;
   y = pos_base;
+  level +=1;
+  if (level%5 == 0)
+  {
+    levelporteN = levelporteN * 2 + compL;
+    compL++;
+  }
   colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
   rclevelsup.x = 0;
   rclevelsup.y = 0;
@@ -413,8 +419,7 @@ void level_sup()
   SDL_BlitSurface(levelsup, NULL, affichage, &rclevelsup);
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
   printf("fonction level_sup\n");
-  /*SDL_Delay(2000);
-  SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
+  /*SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
   SDL_Flip(affichage);*/
 }
 
@@ -440,12 +445,6 @@ void WIN(int* mode)
   SDL_Delay(2000);
   SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
   SDL_Flip(affichage);
-  level +=1;
-  if (level%5 == 0)
-  {
-    levelporteN = levelporteN * 2 + compL;
-    compL++;
-  }
   level_sup();
 
 }
