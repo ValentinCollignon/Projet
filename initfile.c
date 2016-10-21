@@ -362,10 +362,27 @@ void porteNalea()
   map[xp+yp*mapl]='-';
 }
 
+void mapalea()
+{
+  int nummap;
+  srand(time(NULL));
+  nummap=rand()%(2);
+  switch (nummap)
+  {
+    case 0:
+      map=lireMap("map/map.txt");
+      break;
+      
+    case 1:
+      map=lireMap("map/map_2.txt");
+      break;
+  }
+}
+
 void creamap()
 {
   int i;
-  map=lireMap("map/map.txt");
+  mapalea();
   objet_cherche();
   portePalea();
   for (i=0;i<3;i++)
