@@ -371,3 +371,8 @@ void end()
   SDL_FreeSurface(affichage);
   SDL_Quit();
 }
+
+void full()
+{
+  SDL_WM_ToggleFullScreen (affichage);
+}

@@ -59,13 +59,16 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	case SDLK_DOWN:
 	  depl.y = -1;
 	  break;
-	  default:
+	default:
 	break;
-	  case SDLK_m:
+	case SDLK_m:
 	    
 	    draw_minicarte();
 	    *mode =0;
 	    break;
+	case SDLK_o :
+	  full();
+	  break;
       }
       break;
     
