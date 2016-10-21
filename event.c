@@ -9,6 +9,7 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
   
   SDL_Rect depl;
   /*keystate = SDL_GetKeyState(NULL);*/
+
   switch (event.type) 
   {
     /* close button clicked */

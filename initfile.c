@@ -3,7 +3,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include<time.h>
+#include <time.h>
 
 #define mapc 32
 #define mapl 32
@@ -243,12 +243,14 @@ void draw_screen(int mini)
 
 void deplacement(float a, SDL_Rect position,int*mode)
 {
+    /*float nx = (x + strafe_*cos(a+M_PI/2)*.01 + walk_*cos(a)*.01);
+    float ny = (y + strafe_*sin(a+M_PI/2)*.01 + walk_*sin(a)*.01);*/
     float nxx, nyy;
     int nx, ny;
-    nxx = (position.x + position.x*cos(a+M_PI/2)*.01 + position.y*cos(a)*.01);
-    nyy = (position.y + position.x*sin(a+M_PI/2)*.01 + position.y*sin(a)*.01);
-    nx = x+nxx;
-    ny = y+nyy;
+    nxx = (position.x*cos(a+M_PI/2)*.01 + position.y*cos(a)*.01);
+    nyy = (position.x*sin(a+M_PI/2)*.01 + position.y*sin(a)*.01);
+    nx = x + nxx;
+    ny = y + nyy;
     a2 = a;/*transfert de l'angle a dans initfile*/
   
   if (map[nx+ny*mapl]==' ')
