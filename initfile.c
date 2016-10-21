@@ -8,6 +8,7 @@
 #define mapc 32
 #define mapl 32
 #define SIZE mapc*mapl+1
+#define pos_base 16.5
 
 const int colors[] = {120, 120, 120, 200, 200, 200, 155, 155, 155};
 const float fov = M_PI/3;
@@ -57,11 +58,11 @@ void init_window()
 
 void init_menu()
 {
-  x = 16.3;
-  y = 16.3;
   SDL_Surface *temp, *menu;
   SDL_Rect rcmenu;
   int colorkey;
+  x = pos_base;
+  y = pos_base;
   colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
   rcmenu.x = 0;
   rcmenu.y = 0;
@@ -156,12 +157,9 @@ void draw_screen()
 {
     
     SDL_Rect tmp;
-    int ncolors, i, j, z, idx;
+    int ncolors, i, z, idx;
     float w;
     /*map*/
-
-    
-    
     SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
     /*draw map*/
     ncolors = sizeof(colors)/(sizeof(int)*3);
@@ -391,6 +389,29 @@ void creamap()
   }
 }
 
+void level_sup()
+{
+  SDL_Surface *temp, *levelsup;
+  SDL_Rect rclevelsup;
+  int colorkey;
+  x = pos_base;
+  y = pos_base;
+  colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
+  rclevelsup.x = 0;
+  rclevelsup.y = 0;
+  temp  = SDL_LoadBMP("image/level_sup.bmp");
+  levelsup = SDL_DisplayFormat(temp);
+  SDL_FreeSurface(temp);
+  SDL_FreeSurface(affichage);
+  SDL_SetColorKey(levelsup, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
+  SDL_BlitSurface(levelsup, NULL, affichage, &rclevelsup);
+  SDL_UpdateRect(affichage, 0, 0, 0, 0);
+  printf("fonction level_sup\n");
+  /*SDL_Delay(2000);
+  SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
+  SDL_Flip(affichage);*/
+}
+
 void WIN(int* mode)
 {
   SDL_Surface *temp, *win;
@@ -413,7 +434,7 @@ void WIN(int* mode)
   SDL_Delay(2000);
   SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
   SDL_Flip(affichage);
-  init_menu();
+  level_sup();
 
 }
 

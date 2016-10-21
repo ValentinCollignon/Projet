@@ -17,6 +17,7 @@ void portePalea();
 void porteNalea();
 void mapalea();
 void creamap();
+void level_sup();
 void WIN(int *mode);
 void end();
 void full();
