@@ -158,8 +158,7 @@ void draw_screen()
     SDL_Rect tmp;
     int ncolors, i, j, z, idx;
     float w;
-    /*printf("x=%f\ny=%f\n",x,y);
-   map*/
+    /*map*/
 
     
     
@@ -199,7 +198,6 @@ void draw_screen()
       {
 	int cx = x+cos(ca)*t;
         int cy = y+sin(ca)*t;
-        /*putpixel(affichage, w+cx*16, cy*16, 15);*/
         idx = cx+cy*mapl;
 	if (map[idx]=='O') 
 	{
@@ -208,7 +206,6 @@ void draw_screen()
           tmp.h = h;
           tmp.x = i;
           tmp.y = (affichage->h-h)/2;
-          z = (idx%ncolors)*3;
           SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,0,255));
 	  break;
 	}else{
@@ -245,8 +242,6 @@ void draw_screen()
 
 void deplacement(float a, SDL_Rect position,int*mode)
 {
-    /*float nx = (x + strafe_*cos(a+M_PI/2)*.01 + walk_*cos(a)*.01);
-    float ny = (y + strafe_*sin(a+M_PI/2)*.01 + walk_*sin(a)*.01);*/
     float nxx, nyy;
     int nx, ny;
     nxx = (position.x*cos(a+M_PI/2)*.01 + position.y*cos(a)*.01);
@@ -257,13 +252,10 @@ void deplacement(float a, SDL_Rect position,int*mode)
   
   if (map[nx+ny*mapl]==' ')
   {
-
-    printf("dans le if depl\n");
     x += nxx;
     y += nyy;
     
   }
-  printf("déplacement\n");
   if ((map[nx+ny*mapl]=='+') && (nombre_objet == 0))
   {
     WIN(mode);
