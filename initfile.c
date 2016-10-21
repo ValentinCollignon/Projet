@@ -9,7 +9,7 @@
 #define mapl 32
 #define SIZE mapc*mapl+1
 
-const int colors[] = {120, 120, 120};
+const int colors[] = {120, 120, 120, 200, 200, 200, 155, 155, 155};
 const float fov = M_PI/3;
 float x ;
 float y ;
@@ -50,7 +50,7 @@ void init_window()
   SDL_Init(SDL_INIT_VIDEO);
    
   SDL_WM_SetCaption("Labyrinthe", NULL);
-  affichage = SDL_SetVideoMode(1024, 600, 32, SDL_SWSURFACE);
+  affichage = SDL_SetVideoMode(800, 600, 32, SDL_SWSURFACE);
   init_menu();
 }
 
@@ -123,21 +123,21 @@ void draw_minicarte()
         {
             if (map[i+j*mapl]!=' ')
 	    {
-            tmp.x = i*8 + (w*3);
+            tmp.x = i*8 + w;
             tmp.y = j*8;
             
             SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,255,0));
 	    }
 	    if (((map[i+j*mapl]=='+') || (map[i+j*mapl]=='-')) && ( nombre_objet == 0))
 	    {
-            tmp.x = i*8 + (w*3);
+            tmp.x = i*8 + w;
             tmp.y = j*8;
             
             SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0, 0,0));
 	    }   
 	    if (map[i+j*mapl]=='O')
 	    {
-            tmp.x = i*8 + (w*3);
+            tmp.x = i*8 + w;
             tmp.y = j*8;
             
             SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,0,255));
@@ -145,10 +145,10 @@ void draw_minicarte()
         }
     }
     
-    putpixel(affichage, (w*3)+1+x*8, y*8, 0);
-    putpixel(affichage, (w*3)+x*8, y*8, 0);
-    putpixel(affichage, (w*3)+x*8, 1+y*8, 0);
-    putpixel(affichage, (w*3)+x*8+1, y*8+1, 0);
+    putpixel(affichage, (w)+1+x*8, y*8, 0);
+    putpixel(affichage, (w)+x*8, y*8, 0);
+    putpixel(affichage, (w)+x*8, 1+y*8, 0);
+    putpixel(affichage, (w)+x*8+1, y*8+1, 0);
     SDL_Flip(affichage);
 }
 
