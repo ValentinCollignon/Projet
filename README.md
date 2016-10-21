@@ -7,3 +7,4 @@
 # header : http://gl.developpez.com/tutoriel/outil/makefile/
 # recapitulatif fonction sdl : http://sdl.beuc.net/sdl.wiki/SDL_APIFr
 # nom de touvhe : http://bibblefree.esy.es/34-programmation/c/108-les-touches-sdl-en-langage-c
+# texture : https://fr.wikibooks.org/wiki/Programmation_avec_la_SDL/Les_textures

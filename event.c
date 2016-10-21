@@ -3,10 +3,10 @@
 #include "event.h"
 
 float a=0;
-Uint8 *keystate;
+int pause = 0;
+
 void HandleEvent(SDL_Event event,int* game_over,int* mode)
 {
-
   
   SDL_Rect depl;
   /*keystate = SDL_GetKeyState(NULL);*/
@@ -28,25 +28,36 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
             break;
             
 	case SDLK_a:
-            gameover();
-	    *mode =0;
+	  if (*mode == 1)
+	  {
+	    pause = 1;
+	    *mode = 0;
 	    SDL_ShowCursor (SDL_ENABLE);
+	    SDL_WM_GrabInput(SDL_GRAB_OFF);
+	  }
+	  
 	  break;
           
 	case SDLK_RETURN:
 	case SDLK_KP_ENTER:
-	  if (*mode == 0)
+	  if ((*mode == 0) && (pause == 0))
 	  {
 	    creamap();
 	    draw_screen();
 	    *mode = 1;
 	    SDL_WarpMouse(1024 / 2, 600 / 2);
+	    SDL_WM_GrabInput(SDL_GRAB_ON);
+	    SDL_ShowCursor (SDL_DISABLE);
+	  }
+	  if (pause == 1)
+	  {
+	    *mode = 1;
+	    SDL_WM_GrabInput(SDL_GRAB_ON);
 	    SDL_ShowCursor (SDL_DISABLE);
 	  }
 	  break;
 	case SDLK_q:
 	case SDLK_LEFT:
-
 	  depl.x = -1;
           break;
 	case SDLK_d:
@@ -61,15 +72,19 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	case SDLK_DOWN:
 	  depl.y = -1;
 	  break;
-	  default:
+	default:
 	break;
-	  case SDLK_m:
+	case SDLK_m:
 	    
 	    draw_minicarte();
 	    *mode =0;
 	    break;
+	case SDLK_o :
+	  full();
+	  break;
       }
       break;
+    
       case SDL_MOUSEMOTION:
       a += event.motion.xrel * .01;
       break;
@@ -90,7 +105,7 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 
   if (*mode == 1)
   {
-    deplacement(a, depl, mode);
+    deplacement(a, depl,mode);
   }
-}
 
+}

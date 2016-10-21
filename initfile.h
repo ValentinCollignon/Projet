@@ -18,4 +18,5 @@ void porteNalea();
 void creamap();
 void WIN(int *mode);
 void end();
+void full();
 #endif
