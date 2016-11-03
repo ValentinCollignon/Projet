@@ -218,6 +218,7 @@ void draw_screen()
     }
     initsprite();
     afflevel();
+    affobjet();
     SDL_Flip(affichage);
 }
 
@@ -551,6 +552,117 @@ void afflevel()
   
   rclettre.x=AFFICHAGE_WIDTH - (AFFICHAGE_WIDTH/4)+7*i;
   switch (level%10)
+  {
+    case 0:
+      rcSrclettre.x = rcSrclettre.w*0;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+      
+    case 1:
+      rcSrclettre.x = rcSrclettre.w*1;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+      
+    case 2:
+      rcSrclettre.x = rcSrclettre.w*2;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+      
+    case 3:
+      rcSrclettre.x = rcSrclettre.w*3;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+      
+    case 4:
+      rcSrclettre.x = rcSrclettre.w*4;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+      
+    case 5:
+      rcSrclettre.x = rcSrclettre.w*5;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+      
+    case 6:
+      rcSrclettre.x = rcSrclettre.w*6;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+      
+    case 7:
+      rcSrclettre.x = rcSrclettre.w*7;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+      
+    case 8:
+      rcSrclettre.x = rcSrclettre.w*8;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+    
+    case 9:
+      rcSrclettre.x = rcSrclettre.w*9;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+  }
+  SDL_BlitSurface(lettre, &rcSrclettre, affichage, &rclettre);
+}
+
+void affobjet()
+{
+  int i=20;
+  rclettre.x=AFFICHAGE_WIDTH - (AFFICHAGE_WIDTH/4);
+  rclettre.y = 34;
+  rcSrclettre.x = rcSrclettre.w*15;
+  rcSrclettre.y = rcSrclettre.w*4;
+  SDL_BlitSurface(lettre, &rcSrclettre, affichage, &rclettre);
+  
+  rclettre.x=AFFICHAGE_WIDTH - (AFFICHAGE_WIDTH/4)+i;
+  rcSrclettre.x = rcSrclettre.w*2;
+  rcSrclettre.y = rcSrclettre.w*6;
+  SDL_BlitSurface(lettre, &rcSrclettre, affichage, &rclettre);
+  
+  rclettre.x=AFFICHAGE_WIDTH - (AFFICHAGE_WIDTH/4)+2*i;
+  rcSrclettre.x = rcSrclettre.w*10;
+  rcSrclettre.y = rcSrclettre.w*6;
+  SDL_BlitSurface(lettre, &rcSrclettre, affichage, &rclettre);
+  
+  rclettre.x=AFFICHAGE_WIDTH - (AFFICHAGE_WIDTH/4)+3*i;
+  rcSrclettre.x = rcSrclettre.w*5;
+  rcSrclettre.y = rcSrclettre.w*6;
+  SDL_BlitSurface(lettre, &rcSrclettre, affichage, &rclettre);
+  
+  rclettre.x=AFFICHAGE_WIDTH - (AFFICHAGE_WIDTH/4)+4*i;
+  rcSrclettre.x = rcSrclettre.w*4;
+  rcSrclettre.y = rcSrclettre.w*7;
+  SDL_BlitSurface(lettre, &rcSrclettre, affichage, &rclettre);
+  
+  rclettre.x=AFFICHAGE_WIDTH - (AFFICHAGE_WIDTH/4)+5*i;
+  rcSrclettre.x = rcSrclettre.w*10;
+  rcSrclettre.y = rcSrclettre.w*3;
+  SDL_BlitSurface(lettre, &rcSrclettre, affichage, &rclettre);
+  
+  rclettre.x=AFFICHAGE_WIDTH - (AFFICHAGE_WIDTH/4)+6*i;
+  switch (nombre_objet/10)
+  {
+    case 0:
+      rcSrclettre.x = rcSrclettre.w*0;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+      
+    case 1:
+      rcSrclettre.x = rcSrclettre.w*1;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+      
+    case 2:
+      rcSrclettre.x = rcSrclettre.w*2;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+      
+  }
+  SDL_BlitSurface(lettre, &rcSrclettre, affichage, &rclettre);
+  
+  rclettre.x=AFFICHAGE_WIDTH - (AFFICHAGE_WIDTH/4)+7*i;
+  switch (nombre_objet%10)
   {
     case 0:
       rcSrclettre.x = rcSrclettre.w*0;
