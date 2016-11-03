@@ -24,4 +24,5 @@ void full();
 void initialisation();
 void initsprite();
 void afflevel();
+void affobjet();
 #endif

@@ -56,29 +56,34 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	    SDL_ShowCursor (SDL_DISABLE);
 	  }
 	  break;
+	  
 	case SDLK_q:
 	case SDLK_LEFT:
 	  depl.x = -1;
           break;
+	  
 	case SDLK_d:
 	case SDLK_RIGHT:
 	  depl.x = 1;
           break;
+	  
 	case SDLK_z:
 	case SDLK_UP:
 	  depl.y = 1;
 	  break;
+	  
 	case SDLK_s:
 	case SDLK_DOWN:
 	  depl.y = -1;
 	  break;
+	  
 	default:
 	break;
 	case SDLK_m:
-	    
 	    draw_minicarte();
 	    *mode =0;
 	    break;
+	    
 	case SDLK_o :
 	  full();
 	  break;
