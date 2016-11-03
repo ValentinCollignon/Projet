@@ -22,4 +22,6 @@ void WIN(int *mode);
 void end();
 void full();
 void initialisation();
+void initsprite();
+void afflevel();
 #endif
