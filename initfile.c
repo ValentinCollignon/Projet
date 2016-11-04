@@ -721,12 +721,13 @@ void affobjet()
 void personnage()
 {
   SDL_Surface *temp, *personnage;
-  colorkey = SDL_MapRGB(affichage->format, 0, 0, 0);
-  rcSrcpersonnage.w = 96;
-  rcSrcpersonnage.h = 96;
+  colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
+  rcSrcpersonnage.w = 144;
+  rcSrcpersonnage.h = 192;
+  rcSrcpersonnage.y = rcSrcpersonnage.h * 3;
   rcpersonnage.x = (AFFICHAGE_WIDTH/2) - (rcSrcpersonnage.w/2);
   rcpersonnage.y = AFFICHAGE_HEIGHT - rcSrcpersonnage.h;
-  temp  = SDL_LoadBMP("image/dragon2.bmp");
+  temp  = SDL_LoadBMP("image/loup.bmp");
   personnage = SDL_DisplayFormat(temp);
   SDL_FreeSurface(temp);
   SDL_FreeSurface(affichage);
