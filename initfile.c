@@ -17,7 +17,7 @@ const float fov = M_PI/3;
 float x ;
 float y ;
 float a2=0;
-int nombre_objet=0,level = 13,levelporteN = 1, compL = 1, comptPorteN = 0,colorkey;
+int nombre_objet=0,level = 13,levelporteN = 1, compL = 1, comptPorteN = 0,colorkey,posxP=3,posyP=0;
 SDL_Rect rclettre , rcSrclettre, rcSrcpersonnage, rcpersonnage;
 
 /*mise en place de la fenetre principale*/
@@ -219,7 +219,7 @@ void draw_screen()
     
     afflevel();
     affobjet();
-    personnage();
+    personnage(posxP,posyP);
     SDL_Flip(affichage);
 }
 
@@ -718,19 +718,23 @@ void affobjet()
   SDL_BlitSurface(lettre, &rcSrclettre, affichage, &rclettre);
 }
 
-void personnage()
+void personnage(int x, int y)
 {
+  posxP=x;
+  posyP = y;
   SDL_Surface *temp, *personnage;
   colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
   rcSrcpersonnage.w = 144;
   rcSrcpersonnage.h = 192;
-  rcSrcpersonnage.y = rcSrcpersonnage.h * 3;
+  rcSrcpersonnage.x = rcSrcpersonnage.w * posyP;
+  rcSrcpersonnage.y = rcSrcpersonnage.h * posxP;
   rcpersonnage.x = (AFFICHAGE_WIDTH/2) - (rcSrcpersonnage.w/2);
   rcpersonnage.y = AFFICHAGE_HEIGHT - rcSrcpersonnage.h;
   temp  = SDL_LoadBMP("image/loup.bmp");
   personnage = SDL_DisplayFormat(temp);
   SDL_FreeSurface(temp);
-  SDL_FreeSurface(affichage);
   SDL_SetColorKey(personnage, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
   SDL_BlitSurface(personnage, &rcSrcpersonnage, affichage, &rcpersonnage);
+  SDL_Flip(affichage);
+
   }
