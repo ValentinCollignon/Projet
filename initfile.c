@@ -59,7 +59,6 @@ void init_window()
   initsprite();
 }
 
-
 void init_menu()
 {
   SDL_Surface *temp, *menu;
@@ -227,8 +226,8 @@ void deplacement(float a, SDL_Rect position,int*mode)
 {
     float nxx, nyy;
     int nx, ny, i;
-    nxx = (position.x*cos(a+M_PI/2)*.01 + position.y*cos(a)*.01);
-    nyy = (position.x*sin(a+M_PI/2)*.01 + position.y*sin(a)*.01);
+    nxx = (position.x*cos(a+M_PI/2)*.1 + position.y*cos(a)*.1);
+    nyy = (position.x*sin(a+M_PI/2)*.1 + position.y*sin(a)*.1);
     nx = x + nxx;
     ny = y + nyy;
     a2 = a;/*transfert de l'angle a dans initfile*/
