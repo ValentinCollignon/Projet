@@ -18,7 +18,7 @@ float x ;
 float y ;
 float a2=0;
 int nombre_objet=0,level = 13,levelporteN = 1, compL = 1, comptPorteN = 0,colorkey;
-SDL_Rect rclettre , rcSrclettre;
+SDL_Rect rclettre , rcSrclettre, rcSrcpersonnage, rcpersonnage;
 
 /*mise en place de la fenetre principale*/
 SDL_Surface * affichage ,*lettre;
@@ -56,6 +56,7 @@ void init_window()
   SDL_WM_SetCaption("Labyrinthe", NULL);
   affichage = SDL_SetVideoMode(AFFICHAGE_WIDTH, AFFICHAGE_HEIGHT, 32, SDL_SWSURFACE);
   init_menu();
+  initsprite();
 }
 
 
@@ -82,7 +83,6 @@ void gameover()
 {
     SDL_Surface *temp, *gamover;
     SDL_Rect rcgameover;
-    int colorkey;
     initialisation();
     colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
     rcgameover.x = 0;
@@ -216,9 +216,10 @@ void draw_screen()
     }
         
     }
-    initsprite();
+    
     afflevel();
     affobjet();
+    personnage();
     SDL_Flip(affichage);
 }
 
@@ -716,3 +717,19 @@ void affobjet()
   }
   SDL_BlitSurface(lettre, &rcSrclettre, affichage, &rclettre);
 }
+
+void personnage()
+{
+  SDL_Surface *temp, *personnage;
+  colorkey = SDL_MapRGB(affichage->format, 0, 0, 0);
+  rcSrcpersonnage.w = 96;
+  rcSrcpersonnage.h = 96;
+  rcpersonnage.x = (AFFICHAGE_WIDTH/2) - (rcSrcpersonnage.w/2);
+  rcpersonnage.y = AFFICHAGE_HEIGHT - rcSrcpersonnage.h;
+  temp  = SDL_LoadBMP("image/dragon2.bmp");
+  personnage = SDL_DisplayFormat(temp);
+  SDL_FreeSurface(temp);
+  SDL_FreeSurface(affichage);
+  SDL_SetColorKey(personnage, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
+  SDL_BlitSurface(personnage, &rcSrcpersonnage, affichage, &rcpersonnage);
+  }
