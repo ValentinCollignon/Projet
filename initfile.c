@@ -64,7 +64,6 @@ void init_menu()
 {
   SDL_Surface *temp, *menu;
   SDL_Rect rcmenu;
-  int colorkey;
   x = pos_base;
   y = pos_base;
   colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
@@ -180,9 +179,9 @@ void draw_screen()
 	{
 	  int h = affichage->h/t;
           tmp.w = 1;
-          tmp.h = (h/2);
+          tmp.h = (h);
           tmp.x = i;
-          tmp.y = (affichage->h)/2;
+          tmp.y = (affichage->h - h)/2;
           SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,0,255));
 	  break;
 	}
