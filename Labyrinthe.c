@@ -9,7 +9,7 @@ int main()
     int game_over = 0;
     int mode = 0;
     init_window();
-    SDL_EnableKeyRepeat(5, 5);
+    SDL_EnableKeyRepeat(10, 10);
     while(game_over != 1)
     {
         SDL_Event event;

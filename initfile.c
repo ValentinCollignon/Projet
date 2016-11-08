@@ -17,8 +17,8 @@ const float fov = M_PI/3;
 float x ;
 float y ;
 float a2=0;
-int nombre_objet=0,level = 13,levelporteN = 1, compL = 1, comptPorteN = 0,colorkey;
-SDL_Rect rclettre , rcSrclettre;
+int nombre_objet=0,level = 13,levelporteN = 1, compL = 1, comptPorteN = 0,colorkey,posxP=3,posyP=0;
+SDL_Rect rclettre , rcSrclettre, rcSrcpersonnage, rcpersonnage;
 
 /*mise en place de la fenetre principale*/
 SDL_Surface * affichage ,*lettre;
@@ -56,8 +56,8 @@ void init_window()
   SDL_WM_SetCaption("Labyrinthe", NULL);
   affichage = SDL_SetVideoMode(AFFICHAGE_WIDTH, AFFICHAGE_HEIGHT, 32, SDL_SWSURFACE);
   init_menu();
+  initsprite();
 }
-
 
 void init_menu()
 {
@@ -82,7 +82,6 @@ void gameover()
 {
     SDL_Surface *temp, *gamover;
     SDL_Rect rcgameover;
-    int colorkey;
     initialisation();
     colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
     rcgameover.x = 0;
@@ -216,9 +215,10 @@ void draw_screen()
     }
         
     }
-    initsprite();
+    
     afflevel();
     affobjet();
+    personnage(posxP,posyP);
     SDL_Flip(affichage);
 }
 
@@ -226,8 +226,8 @@ void deplacement(float a, SDL_Rect position,int*mode)
 {
     float nxx, nyy;
     int nx, ny, i;
-    nxx = (position.x*cos(a+M_PI/2)*.01 + position.y*cos(a)*.01);
-    nyy = (position.x*sin(a+M_PI/2)*.01 + position.y*sin(a)*.01);
+    nxx = (position.x*cos(a+M_PI/2)*.1 + position.y*cos(a)*.1);
+    nyy = (position.x*sin(a+M_PI/2)*.1 + position.y*sin(a)*.1);
     nx = x + nxx;
     ny = y + nyy;
     a2 = a;/*transfert de l'angle a dans initfile*/
@@ -716,3 +716,24 @@ void affobjet()
   }
   SDL_BlitSurface(lettre, &rcSrclettre, affichage, &rclettre);
 }
+
+void personnage(int x, int y)
+{
+  posxP=x;
+  posyP = y;
+  SDL_Surface *temp, *personnage;
+  colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
+  rcSrcpersonnage.w = 144;
+  rcSrcpersonnage.h = 192;
+  rcSrcpersonnage.x = rcSrcpersonnage.w * posyP;
+  rcSrcpersonnage.y = rcSrcpersonnage.h * posxP;
+  rcpersonnage.x = (AFFICHAGE_WIDTH/2) - (rcSrcpersonnage.w/2);
+  rcpersonnage.y = AFFICHAGE_HEIGHT - rcSrcpersonnage.h;
+  temp  = SDL_LoadBMP("image/loup.bmp");
+  personnage = SDL_DisplayFormat(temp);
+  SDL_FreeSurface(temp);
+  SDL_SetColorKey(personnage, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
+  SDL_BlitSurface(personnage, &rcSrcpersonnage, affichage, &rcpersonnage);
+  SDL_Flip(affichage);
+
+  }

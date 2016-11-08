@@ -25,4 +25,5 @@ void initialisation();
 void initsprite();
 void afflevel();
 void affobjet();
+void personnage(int x ,int y);
 #endif
