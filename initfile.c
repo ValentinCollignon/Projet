@@ -381,21 +381,54 @@ void mapalea()
   {
     case 2:
       map = lireMap("map/map_3.tkt");
+      /*normal*/
       break;
     case 1:
       map=lireMap("map/map.txt");
+      /*difficile*/
       break;
       
     case 0:
       map=lireMap("map/map_2.txt");
+      /*facile*/
       break;
   }
 }
 
+void difficulte(int niv_difficulte)
+{
+    initialisation();
+    if(niv_difficulte < 4)
+    {
+        switch(niv_difficulte)
+        {
+            case 1:
+                map=lireMap("map/map_2.txt");
+                break;
+            case 2:
+                map = lireMap("map/map_3.tkt");
+                break;
+            case 3:
+                map = lireMap("map/map.txt");
+                break;
+            
+        }
+    }
+    else
+    {
+        mapalea();
+        
+    }
+}
+
 void creamap()
 {
-  int i;
-  mapalea();
+  int i, niv_difficulte;
+  niv_difficulte = 0;
+  printf("niveau de difficulte : \n 1 = facile \n 2 = normal \n 3 = difficile \n autre = aleatoire\n");
+  scanf("%d",&niv_difficulte);
+  printf("vous avez choisi : %d \n",niv_difficulte);
+  difficulte(niv_difficulte);
   for (i = 1 ;i <= level; i++)
   {
     objet_cherche();
