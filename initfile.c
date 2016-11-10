@@ -110,7 +110,7 @@ void putpixel(int x, int y, Uint32 pixel)
 Uint32 getpixel(int itex, int x, int y) {
     int texsize = textures_->h;
     int bpp = affichage->format->BytesPerPixel;
-    Uint8 *p = (Uint8 *)textures_->pixels + y*textures_->pitch + (x+texsize*itex)*bpp;
+    Uint8 *p = (Uint8 *)textures_->pixels + y*textures_->pitch + (x+texsize*itex)*3;
     return p[0] | p[1] << 8 | p[2] << 16;
 }
 
