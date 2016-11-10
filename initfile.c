@@ -17,7 +17,7 @@ const float fov = M_PI/3;
 float x ;
 float y ;
 float a2=0;
-int nombre_objet=0,level = 13,levelporteN = 1, compL = 1, comptPorteN = 0,colorkey,posxP=3,posyP=0;
+int nombre_objet=0,level = 1,levelporteN = 1, compL = 1, comptPorteN = 0,colorkey,posxP=3,posyP=0;
 SDL_Rect rclettre , rcSrclettre, rcSrcpersonnage, rcpersonnage;
 
 /*mise en place de la fenetre principale*/
