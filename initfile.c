@@ -107,9 +107,9 @@ void putpixel(int x, int y, Uint32 pixel)
     }
 }
 
-Uint32 getpixel(int itex, int x, int y) {
+Uint32 getpixel(int itex, int x, int y) 
+{
     int texsize = textures_->h;
-    int bpp = affichage->format->BytesPerPixel;
     Uint8 *p = (Uint8 *)textures_->pixels + y*textures_->pitch + (x+texsize*itex)*3;
     return p[0] | p[1] << 8 | p[2] << 16;
 }
@@ -160,16 +160,12 @@ void draw_minicarte()
 void draw_screen()
 {
     
-    SDL_Rect tmp;
-    int ncolors, i, z, idx;
+    int  i, z, idx;
     float w;
     /*map*/
     SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
     /*draw map*/
-    ncolors = sizeof(colors)/(sizeof(int)*3);
     w = affichage->w;
-    tmp.w = 16;
-    tmp.h = 16;
 
     for (i=0; i<w; i++) 
     {
@@ -180,8 +176,8 @@ void draw_screen()
       {
 	float cx = x+cos(ca)*t;
         float cy = y+sin(ca)*t;
-	int cxx=(int)cx;
-	int cyy=(int)cy;
+	int cxx=cx;
+	int cyy=cy;
         idx = cxx+cyy*mapl;
 	int tx = fmax(fabs(cx-floor(cx+.5)), fabs(cy-floor(cy+.5)))*texsize; 
         int ty;
