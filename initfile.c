@@ -82,11 +82,10 @@ void gameover()
 {
     SDL_Surface *temp, *gamover;
     SDL_Rect rcgameover;
-    initialisation();
     colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
     rcgameover.x = 0;
     rcgameover.y = 0;
-    temp  = SDL_LoadBMP("image/game_over2.bmp");
+    temp  = SDL_LoadBMP("image/game_over3.bmp");
     gamover = SDL_DisplayFormat(temp);
     SDL_FreeSurface(temp);
     SDL_FreeSurface(affichage);
@@ -250,7 +249,7 @@ void deplacement(float a, SDL_Rect position,int*mode)
     if (comptPorteN == 2)
     {
       initialisation();
-      creamap();
+      /*creamap();*/
     }
     for (i = 1 ;i <= level; i++)
     {
@@ -509,7 +508,8 @@ void initialisation()
  nombre_objet=0;
  level = 1;
  levelporteN = 1;
- compL = 1; 
+ compL = 1;
+ /*creamap();*/
 }
 
 void initsprite()
@@ -752,7 +752,7 @@ void affobjet()
 
 void personnage(int x, int y)
 {
-  posxP=x;
+  posxP = x;
   posyP = y;
   SDL_Surface *temp, *personnage;
   colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);

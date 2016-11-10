@@ -16,6 +16,7 @@ void objet_cherche();
 void portePalea();
 void porteNalea();
 void mapalea();
+void difficulte(int niv_difficulte);
 void creamap();
 void level_sup();
 void WIN(int *mode);
