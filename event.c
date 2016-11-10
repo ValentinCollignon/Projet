@@ -43,18 +43,17 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	case SDLK_KP_ENTER:
 	  if ((*mode == 0) && (pause == 0))
 	  {
-	    creamap();
+	    initialisation();
+            creamap();
 	    draw_screen();
 	    *mode = 1;
 	    SDL_WarpMouse(1024 / 2, 600 / 2);
-	    SDL_WM_GrabInput(SDL_GRAB_ON);
-	    SDL_ShowCursor (SDL_DISABLE);
+	    
 	  }
 	  if (pause == 1)
 	  {
 	    *mode = 1;
-	    SDL_WM_GrabInput(SDL_GRAB_ON);
-	    SDL_ShowCursor (SDL_DISABLE);
+
 	  }
 	  break;
 	  
@@ -210,6 +209,8 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
   if (*mode == 1)
   {
     deplacement(a, depl,mode);
+    SDL_WM_GrabInput(SDL_GRAB_ON);
+    SDL_ShowCursor (SDL_DISABLE);
   }
 
 }

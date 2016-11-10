@@ -46,7 +46,6 @@ char* lireMap(char* nomFichier)
   return ma_map;
 }
 
-
 void init_window()
 {
 
@@ -82,11 +81,10 @@ void gameover()
 {
     SDL_Surface *temp, *gamover;
     SDL_Rect rcgameover;
-    initialisation();
     colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
     rcgameover.x = 0;
     rcgameover.y = 0;
-    temp  = SDL_LoadBMP("image/game_over2.bmp");
+    temp  = SDL_LoadBMP("image/game_over3.bmp");
     gamover = SDL_DisplayFormat(temp);
     SDL_FreeSurface(temp);
     SDL_FreeSurface(affichage);
@@ -250,7 +248,7 @@ void deplacement(float a, SDL_Rect position,int*mode)
     if (comptPorteN == 2)
     {
       initialisation();
-      creamap();
+      /*creamap();*/
     }
     for (i = 1 ;i <= level; i++)
     {
@@ -381,21 +379,56 @@ void mapalea()
   {
     case 2:
       map = lireMap("map/map_3.tkt");
+      /*normal*/
       break;
     case 1:
       map=lireMap("map/map.txt");
+      /*difficile*/
       break;
       
     case 0:
       map=lireMap("map/map_2.txt");
+      /*facile*/
       break;
   }
 }
 
+void difficulte(int niv_difficulte)
+{
+    initialisation();
+    SDL_ShowCursor (SDL_ENABLE);
+    SDL_WM_GrabInput(SDL_GRAB_OFF);
+    if(niv_difficulte < 4)
+    {
+        switch(niv_difficulte)
+        {
+            case 1:
+                map=lireMap("map/map_2.txt");
+                break;
+            case 2:
+                map = lireMap("map/map_3.tkt");
+                break;
+            case 3:
+                map = lireMap("map/map.txt");
+                break;
+            
+        }
+    }
+    else
+    {
+        mapalea();
+        
+    }
+}
+
 void creamap()
 {
-  int i;
-  mapalea();
+  int i, niv_difficulte;
+  niv_difficulte = 0;
+  printf("niveau de difficulte : \n 1 = facile \n 2 = normal \n 3 = difficile \n autre = aleatoire\n");
+  scanf("%d",&niv_difficulte);
+  printf("vous avez choisi : %d \n",niv_difficulte);
+  difficulte(niv_difficulte);
   for (i = 1 ;i <= level; i++)
   {
     objet_cherche();
@@ -431,6 +464,7 @@ void level_sup()
   SDL_BlitSurface(levelsup, NULL, affichage, &rclevelsup);
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
   printf("fonction level_sup\n");
+
 
 }
 
@@ -476,7 +510,8 @@ void initialisation()
  nombre_objet=0;
  level = 1;
  levelporteN = 1;
- compL = 1; 
+ compL = 1;
+ /*creamap();*/
 }
 
 void initsprite()
@@ -719,7 +754,7 @@ void affobjet()
 
 void personnage(int x, int y)
 {
-  posxP=x;
+  posxP = x;
   posyP = y;
   SDL_Surface *temp, *personnage;
   colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
