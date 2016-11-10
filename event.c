@@ -48,11 +48,15 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	    draw_screen();
 	    *mode = 1;
 	    SDL_WarpMouse(1024 / 2, 600 / 2);
+	    SDL_WM_GrabInput(SDL_GRAB_ON);
+ 	    SDL_ShowCursor (SDL_DISABLE);
 	    
 	  }
 	  if (pause == 1)
 	  {
 	    *mode = 1;
+	    SDL_WM_GrabInput(SDL_GRAB_ON);
+ 	    SDL_ShowCursor (SDL_DISABLE);
 
 	  }
 	  break;
@@ -60,7 +64,7 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	case SDLK_q:
 	case SDLK_LEFT:
 	  depl.x = -1;
-	  posx=1;
+	  /*posx=1;
 	  if (posy==0)
 	  {
 	    posy=1;
@@ -83,7 +87,7 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	      }
 	    }
 	  }
-	  personnage(posx,posy);
+	  personnage(posx,posy);*/
 	  
 	  
           break;
@@ -91,7 +95,7 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	case SDLK_d:
 	case SDLK_RIGHT:
 	  depl.x = 1;
-	  posx=2;
+	  /*posx=2;
 	  if (posy==0)
 	  {
 	    posy=1;
@@ -114,13 +118,13 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	      }
 	    }
 	  }
-	  personnage(posx,posy);
+	  personnage(posx,posy);*/
           break;
 	  
 	case SDLK_z:
 	case SDLK_UP:
 	  depl.y = 1;
-	  posx=3;
+	  /*posx=3;
 	  if (posy==0)
 	  {
 	    posy=1;
@@ -143,13 +147,13 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	      }
 	    }
 	  }
-	  personnage(posx,posy);
+	  personnage(posx,posy);*/
 	  break;
 	  
 	case SDLK_s:
 	case SDLK_DOWN:
 	  depl.y = -1;
-	  posx=0;
+	  /*posx=0;
 	  if (posy==0)
 	  {
 	    posy=1;
@@ -172,7 +176,7 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	      }
 	    }
 	  }
-	  personnage(posx,posy);
+	  personnage(posx,posy);*/
 	  break;
 	  
 	default:
@@ -209,8 +213,7 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
   if (*mode == 1)
   {
     deplacement(a, depl,mode);
-    SDL_WM_GrabInput(SDL_GRAB_ON);
-    SDL_ShowCursor (SDL_DISABLE);
+
   }
 
 }
