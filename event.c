@@ -33,8 +33,8 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	  {
 	    pause = 1;
 	    *mode = 0;
-	   /* SDL_ShowCursor (SDL_ENABLE);
-	    SDL_WM_GrabInput(SDL_GRAB_OFF);*/
+	    SDL_ShowCursor (SDL_ENABLE);
+	    SDL_WM_GrabInput(SDL_GRAB_OFF);
 	  }
 	  
 	  break;
@@ -179,7 +179,7 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	break;
 	case SDLK_m:
 	    draw_minicarte();
-	    *mode =0;
+	    *mode = 0;
 	    break;
 	    
 	case SDLK_o :
@@ -195,7 +195,7 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	switch (event.key.keysym.sym) 
 	{
 	  case SDLK_m:
-	    *mode =1;
+	    *mode = 1;
 	    break;
 	  default:
 	    break;
@@ -211,6 +211,7 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
     deplacement(a, depl,mode);
     SDL_WM_GrabInput(SDL_GRAB_ON);
     SDL_ShowCursor (SDL_DISABLE);
+    
   }
 
 }
