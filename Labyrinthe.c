@@ -10,7 +10,7 @@ int main()
     int mode = 0;
     init_window();
     
-    SDL_EnableKeyRepeat(10, 10);
+    SDL_EnableKeyRepeat(7, 7);
     while(game_over != 1)
     {
         SDL_Event event;
@@ -23,6 +23,7 @@ int main()
         if (mode==1)
 	{
 	  draw_screen();
+          
 	}
     }
     end();
