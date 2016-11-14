@@ -98,6 +98,7 @@ void gameover()
 
 void putpixel(int x, int y, Uint32 pixel) 
 {
+  if (x<0 || y<0 || x>=affichage->w || y>=affichage->h) return;
     int bpp = affichage->format->BytesPerPixel;
     Uint8 *p = (Uint8*)affichage->pixels + y * affichage->pitch + x*bpp;
     int i;
@@ -110,6 +111,7 @@ void putpixel(int x, int y, Uint32 pixel)
 Uint32 getpixel(int itex, int x, int y) 
 {
     int texsize = textures_->h;
+    if (itex<0 || itex>=ntextures || x<0 || y<0 || x>=texsize || y>=texsize) return 0;
     Uint8 *p = (Uint8 *)textures_->pixels + y*textures_->pitch + (x+texsize*itex)*3;
     return p[0] | p[1] << 8 | p[2] << 16;
 }
@@ -771,4 +773,5 @@ void personnage(int x, int y)
   SDL_BlitSurface(personnage, &rcSrcpersonnage, affichage, &rcpersonnage);
   SDL_Flip(affichage);
 
-  }
+}
+  
