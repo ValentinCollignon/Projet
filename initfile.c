@@ -62,7 +62,6 @@ void init_menu()
 {
   SDL_Surface *temp, *menu;
   SDL_Rect rcmenu;
-  int colorkey;
   x = pos_base;
   y = pos_base;
   colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
@@ -75,9 +74,10 @@ void init_menu()
   SDL_BlitSurface(menu, NULL, affichage, &rcmenu);
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
   printf("fonction init_menu\n");
+  
 }
 
-void gameover()
+void gameover(int *mode)
 {
     SDL_Surface *temp, *gamover;
     SDL_Rect rcgameover;
@@ -92,7 +92,10 @@ void gameover()
     SDL_BlitSurface(gamover, NULL, affichage, &rcgameover);
     SDL_UpdateRect(affichage, 0, 0, 0, 0);
     printf("fonction gameover\n");
-
+    SDL_Delay(2000);
+    *mode = 0;
+    initialisation();
+    init_menu();
   
 } 
 
@@ -188,6 +191,7 @@ void draw_screen()
             for (ty=0; ty<h; ty++) { 
                 putpixel(i, ty+(affichage->h-h)/2, getpixel(1, tx, (ty*64)/h));
             }
+
 	  break;
 	}
 	else
@@ -246,14 +250,17 @@ void deplacement(float a, SDL_Rect position,int*mode)
     comptPorteN ++;
     if (comptPorteN == 2)
     {
-      initialisation();
-      /*creamap();*/
+      gameover(mode);
+      
     }
-    for (i = 1 ;i <= level; i++)
+    else
     {
-      objet_cherche();
+      for (i = 1 ;i <= level; i++)
+      {
+	objet_cherche();
+	
+      }
     }
-    
   }
   if (map[nx+ny*mapl]=='O')
   {
@@ -394,7 +401,7 @@ void mapalea()
 
 void difficulte(int niv_difficulte)
 {
-    initialisation();
+    /*initialisation();*/
 
     if(niv_difficulte < 4)
     {
@@ -422,7 +429,7 @@ void difficulte(int niv_difficulte)
 void creamap()
 {
   int i, niv_difficulte;
-  niv_difficulte = 5;
+  niv_difficulte = 1;
   /*printf("niveau de difficulte : \n 1 = facile \n 2 = normal \n 3 = difficile \n autre = aleatoire\n");
   scanf("%d",&niv_difficulte);
   printf("vous avez choisi : %d \n",niv_difficulte);*/
@@ -505,7 +512,7 @@ void full()
 
 void initialisation()
 {
- nombre_objet=0;
+ nombre_objet = 0;
  level = 1;
  levelporteN = 1;
  compL = 1;

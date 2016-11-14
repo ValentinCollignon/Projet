@@ -7,7 +7,7 @@
 char* lireMap(char* nomFichier);
 void init_window();
 void init_menu();
-void gameover();
+void gameover(int *mode);
 void putpixel(int x, int y, Uint32 pixel);
 Uint32 getpixel(int itex, int x, int y) ;
 void draw_minicarte();
