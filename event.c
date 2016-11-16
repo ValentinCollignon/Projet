@@ -189,6 +189,7 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
       a += event.motion.xrel * .01;
       posSx = event.motion.x ;
       posSy = event.motion.y ;
+
       break;
       
       case SDL_MOUSEBUTTONDOWN:
