@@ -84,8 +84,8 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	      }
 	    }
 	  }
-	  personnage(posx,posy);*/
-	  
+	  personnage(posx,posy);
+	  */
 	  
           break;
 	  
@@ -115,8 +115,9 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	      }
 	    }
 	  }
-	  personnage(posx,posy);*/
-          break;
+	  personnage(posx,posy);
+*/
+	  break;
 	  
 	case SDLK_z:
 	case SDLK_UP:
@@ -144,7 +145,8 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	      }
 	    }
 	  }
-	  personnage(posx,posy);*/
+	  personnage(posx,posy);
+	  */
 	  break;
 	  
 	case SDLK_s:
@@ -173,7 +175,8 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	      }
 	    }
 	  }
-	  personnage(posx,posy);*/
+	  personnage(posx,posy);
+	  */
 	  break;
 	  
 	default:

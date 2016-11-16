@@ -21,7 +21,7 @@ int nombre_objet=0,level = 1,levelporteN = 1, compL = 1, comptPorteN = 0,colorke
 SDL_Rect rclettre , rcSrclettre, rcSrcpersonnage, rcpersonnage;
 
 /*mise en place de la fenetre principale*/
-SDL_Surface * affichage ,*lettre, *textures_;
+SDL_Surface * affichage ,*lettre, *textures_, *objet_map;
 char* map;
 
 
@@ -111,11 +111,13 @@ void putpixel(int x, int y, Uint32 pixel)
     }
 }
 
-Uint32 getpixel(int itex, int x, int y) 
+Uint32 getpixel(int itex, int x, int y, SDL_Surface * textures) 
 {
-    int texsize = textures_->h;
+    texsize = textures->h;
+    ntextures = textures->w / texsize;
+    
     if (itex<0 || itex>=ntextures || x<0 || y<0 || x>=texsize || y>=texsize) return 0;
-    Uint8 *p = (Uint8 *)textures_->pixels + y*textures_->pitch + (x+texsize*itex)*3;
+    Uint8 *p = (Uint8 *)textures->pixels + y*textures->pitch + (x+texsize*itex)*3;
     return p[0] | p[1] << 8 | p[2] << 16;
 }
 
@@ -167,8 +169,9 @@ void draw_screen()
     
     int  i, z, idx;
     float w;
-    /*map*/
+     /*map*/
     SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
+ 
     /*draw map*/
     w = affichage->w;
 
@@ -188,8 +191,8 @@ void draw_screen()
         int ty;
 	if (map[idx]=='O') 
 	{
-            for (ty=0; ty<h; ty++) { 
-                putpixel(i, ty+(affichage->h-h)/2, getpixel(1, tx, (ty*64)/h));
+            for (ty=0; ty<(h); ty++) { 
+                putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*256)/h,objet_map));
             }
 
 	  break;
@@ -199,14 +202,14 @@ void draw_screen()
 	  if (((map[idx]!=' ') && ( nombre_objet != 0)) || ((map[idx]=='#') && ( nombre_objet == 0)))
 	  {
             for (ty=0; ty<h; ty++) { 
-	      putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*64)/h));
+	      putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*64)/h,textures_));
             }
 	    break;
 	  }
 	  if (((map[idx]=='+') || (map[idx]=='-')) &&( nombre_objet == 0) ) 
 	  {
             for (ty=0; ty<h; ty++) { 
-                 putpixel(i, ty+(affichage->h-h)/2, getpixel(2, tx, (ty*64)/h));
+                 putpixel(i, ty+(affichage->h-h)/2, getpixel(2, tx, (ty*64)/h,textures_));
             }
 	    break;
 	  }
@@ -531,10 +534,9 @@ void initsprite()
   
   rcSrclettre.w = 24;
   rcSrclettre.h = 24;
-  
+  objet_map = SDL_LoadBMP("image/objet_carte.bmp");
   textures_ = SDL_LoadBMP("image/walltext.bmp");
-  texsize = textures_->h;
-  ntextures = textures_->w / texsize;
+
   
   
 }

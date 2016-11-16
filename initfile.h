@@ -9,7 +9,7 @@ void init_window();
 void init_menu();
 void gameover(int *mode);
 void putpixel(int x, int y, Uint32 pixel);
-Uint32 getpixel(int itex, int x, int y) ;
+Uint32 getpixel(int itex, int x, int y, SDL_Surface * textures) ;
 void draw_minicarte();
 void draw_screen();
 void deplacement(float a, SDL_Rect position,int *mode);
