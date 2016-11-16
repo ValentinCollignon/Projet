@@ -21,7 +21,7 @@ int nombre_objet=0,level = 1,levelporteN = 1, compL = 1, comptPorteN = 0,colorke
 SDL_Rect rclettre , rcSrclettre, rcSrcpersonnage, rcpersonnage;
 
 /*mise en place de la fenetre principale*/
-SDL_Surface * affichage ,*lettre, *textures_, *objet_map;
+SDL_Surface * affichage ,*lettre, *textures_, *objet_map, *text_sol;
 char* map;
 
 
@@ -117,7 +117,8 @@ Uint32 getpixel(int itex, int x, int y, SDL_Surface * textures)
     ntextures = textures->w / texsize;
     
     if (itex<0 || itex>=ntextures || x<0 || y<0 || x>=texsize || y>=texsize) return 0;
-    Uint8 *p = (Uint8 *)textures->pixels + y*textures->pitch + (x+texsize*itex)*3;
+    int bpp = textures->format->BytesPerPixel;
+    Uint8 *p = (Uint8 *)textures->pixels + y*textures->pitch + (x+texsize*itex)*bpp;
     return p[0] | p[1] << 8 | p[2] << 16;
 }
 
@@ -167,10 +168,21 @@ void draw_minicarte()
 void draw_screen()
 {
     
-    int  i, z, idx;
+    int  i,j , z, idx, aff;
     float w;
      /*map*/
-    SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
+    SDL_Rect ciel;
+    ciel.h = 300;
+    ciel.w = 800;
+    ciel.x = 0;
+    SDL_FillRect(affichage,&ciel , SDL_MapRGB(affichage->format, 119, 181, 254));
+    ciel.y = 300;
+    SDL_FillRect(affichage,&ciel , SDL_MapRGB(affichage->format, 104, 157, 113));
+    w = affichage->w;
+    
+    
+    
+    
  
     /*draw map*/
     w = affichage->w;
@@ -191,8 +203,9 @@ void draw_screen()
         int ty;
 	if (map[idx]=='O') 
 	{
-            for (ty=0; ty<(h); ty++) { 
-                putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*256)/h,objet_map));
+            for (ty=0; ty<(h); ty++) 
+	    { 
+                putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*64)/h,objet_map));
             }
 
 	  break;
@@ -536,6 +549,7 @@ void initsprite()
   rcSrclettre.h = 24;
   objet_map = SDL_LoadBMP("image/objet_carte.bmp");
   textures_ = SDL_LoadBMP("image/walltext.bmp");
+  text_sol = SDL_LoadBMP("image/sol.bmp");
 
   
   
