@@ -23,8 +23,6 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
       switch (event.key.keysym.sym) 
       {
 	case SDLK_ESCAPE:
-	    gameover();
-	    SDL_Delay(2000);
             *game_over = 1;
             break;
             
@@ -43,8 +41,7 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	case SDLK_KP_ENTER:
 	  if ((*mode == 0) && (pause == 0))
 	  {
-	    initialisation();
-            creamap();
+	    creamap();
 	    draw_screen();
 	    *mode = 1;
 	    SDL_WarpMouse(1024 / 2, 600 / 2);
