@@ -5,12 +5,14 @@
 float a=0;
 int pause = 0;
 int posx=0, posy=0;
+int posSx,posSy;
 
 void HandleEvent(SDL_Event event,int* game_over,int* mode)
 {
   
   SDL_Rect depl;
   /*keystate = SDL_GetKeyState(NULL);*/
+
 
   switch (event.type) 
   {
@@ -31,8 +33,7 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	  {
 	    pause = 1;
 	    *mode = 0;
-	    SDL_ShowCursor (SDL_ENABLE);
-	    SDL_WM_GrabInput(SDL_GRAB_OFF);
+	    
 	  }
 	  
 	  break;
@@ -41,20 +42,13 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	case SDLK_KP_ENTER:
 	  if ((*mode == 0) && (pause == 0))
 	  {
-	    creamap();
-	    draw_screen();
-	    *mode = 1;
-	    SDL_WarpMouse(1024 / 2, 600 / 2);
-	    SDL_WM_GrabInput(SDL_GRAB_ON);
- 	    SDL_ShowCursor (SDL_DISABLE);
-	    
+	    printf("diff \n");
+	    choixdiffi();
+	    *mode = 2;
 	  }
 	  if (pause == 1)
 	  {
 	    *mode = 1;
-	    SDL_WM_GrabInput(SDL_GRAB_ON);
- 	    SDL_ShowCursor (SDL_DISABLE);
-
 	  }
 	  break;
 	  
@@ -189,12 +183,61 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	case SDLK_o :
 	  full();
 	  break;
+	
+	
       }
       break;
-    
       case SDL_MOUSEMOTION:
+	
       a += event.motion.xrel * .01;
+      posSx = event.motion.x ;
+      posSy = event.motion.y ;
+
       break;
+      
+      case SDL_MOUSEBUTTONDOWN:
+	  case SDL_BUTTON_LEFT:
+	  if (*mode ==2)
+	  {
+	    
+	    if( ((posSx >= 128 && posSx <= 256 && posSy >= 128 && posSy <= 256)))
+	      {
+		difficulte(0);
+		 printf("facile\n");
+		*mode =1;
+		creamap();
+		draw_screen();
+	      }
+	      if( ((posSx >= AFFICHAGE_WIDTH/2 + 128 && posSx <= AFFICHAGE_WIDTH/2 +256 && posSy >= 128 && posSy <= 256)))
+	      {
+		difficulte(1);
+		printf("moyen\n");
+		*mode =1;
+		creamap();
+		draw_screen();
+	      }
+	      if( ((posSx >= 128 && posSx <= 256 && posSy >= AFFICHAGE_HEIGHT/2 + 128 && posSy <= AFFICHAGE_HEIGHT/2 + 256)))
+	      {
+		difficulte(2);
+		printf("diffi\n");
+		*mode =1;
+		creamap();
+		draw_screen();
+	      }
+	      if( ((posSx >= AFFICHAGE_WIDTH/2 + 128 && posSx <= AFFICHAGE_WIDTH/2 + 256 && posSy >= AFFICHAGE_HEIGHT/2 + 128 && posSy <= AFFICHAGE_HEIGHT/2 + 256)))
+	      {
+		difficulte(3);
+		printf("alea\n");
+		*mode =1;
+		creamap();
+		draw_screen();
+	      }
+	      
+	  }
+	  break;
+      break;
+    
+      
       case SDL_KEYUP:
 	switch (event.key.keysym.sym) 
 	{
@@ -213,7 +256,14 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
   if (*mode == 1)
   {
     deplacement(a, depl,mode);
+    SDL_WM_GrabInput(SDL_GRAB_ON);
+    SDL_ShowCursor (SDL_DISABLE);
 
+  }
+  else
+  {
+    SDL_ShowCursor (SDL_ENABLE);
+    SDL_WM_GrabInput(SDL_GRAB_OFF);
   }
 
 }
