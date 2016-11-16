@@ -4,6 +4,13 @@
 #include <stdio.h>
 #include <SDL.h>
 
+#define AFFICHAGE_WIDTH 800
+#define AFFICHAGE_HEIGHT 600 
+#define mapc 32
+#define mapl 32
+#define SIZE mapc*mapl+1
+#define pos_base 16.5
+
 char* lireMap(char* nomFichier);
 void init_window();
 void init_menu();
@@ -18,6 +25,7 @@ void portePalea();
 void porteNalea();
 void mapalea();
 void difficulte(int niv_difficulte);
+void choixdiffi ();
 void creamap();
 void level_sup();
 void WIN(int *mode);

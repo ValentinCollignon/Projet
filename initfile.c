@@ -5,12 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define AFFICHAGE_WIDTH 800
-#define AFFICHAGE_HEIGHT 600 
-#define mapc 32
-#define mapl 32
-#define SIZE mapc*mapl+1
-#define pos_base 16.5
+
 
 const int colors[] = {120, 120, 120, 200, 200, 200, 155, 155, 155};
 const float fov = M_PI/3;
@@ -401,39 +396,68 @@ void mapalea()
 
 void difficulte(int niv_difficulte)
 {
-    /*initialisation();*/
+  switch(niv_difficulte)
+  {
+    case 0:
+      map=lireMap("map/map_2.txt");
+      break;
+    case 1:
+      map = lireMap("map/map_3.tkt");
+      break;
+    case 2:
+      map = lireMap("map/map.txt");
+      break;
+    case 3:
+      mapalea();
+      break;
+    
+  }
 
-    if(niv_difficulte < 4)
-    {
-        switch(niv_difficulte)
-        {
-            case 1:
-                map=lireMap("map/map_2.txt");
-                break;
-            case 2:
-                map = lireMap("map/map_3.tkt");
-                break;
-            case 3:
-                map = lireMap("map/map.txt");
-                break;
-            
-        }
-    }
-    else
-    {
-        mapalea();
-        
-    }
+}
+
+void choixdiffi ()
+{
+  printf("diff choix\n");
+  SDL_Surface *temp, *diff;
+  SDL_Rect rcdiff;
+  SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
+  x = pos_base;
+  y = pos_base;
+  rcdiff.x = 128;
+  rcdiff.y = 128;
+  temp  = SDL_LoadBMP("image/facile.bmp");
+  diff = SDL_DisplayFormat(temp);
+  SDL_BlitSurface(diff, NULL, affichage, &rcdiff);
+  
+  rcdiff.x = AFFICHAGE_WIDTH/2 + 128;
+  rcdiff.y = 128;
+  temp  = SDL_LoadBMP("image/moyen.bmp");
+  diff = SDL_DisplayFormat(temp);
+  SDL_BlitSurface(diff, NULL, affichage, &rcdiff);
+  
+  rcdiff.x = 128;
+  rcdiff.y = AFFICHAGE_HEIGHT/2 + 128;
+  temp  = SDL_LoadBMP("image/dif.bmp");
+  diff = SDL_DisplayFormat(temp);
+  SDL_BlitSurface(diff, NULL, affichage, &rcdiff);
+  
+  rcdiff.x = AFFICHAGE_WIDTH/2+128;
+  rcdiff.y = AFFICHAGE_HEIGHT/2 + 128;
+  temp  = SDL_LoadBMP("image/alea.bmp");
+  diff = SDL_DisplayFormat(temp);
+  SDL_BlitSurface(diff, NULL, affichage, &rcdiff);
+  
+  
+  
+  SDL_FreeSurface(temp);
+  SDL_UpdateRect(affichage, 0, 0, 0, 0);
+  
 }
 
 void creamap()
 {
-  int i, niv_difficulte;
-  niv_difficulte = 1;
-  /*printf("niveau de difficulte : \n 1 = facile \n 2 = normal \n 3 = difficile \n autre = aleatoire\n");
-  scanf("%d",&niv_difficulte);
-  printf("vous avez choisi : %d \n",niv_difficulte);*/
-  difficulte(niv_difficulte);
+  int i;
+
   for (i = 1 ;i <= level; i++)
   {
     objet_cherche();
