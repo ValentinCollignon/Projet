@@ -13,10 +13,11 @@ float x ;
 float y ;
 float a2=0;
 int nombre_objet=0,level = 1,levelporteN = 1, compL = 1, comptPorteN = 0,colorkey,posxP=3,posyP=0,texsize,ntextures;
+int obmap=0;
 SDL_Rect rclettre , rcSrclettre, rcSrcpersonnage, rcpersonnage;
 
 /*mise en place de la fenetre principale*/
-SDL_Surface * affichage ,*lettre, *textures_;
+SDL_Surface * affichage ,*lettre, *textures_, *objet_map;
 char* map;
 
 
@@ -106,11 +107,13 @@ void putpixel(int x, int y, Uint32 pixel)
     }
 }
 
-Uint32 getpixel(int itex, int x, int y) 
+Uint32 getpixel(int itex, int x, int y, SDL_Surface * textures) 
 {
-    int texsize = textures_->h;
+    texsize = textures->h;
+    ntextures = textures->w/texsize ;
+    
     if (itex<0 || itex>=ntextures || x<0 || y<0 || x>=texsize || y>=texsize) return 0;
-    Uint8 *p = (Uint8 *)textures_->pixels + y*textures_->pitch + (x+texsize*itex)*3;
+    Uint8 *p = (Uint8 *)textures->pixels + y*textures->pitch + (x+texsize*itex)*3;
     return p[0] | p[1] << 8 | p[2] << 16;
 }
 
@@ -119,36 +122,39 @@ void draw_minicarte()
   SDL_Rect tmp;
   int i,j;
   float w;
-  w = affichage->w/4;
-  tmp.w = 8;
-  tmp.h = 8;
-  for (i=0; i<mapl; i++) 
-    { 
-        for (j=0; j<mapc; j++) 
-        {
-            if (map[i+j*mapl]!=' ')
-	    {
-            tmp.x = i*8 + w;
-            tmp.y = j*8;
-            
-            SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,255,0));
-	    }
-	    if (((map[i+j*mapl]=='+') || (map[i+j*mapl]=='-')) && ( nombre_objet == 0))
-	    {
-            tmp.x = i*8 + w;
-            tmp.y = j*8;
-            
-            SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0, 0,0));
-	    }   
-	    if (map[i+j*mapl]=='O')
-	    {
-            tmp.x = i*8 + w;
-            tmp.y = j*8;
-            
-            SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,0,255));
-	    }
-        }
-    }
+  if (obmap ==0)
+  {
+    w = affichage->w/4;
+    tmp.w = 8;
+    tmp.h = 8;
+    for (i=0; i<mapl; i++) 
+      { 
+	  for (j=0; j<mapc; j++) 
+	  {
+	      if (map[i+j*mapl]!=' ')
+	      {
+	      tmp.x = i*8 + w;
+	      tmp.y = j*8;
+	      
+	      SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,255,0));
+	      }
+	      if (((map[i+j*mapl]=='+') || (map[i+j*mapl]=='-')) && ( nombre_objet == 0))
+	      {
+	      tmp.x = i*8 + w;
+	      tmp.y = j*8;
+	      
+	      SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0, 0,0));
+	      }   
+	      if (map[i+j*mapl]=='O')
+	      {
+	      tmp.x = i*8 + w;
+	      tmp.y = j*8;
+	      
+	      SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,0,255));
+	      }
+	  }
+      }
+  }
     
     putpixel( (w)+1+x*8, y*8, 0);
     putpixel( (w)+x*8, y*8, 0);
@@ -162,8 +168,9 @@ void draw_screen()
     
     int  i, z, idx;
     float w;
-    /*map*/
+     /*map*/
     SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
+ 
     /*draw map*/
     w = affichage->w;
 
@@ -183,25 +190,34 @@ void draw_screen()
         int ty;
 	if (map[idx]=='O') 
 	{
-            for (ty=0; ty<h; ty++) { 
-                putpixel(i, ty+(affichage->h-h)/2, getpixel(1, tx, (ty*64)/h));
+            for (ty=0; ty<(h); ty++) { 
+                putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*256)/h,objet_map));
             }
 
 	  break;
 	}
 	else
 	{
-	  if (((map[idx]!=' ') && ( nombre_objet != 0)) || ((map[idx]=='#') && ( nombre_objet == 0)))
-	  {
-            for (ty=0; ty<h; ty++) { 
-	      putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*64)/h));
-            }
-	    break;
-	  }
+	  
 	  if (((map[idx]=='+') || (map[idx]=='-')) &&( nombre_objet == 0) ) 
 	  {
             for (ty=0; ty<h; ty++) { 
-                 putpixel(i, ty+(affichage->h-h)/2, getpixel(2, tx, (ty*64)/h));
+                 putpixel(i, ty+(affichage->h-h)/2, getpixel(3, tx, (ty*64)/h,textures_));
+            }
+	    break;
+	  }
+	  if (map[idx]=='M') 
+	  {
+            for (ty=0; ty<(h); ty++) { 
+                putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*256)/h,objet_map));
+            }
+
+	    break;
+	  }
+	  if ((map[idx]!=' ') && ( nombre_objet != 0) || ((map[idx]=='#') && ( nombre_objet == 0)))
+	  {
+            for (ty=0; ty<h; ty++) { 
+	      putpixel(i, ty+(affichage->h-h)/2, getpixel(2, tx, (ty*64)/h,textures_));
             }
 	    break;
 	  }
@@ -265,6 +281,14 @@ void deplacement(float a, SDL_Rect position,int*mode)
     map[nx+ny*mapl]=' ';
     
   }
+  if (map[nx+ny*mapl]=='M')
+  {
+    x += nxx;
+    y += nyy;
+    obmap -= 1;
+    map[nx+ny*mapl]=' ';
+    
+  }
 
 }
 
@@ -281,6 +305,21 @@ void objet_cherche()
   }
   nombre_objet += 1;
   map[xob+yob*mapl]='O';
+}
+
+void objet_cherche_map()
+{
+  int xob=0;
+  int yob=0;
+  
+  srand(time(NULL));
+  while (map[xob+yob*mapl]!=' ')
+  {
+    xob=rand()%(32);
+    yob=rand()%(32);
+  }
+  obmap += 1;
+  map[xob+yob*mapl]='M';
 }
 
 void portePalea()
@@ -462,6 +501,7 @@ void creamap()
   {
     objet_cherche();
   }
+  objet_cherche_map();
   portePalea();
   for (i=1;i<=(levelporteN);i++)
   {
@@ -555,10 +595,9 @@ void initsprite()
   
   rcSrclettre.w = 24;
   rcSrclettre.h = 24;
-  
+  objet_map = SDL_LoadBMP("image/objet_carte.bmp");
   textures_ = SDL_LoadBMP("image/walltext.bmp");
-  texsize = textures_->h;
-  ntextures = textures_->w / texsize;
+
   
   
 }
