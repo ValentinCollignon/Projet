@@ -177,10 +177,13 @@ void draw_screen()
     ciel.x = 0;
     SDL_FillRect(affichage,&ciel , SDL_MapRGB(affichage->format, 119, 181, 254));
     ciel.y = 300;
+
     SDL_FillRect(affichage,&ciel , SDL_MapRGB(affichage->format, 100, 181, 54));
     w = affichage->w;
     
-    /*
+    /*teste sol
+     * 
+     * 
     for(i = 0; i < w; i++)
     {
       float t;
@@ -200,10 +203,7 @@ void draw_screen()
 	
       }
     }*/
- 
-    
-    
-    
+
  
     /*draw map*/
     w = affichage->w;
@@ -247,32 +247,39 @@ void draw_screen()
 	    break;
 	    
 	  }
-	  if (map[idx]=='M') 
+	  else
 	  {
 
-            for (ty=0; ty<(h); ty++) { 
-                putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*objet_map->h)/h,objet_map));
+	    if (map[idx]=='M') 
+	    {
+	      for (ty=0; ty<(h); ty++) { 
+		  putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*objet_map->h)/h,objet_map));
+	      }
 
-            }
+	      break;
+	    }
+	    else
+	    {
+	      if ((map[idx]!=' ') && ( nombre_objet != 0) || ((map[idx]=='#') && ( nombre_objet == 0)))
+	      {
 
-	    break;
-	  }
-	  if ((map[idx]!=' ') && ( nombre_objet != 0) || ((map[idx]=='#') && ( nombre_objet == 0)))
-	  {
-	    printf("mur\n");
-            for (ty=0; ty<h; ty++) {
+
+		for (ty=0; ty<h; ty++) { 
+		  putpixel(i, ty+(affichage->h-h)/2, getpixel(2, tx, (ty*64)/h,textures_));
+
+		}
+		break;
+	      }
 	      
 	      
-	      putpixel(i, ty+(affichage->h-h)/2, getpixel(2, tx, (ty*64)/h,textures_));
-
-            }
-	    break;
+	    }
 	  }
 	  
 
 	}
 /*
 	
+
 	h = affichage->h;
 	for (ty=(h/2); ty<h; ty++) 
 	{
@@ -291,6 +298,7 @@ void draw_screen()
     }
       
     }
+
     
     afflevel();
     affobjet();
@@ -574,11 +582,14 @@ void creamap()
   }
 }
 
+/*prossedure inter level*/
 void level_sup()
 {
-  SDL_Surface *temp, *levelsup;
+  /*SDL_Surface *temp, *levelsup;
   SDL_Rect rclevelsup;
-  int colorkey;
+  int colorkey;*/
+  
+  /*prepare le level suivant*/
   x = pos_base;
   y = pos_base;
   level +=1;
@@ -587,7 +598,8 @@ void level_sup()
     levelporteN = levelporteN * 2 + compL;
     compL++;
   }
-  colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
+  
+  /*colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
   rclevelsup.x = 0;
   rclevelsup.y = 0;
   temp  = SDL_LoadBMP("image/level_sup.bmp");
@@ -597,8 +609,337 @@ void level_sup()
   SDL_SetColorKey(levelsup, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
   SDL_BlitSurface(levelsup, NULL, affichage, &rclevelsup);
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
-  printf("fonction level_sup\n");
+  printf("fonction level_sup\n");*/
+  char* sup;
+  char supprec = 't';
+  int i = 0 ,lx=0,ly=affichage->h/2;
+  
+  /*afficher le message*/
+  sup = " Pour passer au labyrinthe  ";
+  
+  while (i<50 && !(sup [i] == ' ' && supprec == ' '))
+  {
+    if (sup[i]!=' ')
+    {
+      afflettre(sup[i],lx,ly);
+      SDL_UpdateRect(affichage, 0, 0, 0, 0);
+    }
+    lx += 20;
+    supprec = sup[i];
+    i++;
+  }
+  affnum(level/10,lx,ly);
+  lx += 20;
+  affnum(level%10,lx,ly);
+  lx = 0;
+  ly += 30;
+  supprec='r';
+  i=0;
+  sup=" pressez ENTREE  ";
+  while (i<50 && !(sup [i] == ' ' && supprec == ' '))
+  {
+    if (sup[i]!=' ')
+    {
+      afflettre(sup[i],lx,ly);
+      SDL_UpdateRect(affichage, 0, 0, 0, 0);
+    }
+    lx += 20;
+    if (i==30)
+    {
+      lx = 0;
+      ly += 30;
+    }
+    supprec = sup[i];
+    i++;
+  }
+  
+}
+/* prossedure qui affiche une lettre a une position donnée*/
+void afflettre(char Lettre,int lx, int ly)
+{
+  /* coordonné de la lettre dans la fenetre*/
+  rclettre.x=lx;
+  rclettre.y = ly;
+  
+  /* choix de la lettre*/
+  switch (Lettre)
+  {
+    case 'a':
+      rcSrclettre.x = rcSrclettre.w;
+      rcSrclettre.y = rcSrclettre.w*6;
+      break;
+    case 'b':
+      rcSrclettre.x = rcSrclettre.w*2;
+      rcSrclettre.y = rcSrclettre.w*6;
+      break;
+    case 'c':
+      rcSrclettre.x = rcSrclettre.w*3;
+      rcSrclettre.y = rcSrclettre.w*6;
+      break;
+    case 'd':
+      rcSrclettre.x = rcSrclettre.w*4;
+      rcSrclettre.y = rcSrclettre.w*6;
+      break;
+    case 'e':
+      rcSrclettre.x = rcSrclettre.w*5;
+      rcSrclettre.y = rcSrclettre.w*6;
+      break;
+    case 'f':
+      rcSrclettre.x = rcSrclettre.w*6;
+      rcSrclettre.y = rcSrclettre.w*6;
+      break;
+    case 'g':
+      rcSrclettre.x = rcSrclettre.w*7;
+      rcSrclettre.y = rcSrclettre.w*6;
+      break;
+    case 'h':
+      rcSrclettre.x = rcSrclettre.w*8;
+      rcSrclettre.y = rcSrclettre.w*6;
+      break;
+    case 'i':
+      rcSrclettre.x = rcSrclettre.w*9;
+      rcSrclettre.y = rcSrclettre.w*6;
+      break;
+    case 'j':
+      rcSrclettre.x = rcSrclettre.w*10;
+      rcSrclettre.y = rcSrclettre.w*6;
+      break;
+    case 'k':
+      rcSrclettre.x = rcSrclettre.w*11;
+      rcSrclettre.y = rcSrclettre.w*6;
+      break;
+    case 'l':
+      rcSrclettre.x = rcSrclettre.w*12;
+      rcSrclettre.y = rcSrclettre.w*6;
+      break;
+    case 'm':
+      rcSrclettre.x = rcSrclettre.w*13;
+      rcSrclettre.y = rcSrclettre.w*6;
+      break;
+    case 'n':
+      rcSrclettre.x = rcSrclettre.w*14;
+      rcSrclettre.y = rcSrclettre.w*6;
+      break;
+    case 'o':
+      rcSrclettre.x = rcSrclettre.w*15;
+      rcSrclettre.y = rcSrclettre.w*6;
+      break;
+    case 'p':
+      rcSrclettre.x = rcSrclettre.w*0;
+      rcSrclettre.y = rcSrclettre.w*7;
+      break;
+    case 'q':
+      rcSrclettre.x = rcSrclettre.w*1;
+      rcSrclettre.y = rcSrclettre.w*7;
+      break;
+    case 'r':
+      rcSrclettre.x = rcSrclettre.w*2;
+      rcSrclettre.y = rcSrclettre.w*7;
+      break;
+    case 's':
+      rcSrclettre.x = rcSrclettre.w*3;
+      rcSrclettre.y = rcSrclettre.w*7;
+      break;
+    case 't':
+      rcSrclettre.x = rcSrclettre.w*4;
+      rcSrclettre.y = rcSrclettre.w*7;
+      break;
+    case 'u':
+      rcSrclettre.x = rcSrclettre.w*5;
+      rcSrclettre.y = rcSrclettre.w*7;
+      break;
+    case 'v':
+      rcSrclettre.x = rcSrclettre.w*6;
+      rcSrclettre.y = rcSrclettre.w*7;
+      break;
+    case 'w':
+      rcSrclettre.x = rcSrclettre.w*7;
+      rcSrclettre.y = rcSrclettre.w*7;
+      break;
+    case 'x':
+      rcSrclettre.x = rcSrclettre.w*8;
+      rcSrclettre.y = rcSrclettre.w*7;
+      break;
+    case 'y':
+      rcSrclettre.x = rcSrclettre.w*9;
+      rcSrclettre.y = rcSrclettre.w*7;
+      break;
+    case 'z':
+      rcSrclettre.x = rcSrclettre.w*10;
+      rcSrclettre.y = rcSrclettre.w*7;
+      break;
+    case 'A':
+      rcSrclettre.x = rcSrclettre.w*1;
+      rcSrclettre.y = rcSrclettre.w*4;
+      break;
+    case 'B':
+      rcSrclettre.x = rcSrclettre.w*2;
+      rcSrclettre.y = rcSrclettre.w*4;
+      break;
+    case 'C':
+      rcSrclettre.x = rcSrclettre.w*3;
+      rcSrclettre.y = rcSrclettre.w*4;
+      break;
+    case 'D':
+      rcSrclettre.x = rcSrclettre.w*4;
+      rcSrclettre.y = rcSrclettre.w*4;
+      break;
+    case 'E':
+      rcSrclettre.x = rcSrclettre.w*5;
+      rcSrclettre.y = rcSrclettre.w*4;
+      break;
+    case 'F':
+      rcSrclettre.x = rcSrclettre.w*6;
+      rcSrclettre.y = rcSrclettre.w*4;
+      break;
+    case 'G':
+      rcSrclettre.x = rcSrclettre.w*7;
+      rcSrclettre.y = rcSrclettre.w*4;
+      break;
+    case 'H':
+      rcSrclettre.x = rcSrclettre.w*8;
+      rcSrclettre.y = rcSrclettre.w*4;
+      break;
+    case 'I':
+      rcSrclettre.x = rcSrclettre.w*9;
+      rcSrclettre.y = rcSrclettre.w*4;
+      break;
+    case 'J':
+      rcSrclettre.x = rcSrclettre.w*10;
+      rcSrclettre.y = rcSrclettre.w*4;
+      break;
+    case 'K':
+      rcSrclettre.x = rcSrclettre.w*11;
+      rcSrclettre.y = rcSrclettre.w*4;
+      break;
+    case 'L':
+      rcSrclettre.x = rcSrclettre.w*12;
+      rcSrclettre.y = rcSrclettre.w*4;
+      break;
+    case 'M':
+      rcSrclettre.x = rcSrclettre.w*13;
+      rcSrclettre.y = rcSrclettre.w*4;
+      break;
+    case 'N':
+      rcSrclettre.x = rcSrclettre.w*14;
+      rcSrclettre.y = rcSrclettre.w*4;
+      break;
+    case 'O':
+      rcSrclettre.x = rcSrclettre.w*15;
+      rcSrclettre.y = rcSrclettre.w*4;
+      break;
+    case 'P':
+      rcSrclettre.x = rcSrclettre.w*0;
+      rcSrclettre.y = rcSrclettre.w*5;
+      break;
+    case 'Q':
+      rcSrclettre.x = rcSrclettre.w*1;
+      rcSrclettre.y = rcSrclettre.w*5;
+      break;
+    case 'R':
+      rcSrclettre.x = rcSrclettre.w*2;
+      rcSrclettre.y = rcSrclettre.w*5;
+      break;
+    case 'S':
+      rcSrclettre.x = rcSrclettre.w*3;
+      rcSrclettre.y = rcSrclettre.w*5;
+      break;
+    case 'T':
+      rcSrclettre.x = rcSrclettre.w*4;
+      rcSrclettre.y = rcSrclettre.w*5;
+      break;
+    case 'U':
+      rcSrclettre.x = rcSrclettre.w*5;
+      rcSrclettre.y = rcSrclettre.w*5;
+      break;
+    case 'V':
+      rcSrclettre.x = rcSrclettre.w*6;
+      rcSrclettre.y = rcSrclettre.w*5;
+      break;
+    case 'W':
+      rcSrclettre.x = rcSrclettre.w*7;
+      rcSrclettre.y = rcSrclettre.w*5;
+      break;
+    case 'X':
+      rcSrclettre.x = rcSrclettre.w*8;
+      rcSrclettre.y = rcSrclettre.w*5;
+      break;
+    case 'Y':
+      rcSrclettre.x = rcSrclettre.w*9;
+      rcSrclettre.y = rcSrclettre.w*5;
+      break;
+    case 'Z':
+      rcSrclettre.x = rcSrclettre.w*10;
+      rcSrclettre.y = rcSrclettre.w*5;
+      break;
+      
+  }
 
+  SDL_BlitSurface(lettre, &rcSrclettre, affichage, &rclettre);
+  
+}
+
+/* prossedure qui affiche un chiffre a une position donnée*/
+void affnum(int num,int lx, int ly)
+{
+  /* coordonné du chiffre dans la fenetre*/
+  rclettre.x=lx;
+  rclettre.y = ly;
+  
+  /*choix du chifre*/
+  switch (num)
+  {
+    case 0:
+      rcSrclettre.x = rcSrclettre.w*0;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+      
+    case 1:
+      rcSrclettre.x = rcSrclettre.w*1;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+      
+    case 2:
+      rcSrclettre.x = rcSrclettre.w*2;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+      
+    case 3:
+      rcSrclettre.x = rcSrclettre.w*3;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+      
+    case 4:
+      rcSrclettre.x = rcSrclettre.w*4;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+      
+    case 5:
+      rcSrclettre.x = rcSrclettre.w*5;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+      
+    case 6:
+      rcSrclettre.x = rcSrclettre.w*6;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+      
+    case 7:
+      rcSrclettre.x = rcSrclettre.w*7;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+      
+    case 8:
+      rcSrclettre.x = rcSrclettre.w*8;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+    
+    case 9:
+      rcSrclettre.x = rcSrclettre.w*9;
+      rcSrclettre.y = rcSrclettre.w*3;
+      break;
+  }
+  SDL_BlitSurface(lettre, &rcSrclettre, affichage, &rclettre);
 
 }
 
