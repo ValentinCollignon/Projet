@@ -167,7 +167,7 @@ void draw_minicarte()
 void draw_screen()
 {
     
-    int  i,j , z, idx, aff;
+    int  i,j , z, idx, aff, ty;
     float w;
      /*map*/
     SDL_Rect ciel;
@@ -176,10 +176,11 @@ void draw_screen()
     ciel.x = 0;
     SDL_FillRect(affichage,&ciel , SDL_MapRGB(affichage->format, 119, 181, 254));
     ciel.y = 300;
-    SDL_FillRect(affichage,&ciel , getpixel(1,5,ciel.y,text_sol));
+    
+    SDL_FillRect(affichage,&ciel , SDL_MapRGB(affichage->format, 100, 181, 54));
     w = affichage->w;
-    
-    
+ 
+
     
     
  
@@ -191,6 +192,7 @@ void draw_screen()
       float t;
       float ca = (1.-i/w) * (a2-fov/2.) + i/w*(a2+fov/2.);
       int h = affichage->h/t;
+      
       for (t=0; t<20; t+=.05)
       {
 	float cx = x+cos(ca)*t;
@@ -198,8 +200,11 @@ void draw_screen()
 	int cxx=cx;
 	int cyy=cy;
         idx = cxx+cyy*mapl;
-	int tx = fmax(fabs(cx-floor(cx+.5)), fabs(cy-floor(cy+.5)))*texsize; 
+	int tx = fmax(fabs(cx-floor(cx+.1)), fabs(cy-floor(cy+.1)))*texsize; 
         int ty;
+	/*
+	else{*/
+
 	if (map[idx]=='O') 
 	{
             for (ty=0; ty<(h); ty++) 
@@ -221,7 +226,8 @@ void draw_screen()
 	  }
 	  if (map[idx]=='M') 
 	  {
-            for (ty=0; ty<(h); ty++) { 
+            for (ty=0; ty<(h); ty++) {
+	      
                 putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*256)/h,objet_map));
             }
 
@@ -229,16 +235,19 @@ void draw_screen()
 	  }
 	  if ((map[idx]!=' ') && ( nombre_objet != 0) || ((map[idx]=='#') && ( nombre_objet == 0)))
 	  {
-            for (ty=0; ty<h; ty++) { 
+            for (ty=0; ty<h; ty++) {
+	      
+	      
 	      putpixel(i, ty+(affichage->h-h)/2, getpixel(2, tx, (ty*64)/h,textures_));
             }
 	    break;
 	  }
+
 	}
 	
           
     }
-        
+      
     }
     
     afflevel();
