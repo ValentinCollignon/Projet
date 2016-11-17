@@ -17,7 +17,7 @@ int obmap=0;
 SDL_Rect rclettre , rcSrclettre, rcSrcpersonnage, rcpersonnage;
 
 /*mise en place de la fenetre principale*/
-SDL_Surface * affichage ,*lettre, *textures_, *objet_map, *text_sol;
+SDL_Surface * affichage ,*lettre, *textures_, *objet_map, *text_sol,*objet_a_chercher;
 char* map;
 
 
@@ -155,13 +155,14 @@ void draw_minicarte()
 	      }
 	  }
       }
-  }
+  
     
     putpixel( (w)+1+x*8, y*8, 0);
     putpixel( (w)+x*8, y*8, 0);
     putpixel( (w)+x*8, 1+y*8, 0);
     putpixel( (w)+x*8+1, y*8+1, 0);
     SDL_Flip(affichage);
+    }
 }
 
 void draw_screen()
@@ -176,18 +177,11 @@ void draw_screen()
     ciel.x = 0;
     SDL_FillRect(affichage,&ciel , SDL_MapRGB(affichage->format, 119, 181, 254));
     ciel.y = 300;
-    
     SDL_FillRect(affichage,&ciel , SDL_MapRGB(affichage->format, 100, 181, 54));
     w = affichage->w;
- 
-
     
-    
- 
-    /*draw map*/
-    w = affichage->w;
-
-    for (i=0; i<w; i++) 
+    /*
+    for(i = 0; i < w; i++)
     {
       float t;
       float ca = (1.-i/w) * (a2-fov/2.) + i/w*(a2+fov/2.);
@@ -202,14 +196,41 @@ void draw_screen()
         idx = cxx+cyy*mapl;
 	int tx = fmax(fabs(cx-floor(cx+.1)), fabs(cy-floor(cy+.1)))*texsize; 
         int ty;
-	/*
-	else{*/
+
+	
+      }
+    }*/
+ 
+    
+    
+    
+ 
+    /*draw map*/
+    w = affichage->w;
+
+    for (i=0; i<w; i++) 
+    {
+      float t;
+      float ca = (1.-i/w) * (a2-fov/2.) + i/w*(a2+fov/2.);
+      
+      for (t=0; t<20; t+=.05)
+      {
+	int h = affichage->h/t;
+      
+	float cx = x+cos(ca)*t;
+        float cy = y+sin(ca)*t;
+	int cxx=cx;
+	int cyy=cy;
+        idx = cxx+cyy*mapl;
+	int tx = fmax(fabs(cx-floor(cx+.1)), fabs(cy-floor(cy+.1)))*texsize; 
+        int ty;
+	
 
 	if (map[idx]=='O') 
 	{
             for (ty=0; ty<(h); ty++) 
 	    { 
-                putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*64)/h,objet_map));
+                putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*objet_a_chercher->h)/h,objet_a_chercher));
             }
 
 	  break;
@@ -221,30 +242,51 @@ void draw_screen()
 	  {
             for (ty=0; ty<h; ty++) { 
                  putpixel(i, ty+(affichage->h-h)/2, getpixel(3, tx, (ty*64)/h,textures_));
+
             }
 	    break;
+	    
 	  }
 	  if (map[idx]=='M') 
 	  {
-            for (ty=0; ty<(h); ty++) {
-	      
-                putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*256)/h,objet_map));
+
+            for (ty=0; ty<(h); ty++) { 
+                putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*objet_map->h)/h,objet_map));
+
             }
 
 	    break;
 	  }
 	  if ((map[idx]!=' ') && ( nombre_objet != 0) || ((map[idx]=='#') && ( nombre_objet == 0)))
 	  {
+	    printf("mur\n");
             for (ty=0; ty<h; ty++) {
 	      
 	      
 	      putpixel(i, ty+(affichage->h-h)/2, getpixel(2, tx, (ty*64)/h,textures_));
+
             }
 	    break;
 	  }
+	  
+
+	}
+/*
+	
+	h = affichage->h;
+	for (ty=(h/2); ty<h; ty++) 
+	{
+	  
+	  if(getpixel(0, tx, ty,affichage)!= 100,181,54)continue;
+	  printf("sols\n");
+	  putpixel(i, ty, SDL_MapRGB(affichage->format, 0, 0, 100) );
+	  break;
+	
+
 
 	}
 	
+*/	
           
     }
       
@@ -252,6 +294,7 @@ void draw_screen()
     
     afflevel();
     affobjet();
+    SDL_UpdateRect(affichage, 0, 0, 0, 0);
     /*personnage(posxP,posyP);*/
     SDL_Flip(affichage);
 }
@@ -564,7 +607,7 @@ void WIN(int* mode)
   SDL_Surface *temp, *win;
   SDL_Rect rcwin;
   int colorkey;
-  *mode = 0;
+  *mode = 3;
   colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
   rcwin.x = 0;
   rcwin.y = 0;
@@ -618,6 +661,7 @@ void initsprite()
   rcSrclettre.w = 24;
   rcSrclettre.h = 24;
   objet_map = SDL_LoadBMP("image/objet_carte.bmp");
+  objet_a_chercher = SDL_LoadBMP("image/obj.bmp");
   textures_ = SDL_LoadBMP("image/walltext.bmp");
   text_sol = SDL_LoadBMP("image/sol.bmp");
 
