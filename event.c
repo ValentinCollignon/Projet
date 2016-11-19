@@ -50,6 +50,13 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	  {
 	    *mode = 1;
 	  }
+	  if ((*mode == 3) )
+	  {
+	    *mode = 1;
+	    creamap();
+	    draw_screen();
+	  }
+	  
 	  break;
 	  
 	case SDLK_q:
