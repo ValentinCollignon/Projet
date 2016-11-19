@@ -23,7 +23,6 @@ int main()
         if (mode==1)
 	{
 	  draw_screen();
-          
 	}
     }
     end();

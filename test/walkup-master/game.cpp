@@ -6,7 +6,7 @@
 void Game::draw() {
     SDL_FillRect(sdl_screen_, NULL, SDL_MapRGB(sdl_screen_->format, 255, 255, 255));
 
-    int w = sdl_screen_->w;
+    int w = sdl_screen_->w/2;
     for (int i=0; i<mapw; i++) { // draw the map
         for (int j=0; j<maph; j++) {
             if (map[i+j*mapw]==' ') continue;
@@ -29,7 +29,7 @@ void Game::draw() {
             int idx = int(cx)+int(cy)*mapw;
             if (map[idx]!=' ') {
                 int h = sdl_screen_->h/t; // height of current vertical segment to draw
-                int tx = std::max(std::abs(cx-floor(cx+.5)), std::abs(cy-floor(cy+.5)))texsize; // x-texcoord
+                int tx = std::max(std::abs(cx-floor(cx+.5)), std::abs(cy-floor(cy+.5)))*texsize; // x-texcoord
                 int wall_tex = map[idx]-'0';
                 for (int ty=0; ty<h; ty++) { // we need to scale texsize to h, thus y-texcoord can be computed as ty*64/h
                     putpixel(i, ty+(sdl_screen_->h-h)/2, getpixel(wall_tex, tx, (ty*64)/h));
