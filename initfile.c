@@ -507,11 +507,10 @@ void choixdiffi ()
   SDL_BlitSurface(diff3, NULL, affichage, &rcdiff);
   
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
-  /*SDL_FreeSurface(diff);
+  SDL_FreeSurface(diff);
   SDL_FreeSurface(diff1);
   SDL_FreeSurface(diff2);
   SDL_FreeSurface(diff3);
-  */
 }
 
 void creamap()
