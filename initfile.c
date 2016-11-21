@@ -17,7 +17,7 @@ int obmap=0;
 SDL_Rect rclettre , rcSrclettre, rcSrcpersonnage, rcpersonnage;
 
 /*mise en place de la fenetre principale*/
-SDL_Surface * affichage ,*lettre, *textures_, *objet_map, *text_sol,*objet_a_chercher;
+SDL_Surface * affichage ,*lettre, *textures_, *objet_map, *text_sol,*objet_a_chercher, *diff, *diff1, *diff2, *diff3, *win, *menu;
 char* map;
 
 
@@ -56,7 +56,7 @@ void init_window()
 
 void init_menu()
 {
-  SDL_Surface *temp, *menu;
+  SDL_Surface *temp;
   SDL_Rect rcmenu;
   x = pos_base;
   y = pos_base;
@@ -164,7 +164,7 @@ void draw_minicarte()
 void draw_screen()
 {
     
-    int  i,j , z, idx, aff, ty;
+    int  i, j, z, idx, aff, ty;
     float w;
      /*map*/
     SDL_Rect ciel;
@@ -173,7 +173,6 @@ void draw_screen()
     ciel.x = 0;
     SDL_FillRect(affichage,&ciel , SDL_MapRGB(affichage->format, 119, 181, 254));
     ciel.y = 300;
-
     SDL_FillRect(affichage,&ciel , SDL_MapRGB(affichage->format, 100, 181, 54));
     w = affichage->w;
 
@@ -483,40 +482,36 @@ void difficulte(int niv_difficulte)
 void choixdiffi ()
 {
   printf("diff choix\n");
-  SDL_Surface *temp, *diff;
   SDL_Rect rcdiff;
+  diff = init_sprite_("image/alea.bmp");
+  diff1 = init_sprite_("image/dif.bmp");
+  diff2 = init_sprite_("image/facile.bmp");
+  diff3 = init_sprite_("image/moyen.bmp");
   SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
   x = pos_base;
   y = pos_base;
   rcdiff.x = 128;
   rcdiff.y = 128;
-  temp  = SDL_LoadBMP("image/facile.bmp");
-  diff = SDL_DisplayFormat(temp);
   SDL_BlitSurface(diff, NULL, affichage, &rcdiff);
   
   rcdiff.x = AFFICHAGE_WIDTH/2 + 128;
   rcdiff.y = 128;
-  temp  = SDL_LoadBMP("image/moyen.bmp");
-  diff = SDL_DisplayFormat(temp);
-  SDL_BlitSurface(diff, NULL, affichage, &rcdiff);
+  SDL_BlitSurface(diff1, NULL, affichage, &rcdiff);
   
   rcdiff.x = 128;
   rcdiff.y = AFFICHAGE_HEIGHT/2 + 128;
-  temp  = SDL_LoadBMP("image/dif.bmp");
-  diff = SDL_DisplayFormat(temp);
-  SDL_BlitSurface(diff, NULL, affichage, &rcdiff);
+  SDL_BlitSurface(diff2, NULL, affichage, &rcdiff);
   
   rcdiff.x = AFFICHAGE_WIDTH/2+128;
   rcdiff.y = AFFICHAGE_HEIGHT/2 + 128;
-  temp  = SDL_LoadBMP("image/alea.bmp");
-  diff = SDL_DisplayFormat(temp);
-  SDL_BlitSurface(diff, NULL, affichage, &rcdiff);
+  SDL_BlitSurface(diff3, NULL, affichage, &rcdiff);
   
-  
-  
-  SDL_FreeSurface(temp);
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
-  
+  /*SDL_FreeSurface(diff);
+  SDL_FreeSurface(diff1);
+  SDL_FreeSurface(diff2);
+  SDL_FreeSurface(diff3);
+  */
 }
 
 void creamap()
@@ -898,6 +893,7 @@ void affnum(int num,int lx, int ly)
 
 void WIN(int* mode)
 {
+
   SDL_Surface *win;
   SDL_Rect rcwin;
   int colorkey;
@@ -906,6 +902,7 @@ void WIN(int* mode)
   rcwin.x = 0;
   rcwin.y = 0;
   win = init_sprite_("image/win.bmp");
+
   SDL_FreeSurface(affichage);
   SDL_SetColorKey(win, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
   SDL_BlitSurface(win, NULL, affichage, &rcwin);
@@ -936,7 +933,6 @@ void initialisation()
  level = 1;
  levelporteN = 1;
  compL = 1;
- /*creamap();*/
 }
 
 SDL_Surface* init_sprite_(char *nomSprite)
@@ -952,15 +948,16 @@ void initsprite()
 {
   SDL_Surface *temp;
   lettre = init_sprite_("spritealfanum/lettre.bmp");
+
   colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
   SDL_SetColorKey(lettre, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
   rcSrclettre.w = 24;
   rcSrclettre.h = 24;
-  
   objet_map = init_sprite_("image/objet_carte.bmp");
   objet_a_chercher = init_sprite_("image/obj.bmp");
   textures_ = init_sprite_("image/walltext.bmp");
   text_sol = init_sprite_("image/sol.bmp");
+
 }
 
 void afflevel()
