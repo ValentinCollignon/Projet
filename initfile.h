@@ -36,8 +36,9 @@ void WIN(int *mode);
 void end();
 void full();
 void initialisation();
+SDL_Surface* init_sprite_(char *nomSprite);
 void initsprite();
 void afflevel();
 void affobjet();
-void personnage(int x ,int y);
+
 #endif

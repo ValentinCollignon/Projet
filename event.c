@@ -62,122 +62,21 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	case SDLK_q:
 	case SDLK_LEFT:
 	  depl.x = -1;
-	  /*posx=1;
-	  if (posy==0)
-	  {
-	    posy=1;
-	  }
-	  else
-	  {
-	    if (posy==1)
-	    {
-	      posy=2;
-	    }
-	    else
-	    {
-	      if (posy==2)
-	      {
-		posy=3;
-	      }
-	      else
-	      {
-		posy=0;
-	      }
-	    }
-	  }
-	  personnage(posx,posy);
-	  */
-	  
           break;
 	  
 	case SDLK_d:
 	case SDLK_RIGHT:
 	  depl.x = 1;
-	  /*posx=2;
-	  if (posy==0)
-	  {
-	    posy=1;
-	  }
-	  else
-	  {
-	    if (posy==1)
-	    {
-	      posy=2;
-	    }
-	    else
-	    {
-	      if (posy==2)
-	      {
-		posy=3;
-	      }
-	      else
-	      {
-		posy=0;
-	      }
-	    }
-	  }
-	  personnage(posx,posy);
-*/
 	  break;
 	  
 	case SDLK_z:
 	case SDLK_UP:
 	  depl.y = 1;
-	  /*posx=3;
-	  if (posy==0)
-	  {
-	    posy=1;
-	  }
-	  else
-	  {
-	    if (posy==1)
-	    {
-	      posy=2;
-	    }
-	    else
-	    {
-	      if (posy==2)
-	      {
-		posy=3;
-	      }
-	      else
-	      {
-		posy=0;
-	      }
-	    }
-	  }
-	  personnage(posx,posy);
-	  */
 	  break;
 	  
 	case SDLK_s:
 	case SDLK_DOWN:
 	  depl.y = -1;
-	  /*posx=0;
-	  if (posy==0)
-	  {
-	    posy=1;
-	  }
-	  else
-	  {
-	    if (posy==1)
-	    {
-	      posy=2;
-	    }
-	    else
-	    {
-	      if (posy==2)
-	      {
-		posy=3;
-	      }
-	      else
-	      {
-		posy=0;
-	      }
-	    }
-	  }
-	  personnage(posx,posy);
-	  */
 	  break;
 	  
 	default:
