@@ -56,7 +56,6 @@ void init_window()
 
 void init_menu()
 {
-  SDL_Surface *temp;
   SDL_Rect rcmenu;
   x = pos_base;
   y = pos_base;
@@ -93,10 +92,12 @@ void gameover(int *mode)
 
 void putpixel(int x, int y, Uint32 pixel) 
 {
+  int i, bpp;
+  Uint8 *p;
   if (x<0 || y<0 || x>=affichage->w || y>=affichage->h) return;
-    int bpp = affichage->format->BytesPerPixel;
-    Uint8 *p = (Uint8*)affichage->pixels + y * affichage->pitch + x*bpp;
-    int i;
+    bpp = affichage->format->BytesPerPixel;
+    p = (Uint8*)affichage->pixels + y * affichage->pitch + x*bpp;
+
     for (i=0; i<bpp; i++) 
     {
         p[i] = ((Uint8*)&pixel)[i];
@@ -105,12 +106,14 @@ void putpixel(int x, int y, Uint32 pixel)
 
 Uint32 getpixel(int itex, int x, int y, SDL_Surface * textures) 
 {
+  int bpp;
+  Uint8 *p;
     texsize = textures->h;
     ntextures = textures->w/texsize ;
     
     if (itex<0 || itex>=ntextures || x<0 || y<0 || x>=texsize || y>=texsize) return 0;
-    int bpp = textures->format->BytesPerPixel;
-    Uint8 *p = (Uint8 *)textures->pixels + y*textures->pitch + (x+texsize*itex)*bpp;
+    bpp = textures->format->BytesPerPixel;
+    p = (Uint8 *)textures->pixels + y*textures->pitch + (x+texsize*itex)*bpp;
     return p[0] | p[1] << 8 | p[2] << 16;
 }
 
@@ -164,8 +167,8 @@ void draw_minicarte()
 void draw_screen()
 {
     
-    int  i, j, z, idx, aff, ty;
-    float w;
+    int  i, idx, tx, ty, cyy, cxx, h;
+    float w, cx, cy, t, ca;
      /*map*/
     SDL_Rect ciel;
     ciel.h = 300;
@@ -181,22 +184,20 @@ void draw_screen()
 
     for (i=0; i<w; i++) 
     {
-      float t;
-      float ca = (1.-i/w) * (a2-fov/2.) + i/w*(a2+fov/2.);
+     
+      ca = (1.-i/w) * (a2-fov/2.) + i/w*(a2+fov/2.);
       
       for (t=0; t<20; t+=.05)
       {
-	int h = affichage->h/t;
+	h = affichage->h/t;
       
-	float cx = x+cos(ca)*t;
-        float cy = y+sin(ca)*t;
-	int cxx=cx;
-	int cyy=cy;
+	cx = x+cos(ca)*t;
+        cy = y+sin(ca)*t;
+	cxx=cx;
+	cyy=cy;
         idx = cxx+cyy*mapl;
-	int tx = fmax(fabs(cx-floor(cx+.1)), fabs(cy-floor(cy+.1)))*texsize; 
-        int ty;
-	
-
+	tx = fmax(fabs(cx-floor(cx+.1)), fabs(cy-floor(cy+.1)))*texsize; 
+        
 	if (map[idx]=='O') 
 	{
             for (ty=0; ty<(h); ty++) 
@@ -231,7 +232,7 @@ void draw_screen()
 	    }
 	    else
 	    {
-	      if ((map[idx]!=' ') && ( nombre_objet != 0) || ((map[idx]=='#') && ( nombre_objet == 0)))
+	      if (((map[idx]!=' ') && ( nombre_objet != 0)) || ((map[idx]=='#') && ( nombre_objet == 0)))
 	      {
 
 
@@ -481,8 +482,8 @@ void difficulte(int niv_difficulte)
 
 void choixdiffi ()
 {
-  printf("diff choix\n");
   SDL_Rect rcdiff;
+    printf("diff choix\n");
   diff = init_sprite_("image/alea.bmp");
   diff1 = init_sprite_("image/dif.bmp");
   diff2 = init_sprite_("image/facile.bmp");
@@ -532,6 +533,9 @@ void creamap()
 /*prossedure inter level*/
 void level_sup()
 {
+    char* sup;
+    char supprec;
+    int i = 0 ,lx=0,ly=affichage->h/2;
   /*SDL_Surface *temp, *levelsup;
   SDL_Rect rclevelsup;
   int colorkey;*/
@@ -557,9 +561,9 @@ void level_sup()
   SDL_BlitSurface(levelsup, NULL, affichage, &rclevelsup);
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
   printf("fonction level_sup\n");*/
-  char* sup;
-  char supprec = 't';
-  int i = 0 ,lx=0,ly=affichage->h/2;
+
+  supprec = 't';
+  
   
   /*afficher le message*/
   sup = " Pour passer au labyrinthe  ";
@@ -917,6 +921,9 @@ void WIN(int* mode)
 
 void end()
 {
+  SDL_FreeSurface(objet_map);
+  SDL_FreeSurface(objet_a_chercher);
+  SDL_FreeSurface(textures_);
   SDL_FreeSurface(affichage);
   SDL_Quit();
 }
@@ -945,7 +952,7 @@ SDL_Surface* init_sprite_(char *nomSprite)
 
 void initsprite()
 {
-  SDL_Surface *temp;
+
   lettre = init_sprite_("spritealfanum/lettre.bmp");
 
   colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
@@ -955,7 +962,6 @@ void initsprite()
   objet_map = init_sprite_("image/objet_carte.bmp");
   objet_a_chercher = init_sprite_("image/obj.bmp");
   textures_ = init_sprite_("image/walltext.bmp");
-  text_sol = init_sprite_("image/sol.bmp");
 
 }
 
