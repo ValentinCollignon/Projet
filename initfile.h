@@ -24,7 +24,6 @@ void draw_screen();
 void deplacement(float a, SDL_Rect position,int *mode);
 void objet_cherche(char objet);
 void portAlea();
-/*void porteNalea();*/
 void mapalea();
 void difficulte(int niv_difficulte);
 void choixdiffi ();

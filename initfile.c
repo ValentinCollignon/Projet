@@ -167,16 +167,32 @@ void draw_minicarte()
 void draw_screen()
 {
     
-    int  i, idx, tx, ty, cyy, cxx, h;
+    int  i, idx, tx, ty, cyy, cxx, h ,z;
     float w, cx, cy, t, ca;
      /*map*/
-    SDL_Rect ciel;
-    ciel.h = 300;
+    SDL_Rect ciel, sol;
+    ciel.h = 5;
     ciel.w = 800;
     ciel.x = 0;
-    SDL_FillRect(affichage,&ciel , SDL_MapRGB(affichage->format, 119, 181, 254));
-    ciel.y = 300;
-    SDL_FillRect(affichage,&ciel , SDL_MapRGB(affichage->format, 100, 181, 54));
+    ciel.y = 0;
+    sol.h = 5;
+    sol.y = 300;
+    sol.w = 800;
+    sol.x = 0;
+    for(z = 0; z < 200; z++)
+    {
+      SDL_FillRect(affichage,&ciel , SDL_MapRGB(affichage->format, 50+ z,5+z, 255 - z));
+      
+      ciel.y += ciel.h;
+      
+    }
+    for(z=0; z < 200; z++)
+    {
+      SDL_FillRect(affichage,&sol , SDL_MapRGB(affichage->format, 0, 55+z , 54));
+      sol.y += sol.h;
+    }
+    
+
     w = affichage->w;
 
     /*draw map*/
@@ -386,51 +402,7 @@ void porteAlea(char porte)
   }
   map[xp+yp*mapl]= porte;
 }
-/*
-void porteNalea()
-{
-  int xp=16;
-  int yp=16;
-  
-  srand(time(NULL));
-  while (map[xp+yp*mapl]!='#')
-  {
-    xp=rand()%(32);
-    yp=rand()%(32);
-    if ((map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
-    {
-      xp = 16;
-      yp = 16;
-    }
-    if ((xp == 0) && (map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
-    {
-      xp = 16;
-      yp = 16;
-    }
-    if ((xp == 31) && (map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#'))
-    {
-      xp = 16;
-      yp = 16;
-    }
-    if ((yp == 0) && (map[xp+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
-    {
-      xp = 16;
-      yp = 16;
-    }
-    if ((yp == 31) && (map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
-    {
-      xp = 16;
-      yp = 16;
-    }
-    if (((xp == 0) && (yp == 0)) || ((xp == 0) && (yp == 31)) || ((xp == 31) && (yp == 0)) || ((xp == 31) && (yp == 31)))
-    {
-      xp = 16;
-      yp = 16;
-    }
-  }
-  map[xp+yp*mapl]='-';
-}
-*/
+
 void mapalea()
 {
   int nummap;
