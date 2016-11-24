@@ -17,7 +17,7 @@ int obmap=0;
 SDL_Rect rclettre , rcSrclettre, rcSrcpersonnage, rcpersonnage;
 
 /*mise en place de la fenetre principale*/
-SDL_Surface * affichage ,*lettre, *textures_, *objet_map, *text_sol,*objet_a_chercher, *diff, *diff1, *diff2, *diff3, *win, *menu,*mur;
+SDL_Surface * affichage ,*lettre, *textures_, *objet_map, *text_sol,*objet_a_chercher, *win, *menu,*mur;
 char* map;
 
 
@@ -450,12 +450,17 @@ void difficulte(int niv_difficulte)
 void choixdiffi ()
 {
   SDL_Rect rcdiff;
-    printf("diff choix\n");
+  SDL_Surface  *diff, *diff1, *diff2, *diff3, *fontdiff;
+  
+  printf("diff choix\n");
+  fontdiff = init_sprite_("image/choix_diff.bmp");
   diff = init_sprite_("image/alea.bmp");
   diff1 = init_sprite_("image/dif.bmp");
   diff2 = init_sprite_("image/facile.bmp");
   diff3 = init_sprite_("image/moyen.bmp");
-  SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
+  rcdiff.x = 0;
+  rcdiff.y = 0;
+  SDL_BlitSurface(fontdiff, NULL, affichage, &rcdiff);
   x = pos_base;
   y = pos_base;
   rcdiff.x = 128;
@@ -467,11 +472,11 @@ void choixdiffi ()
   SDL_BlitSurface(diff3, NULL, affichage, &rcdiff);
   
   rcdiff.x = 128;
-  rcdiff.y = AFFICHAGE_HEIGHT/2 + 128;
+  rcdiff.y = AFFICHAGE_HEIGHT/2+75 ;
   SDL_BlitSurface(diff1, NULL, affichage, &rcdiff);
   
   rcdiff.x = AFFICHAGE_WIDTH/2+128;
-  rcdiff.y = AFFICHAGE_HEIGHT/2 + 128;
+  rcdiff.y = AFFICHAGE_HEIGHT/2 +75;
   SDL_BlitSurface(diff, NULL, affichage, &rcdiff);
   
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
