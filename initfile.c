@@ -17,7 +17,7 @@ int obmap=0;
 SDL_Rect rclettre , rcSrclettre, rcSrcpersonnage, rcpersonnage;
 
 /*mise en place de la fenetre principale*/
-SDL_Surface * affichage ,*lettre, *textures_, *objet_map, *text_sol,*objet_a_chercher, *diff, *diff1, *diff2, *diff3, *win, *menu;
+SDL_Surface * affichage ,*lettre, *textures_, *objet_map, *text_sol,*objet_a_chercher, *diff, *diff1, *diff2, *diff3, *win, *menu,*mur;
 char* map;
 
 
@@ -213,7 +213,7 @@ void draw_screen()
 	  if (((map[idx]=='+') || (map[idx]=='-')) &&( nombre_objet == 0) ) 
 	  {
             for (ty=0; ty<h; ty++) { 
-                 putpixel(i, ty+(affichage->h-h)/2, getpixel(3, tx, (ty*64)/h,textures_));
+                 putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*textures_->h)/h,textures_));
 
             }
 	    break;
@@ -237,7 +237,7 @@ void draw_screen()
 
 
 		for (ty=0; ty<h; ty++) { 
-		  putpixel(i, ty+(affichage->h-h)/2, getpixel(2, tx, (ty*64)/h,textures_));
+		  putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*mur->h)/h,mur));
 
 		}
 		break;
@@ -488,19 +488,19 @@ void choixdiffi ()
   y = pos_base;
   rcdiff.x = 128;
   rcdiff.y = 128;
-  SDL_BlitSurface(diff, NULL, affichage, &rcdiff);
+  SDL_BlitSurface(diff2, NULL, affichage, &rcdiff);
   
   rcdiff.x = AFFICHAGE_WIDTH/2 + 128;
   rcdiff.y = 128;
-  SDL_BlitSurface(diff1, NULL, affichage, &rcdiff);
+  SDL_BlitSurface(diff3, NULL, affichage, &rcdiff);
   
   rcdiff.x = 128;
   rcdiff.y = AFFICHAGE_HEIGHT/2 + 128;
-  SDL_BlitSurface(diff2, NULL, affichage, &rcdiff);
+  SDL_BlitSurface(diff1, NULL, affichage, &rcdiff);
   
   rcdiff.x = AFFICHAGE_WIDTH/2+128;
   rcdiff.y = AFFICHAGE_HEIGHT/2 + 128;
-  SDL_BlitSurface(diff3, NULL, affichage, &rcdiff);
+  SDL_BlitSurface(diff, NULL, affichage, &rcdiff);
   
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
   SDL_FreeSurface(diff);
@@ -951,9 +951,11 @@ void initsprite()
   SDL_SetColorKey(lettre, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
   rcSrclettre.w = 24;
   rcSrclettre.h = 24;
+
   objet_map = init_sprite_("image/objet_carte.bmp");
   objet_a_chercher = init_sprite_("image/obj.bmp");
-  textures_ = init_sprite_("image/walltext.bmp");
+  textures_ = init_sprite_("image/porte.bmp");
+  mur = init_sprite_("image/mur.bmp");
 
 }
 
