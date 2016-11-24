@@ -17,7 +17,7 @@ int obmap=0;
 SDL_Rect rclettre , rcSrclettre, rcSrcpersonnage, rcpersonnage;
 
 /*mise en place de la fenetre principale*/
-SDL_Surface * affichage ,*lettre, *textures_, *objet_map, *text_sol,*objet_a_chercher, *diff, *diff1, *diff2, *diff3, *win, *menu,*mur;
+SDL_Surface * affichage ,*lettre, *textures_, *objet_map, *text_sol,*objet_a_chercher, *win, *menu,*mur;
 char* map;
 
 
@@ -85,6 +85,7 @@ void gameover(int *mode)
     printf("fonction gameover\n");
     SDL_Delay(2000);
     *mode = 0;
+    printf("mode = %d\n",*mode);
     initialisation();
     init_menu();
     SDL_FreeSurface(gamover);
@@ -482,9 +483,11 @@ void difficulte(int niv_difficulte)
       switch(alea)
       {
 	case 0:
+	  printf("map\n");
 	  map = lireMap("map/map.txt");
 	  break;
 	case 1:
+	  printf("map_6\n");
 	  map = lireMap("map/map_6.txt");
 	  break;
 	}
@@ -500,12 +503,17 @@ void difficulte(int niv_difficulte)
 void choixdiffi ()
 {
   SDL_Rect rcdiff;
-    printf("diff choix\n");
+  SDL_Surface  *diff, *diff1, *diff2, *diff3, *fontdiff;
+  
+  printf("diff choix\n");
+  fontdiff = init_sprite_("image/choix_diff.bmp");
   diff = init_sprite_("image/alea.bmp");
   diff1 = init_sprite_("image/dif.bmp");
   diff2 = init_sprite_("image/facile.bmp");
   diff3 = init_sprite_("image/moyen.bmp");
-  SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
+  rcdiff.x = 0;
+  rcdiff.y = 0;
+  SDL_BlitSurface(fontdiff, NULL, affichage, &rcdiff);
   x = pos_base;
   y = pos_base;
   rcdiff.x = 128;
@@ -517,11 +525,11 @@ void choixdiffi ()
   SDL_BlitSurface(diff3, NULL, affichage, &rcdiff);
   
   rcdiff.x = 128;
-  rcdiff.y = AFFICHAGE_HEIGHT/2 + 128;
+  rcdiff.y = AFFICHAGE_HEIGHT/2+75 ;
   SDL_BlitSurface(diff1, NULL, affichage, &rcdiff);
   
   rcdiff.x = AFFICHAGE_WIDTH/2+128;
-  rcdiff.y = AFFICHAGE_HEIGHT/2 + 128;
+  rcdiff.y = AFFICHAGE_HEIGHT/2 +75;
   SDL_BlitSurface(diff, NULL, affichage, &rcdiff);
   
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
@@ -951,7 +959,8 @@ void full()
 
 void initialisation()
 {
- nombre_objet = 0;
+ printf("initialisation\n");
+  nombre_objet = 0;
  level = 1;
  levelporteN = 1;
  compL = 1;
