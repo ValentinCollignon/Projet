@@ -137,7 +137,7 @@ void draw_minicarte()
 	      tmp.x = i*8 + w;
 	      tmp.y = j*8;
 	      
-	      SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,255,0));
+	      SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,128,0));
 	      }
 	      if (((map[i+j*mapl]=='+') || (map[i+j*mapl]=='-')) && ( nombre_objet == 0))
 	      {
@@ -151,16 +151,16 @@ void draw_minicarte()
 	      tmp.x = i*8 + w;
 	      tmp.y = j*8;
 	      
-	      SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,0,255));
+	      SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 255,0,0));
 	      }
 	  }
       }
   
     
-    putpixel( (w)+1+x*8, y*8, 0);
-    putpixel( (w)+x*8, y*8, 0);
-    putpixel( (w)+x*8, 1+y*8, 0);
-    putpixel( (w)+x*8+1, y*8+1, 0);
+    putpixel( (w)+1+x*8, y*8, SDL_MapRGB(affichage->format, 255,255,0));
+    putpixel( (w)+x*8, y*8, SDL_MapRGB(affichage->format, 255,255,0));
+    putpixel( (w)+x*8, 1+y*8, SDL_MapRGB(affichage->format, 255,255,0));
+    putpixel( (w)+x*8+1, y*8+1, SDL_MapRGB(affichage->format, 255,255,0));
     SDL_Flip(affichage);
     }
 }
@@ -960,10 +960,11 @@ void full()
 void initialisation()
 {
  printf("initialisation\n");
-  nombre_objet = 0;
+ nombre_objet = 0;
  level = 1;
  levelporteN = 1;
  compL = 1;
+ comptPorteN = 0;
 }
 
 SDL_Surface* init_sprite_(char *nomSprite)
