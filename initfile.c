@@ -407,19 +407,38 @@ void mapalea()
 {
   int nummap;
   srand(time(NULL));
-  nummap=rand()%(3);
+  nummap=rand()%(6);
   switch (nummap)
   {
+    case 6:
+      printf("map_6");
+      map = lireMap("map/map_6.txt");
+      break;
+      
+    case 4:
+      printf("map_5\n");
+      map = lireMap("map/map_5.txt");
+      break;
+      
+    case 3:
+      printf("map_4\n");
+      map = lireMap("map/map_4.txt");
+      break;
+      
     case 2:
-      map = lireMap("map/map_3.tkt");
+      printf("map_3\n");
+      map = lireMap("map/map_3.txt");
       /*normal*/
       break;
+      
     case 1:
+      printf("map\n");
       map=lireMap("map/map.txt");
       /*difficile*/
       break;
       
     case 0:
+      printf("map_2\n");
       map=lireMap("map/map_2.txt");
       /*facile*/
       break;
@@ -428,21 +447,52 @@ void mapalea()
 
 void difficulte(int niv_difficulte)
 {
+  int alea;
+  srand(time(NULL));
+  alea = rand()%(2);
   switch(niv_difficulte)
   {
     case 0:
-      map=lireMap("map/map_2.txt");
+      switch(alea)
+      {
+	case 0:
+	  map = lireMap("map/map_2.txt");
+	  break;
+	case 1:
+	  map = lireMap("map/map_4.txt");
+	  break;
+      }
       break;
+      
     case 1:
-      map = lireMap("map/map_3.tkt");
+      switch(alea)
+      {
+	case 0:
+	  printf("case moyen 1\n");
+	  map = lireMap("map/map_5.txt");
+	  break;
+	case 1:
+	  printf("case moyen 2\n");
+	  map = lireMap("map/map_3.txt");
+	  break;
+      }
       break;
+      
     case 2:
-      map = lireMap("map/map.txt");
+      switch(alea)
+      {
+	case 0:
+	  map = lireMap("map/map.txt");
+	  break;
+	case 1:
+	  map = lireMap("map/map_6.txt");
+	  break;
+	}
       break;
+      
     case 3:
       mapalea();
       break;
-    
   }
 
 }
@@ -925,12 +975,11 @@ void initsprite()
   SDL_SetColorKey(lettre, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
   rcSrclettre.w = 24;
   rcSrclettre.h = 24;
-
+  
+  textures_ = init_sprite_("image/porte.bmp");
   objet_map = init_sprite_("image/objet_carte.bmp");
   objet_a_chercher = init_sprite_("image/obj.bmp");
-  textures_ = init_sprite_("image/porte.bmp");
   mur = init_sprite_("image/mur.bmp");
-
 }
 
 void afflevel()
