@@ -11,7 +11,7 @@ int main()
     init_window();
     
     /*repetition des evenement maintenue*/
-    SDL_EnableKeyRepeat(7, 7);
+    SDL_EnableKeyRepeat(5, 5);
     
     
     while(game_over != 1)
