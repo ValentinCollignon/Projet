@@ -28,7 +28,7 @@ void porteNalea();
 void mapalea();
 void difficulte(int niv_difficulte);
 void choixdiffi ();
-void creamap();
+void creamap(int num_difficulte);
 void level_sup();
 void afflettre(char Lettre,int lx, int ly);
 void affnum(int num,int lx, int ly);
