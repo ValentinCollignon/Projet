@@ -6,6 +6,7 @@ float a=0;
 int pause = 0;
 int posx=0, posy=0;
 int posSx,posSy;
+int num_difficulte;
 
 void HandleEvent(SDL_Event event,int* game_over,int* mode)
 {
@@ -53,7 +54,7 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	  if ((*mode == 3) )
 	  {
 	    *mode = 1;
-	    creamap();
+	    creamap(num_difficulte);
 	    draw_screen();
 	  }
 	  
@@ -108,34 +109,34 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	    
 	    if( ((posSx >= 128 && posSx <= 256 && posSy >= 128 && posSy <= 256)))
 	      {
-		difficulte(0);
+		num_difficulte=0;
 		 printf("facile\n");
 		*mode =1;
-		creamap();
+		creamap(num_difficulte);
 		draw_screen();
 	      }
 	      if( ((posSx >= AFFICHAGE_WIDTH/2 + 128 && posSx <= AFFICHAGE_WIDTH/2 +256 && posSy >= 128 && posSy <= 256)))
 	      {
-		difficulte(1);
+		num_difficulte=1;
 		printf("moyen\n");
 		*mode =1;
-		creamap();
+		creamap(num_difficulte);
 		draw_screen();
 	      }
 	      if( ((posSx >= 128 && posSx <= 256 && posSy >= AFFICHAGE_HEIGHT/2 + 128 && posSy <= AFFICHAGE_HEIGHT/2 + 256)))
 	      {
-		difficulte(2);
+		num_difficulte=2;
 		printf("diffi\n");
 		*mode =1;
-		creamap();
+		creamap(num_difficulte);
 		draw_screen();
 	      }
 	      if( ((posSx >= AFFICHAGE_WIDTH/2 + 128 && posSx <= AFFICHAGE_WIDTH/2 + 256 && posSy >= AFFICHAGE_HEIGHT/2 + 128 && posSy <= AFFICHAGE_HEIGHT/2 + 256)))
 	      {
-		difficulte(3);
+		num_difficulte=3;
 		printf("alea\n");
 		*mode =1;
-		creamap();
+		creamap(num_difficulte);
 		draw_screen();
 	      }
 	      

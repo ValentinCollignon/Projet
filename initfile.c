@@ -509,10 +509,12 @@ void choixdiffi ()
   SDL_FreeSurface(diff3);
 }
 
-void creamap()
+void creamap(int num_difficulte)
 {
+  
   int i;
-
+  difficulte(num_difficulte);
+  obmap = 0;
   for (i = 1 ;i <= level; i++)
   {
     objet_cherche('O');
