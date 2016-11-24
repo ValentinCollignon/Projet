@@ -294,7 +294,7 @@ void deplacement(float a, SDL_Rect position,int*mode)
     {
       for (i = 1 ;i <= level; i++)
       {
-	objet_cherche();
+	objet_cherche('O');
 	
       }
     }
@@ -318,7 +318,7 @@ void deplacement(float a, SDL_Rect position,int*mode)
 
 }
 
-void objet_cherche()
+void objet_cherche(char objet)
 {
   int xob=0;
   int yob=0;
@@ -329,26 +329,21 @@ void objet_cherche()
     xob=rand()%(32);
     yob=rand()%(32);
   }
-  nombre_objet += 1;
-  map[xob+yob*mapl]='O';
-}
-
-void objet_cherche_map()
-{
-  int xob=0;
-  int yob=0;
-  
-  srand(time(NULL));
-  while (map[xob+yob*mapl]!=' ')
+  if(objet == 'O')
   {
-    xob=rand()%(32);
-    yob=rand()%(32);
+    nombre_objet += 1;
+    
   }
-  obmap += 1;
-  map[xob+yob*mapl]='M';
+  else
+    if(objet == 'M')
+    {
+     obmap += 1; 
+    }
+    map[xob+yob*mapl] = objet;
+    
 }
 
-void portePalea()
+void porteAlea(char porte)
 {
   int xp=16;
   int yp=16;
@@ -389,9 +384,9 @@ void portePalea()
     }
       
   }
-  map[xp+yp*mapl]='+';
+  map[xp+yp*mapl]= porte;
 }
-
+/*
 void porteNalea()
 {
   int xp=16;
@@ -435,7 +430,7 @@ void porteNalea()
   }
   map[xp+yp*mapl]='-';
 }
-
+*/
 void mapalea()
 {
   int nummap;
@@ -520,13 +515,13 @@ void creamap()
 
   for (i = 1 ;i <= level; i++)
   {
-    objet_cherche();
+    objet_cherche('O');
   }
-  objet_cherche_map();
-  portePalea();
+  objet_cherche('M');
+  porteAlea('+');
   for (i=1;i<=(levelporteN);i++)
   {
-    porteNalea();
+    porteAlea('-');
   }
 }
 
@@ -536,7 +531,7 @@ void level_sup()
     char* sup;
     char supprec;
     int i = 0 ,lx=0,ly=affichage->h/2;
-  /*SDL_Surface *temp, *levelsup;
+  /*SDL_Surface *levelsup;
   SDL_Rect rclevelsup;
   int colorkey;*/
   
@@ -553,10 +548,7 @@ void level_sup()
   /*colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
   rclevelsup.x = 0;
   rclevelsup.y = 0;
-  temp  = SDL_LoadBMP("image/level_sup.bmp");
-  levelsup = SDL_DisplayFormat(temp);
-  SDL_FreeSurface(temp);
-  SDL_FreeSurface(affichage);
+  levelsup = ;
   SDL_SetColorKey(levelsup, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
   SDL_BlitSurface(levelsup, NULL, affichage, &rclevelsup);
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
