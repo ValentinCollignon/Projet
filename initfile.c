@@ -66,7 +66,6 @@ void init_menu()
   SDL_SetColorKey(menu, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
   SDL_BlitSurface(menu, NULL, affichage, &rcmenu);
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
-  printf("fonction init_menu\n");
   SDL_FreeSurface(menu);
   
 }
@@ -100,27 +99,7 @@ void WIN_game_over(int* mode, int w_g_o) /*w_g_o : bouleen win=0,  game over=!0*
   init_menu();
 
 }
-/*
-void gameover(int *mode)
-{
-    SDL_Surface *gamover;
-    SDL_Rect rcgameover;
-    colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
-    rcgameover.x = 0;
-    rcgameover.y = 0;
-    gamover = 
-    SDL_SetColorKey(gamover, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
-    SDL_BlitSurface(gamover, NULL, affichage, &rcgameover);
-    SDL_UpdateRect(affichage, 0, 0, 0, 0);
-    printf("fonction gameover\n");
-    SDL_Delay(2000);
-    *mode = 0;
-    printf("mode = %d\n",*mode);
-    
-    init_menu();
-    SDL_FreeSurface(gamover);
-} 
-*/
+
 void putpixel(int x, int y, Uint32 pixel) 
 {
   int i, bpp;
@@ -325,7 +304,7 @@ void deplacement(float a, SDL_Rect position,int*mode)
   }
   if ((map[nx+ny*mapl]=='+') && (nombre_objet == 0))
   {
-    if(level < 2)
+    if(level < 20)
     {
       level_sup(mode);
     }
@@ -505,11 +484,9 @@ void difficulte(int niv_difficulte)
       switch(alea)
       {
 	case 0:
-	  printf("case moyen 1\n");
 	  map = lireMap("map/map_5.txt");
 	  break;
 	case 1:
-	  printf("case moyen 2\n");
 	  map = lireMap("map/map_3.txt");
 	  break;
       }
@@ -519,11 +496,9 @@ void difficulte(int niv_difficulte)
       switch(alea)
       {
 	case 0:
-	  printf("map\n");
 	  map = lireMap("map/map.txt");
 	  break;
 	case 1:
-	  printf("map_6\n");
 	  map = lireMap("map/map_6.txt");
 	  break;
 	}
@@ -541,7 +516,6 @@ void choixdiffi ()
   SDL_Rect rcdiff;
   SDL_Surface  *diff, *diff1, *diff2, *diff3, *fontdiff;
   
-  printf("diff choix\n");
   fontdiff = init_sprite_("image/choix_diff.bmp");
   diff = init_sprite_("image/alea.bmp");
   diff1 = init_sprite_("image/dif.bmp");
@@ -599,10 +573,11 @@ void level_sup(int *mode)
     char* sup;
     char supprec;
     int i = 0 ,lx=0,ly=affichage->h/2;
+    SDL_Surface *levelsup;
+    SDL_Rect rclevelsup;
     *mode = 3;
-  /*SDL_Surface *levelsup;
-  SDL_Rect rclevelsup;
-  int colorkey;*/
+    comptPorteN -= 1;
+
   
   /*prepare le level suivant*/
   x = pos_base;
@@ -614,14 +589,12 @@ void level_sup(int *mode)
     compL++;
   }
   
-  /*colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
+  
   rclevelsup.x = 0;
   rclevelsup.y = 0;
-  levelsup = ;
-  SDL_SetColorKey(levelsup, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
+  levelsup = init_sprite_("image/level_sup.bmp");;
   SDL_BlitSurface(levelsup, NULL, affichage, &rclevelsup);
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
-  printf("fonction level_sup\n");*/
 
   supprec = 't';
   
@@ -972,7 +945,6 @@ void full()
 
 void initialisation()
 {
- printf("initialisation\n");
  nombre_objet = 0;
  level = 1;
  levelporteN = 1;

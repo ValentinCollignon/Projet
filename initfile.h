@@ -17,7 +17,6 @@ char* lireMap(char* nomFichier);
 void init_window();
 void init_menu();
 void WIN(int *mode, int w_g_o);
-/*void gameover(int *mode);*/
 void putpixel(int x, int y, Uint32 pixel);
 Uint32 getpixel(int itex, int x, int y, SDL_Surface * textures) ;
 void draw_minicarte();
