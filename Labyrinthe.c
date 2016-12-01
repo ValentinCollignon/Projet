@@ -8,6 +8,16 @@ int main()
 {
     int game_over = 0;
     int mode = 0;
+    /* *
+     * mode 0 : menu ou pause 
+     * mode 1 : jeu
+     * mode 2 : choix difficultée
+     * mode 3 : level sup
+     * mode 4 : carte 
+     * mode 5 : option
+     * */
+    
+    
     init_window();
     
     /*repetition des evenement maintenue*/

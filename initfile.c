@@ -579,7 +579,7 @@ void level_sup()
   
   rclevelsup.x = 0;
   rclevelsup.y = 0;
-  levelsup = init_sprite_("image/level_sup.bmp");;
+  levelsup = init_sprite_("image/level_sup.bmp");
   SDL_BlitSurface(levelsup, NULL, affichage, &rclevelsup);
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
 
@@ -1209,6 +1209,18 @@ void affobjet()
       break;
   }
   SDL_BlitSurface(lettre, &rcSrclettre, affichage, &rclettre);
+}
+
+void option()
+{
+  SDL_Surface *option_;
+  SDL_Rect rcoption;
+  rcoption.x = 0;
+  rcoption.y = 0;
+  option_= init_sprite_("image/option.bmp");
+  SDL_BlitSurface(option_, NULL, affichage, &rcoption);
+  SDL_UpdateRect(affichage, 0, 0, 0, 0);
+  free (option_);
 }
 
 
