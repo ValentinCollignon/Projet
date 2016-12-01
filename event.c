@@ -83,11 +83,14 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	default:
 	break;
 	case SDLK_m:
+	  if (*mode == 1)
+	  {
 	    draw_minicarte();
-	    *mode =0;
-	    break;
+	    *mode =4;
+	  }
+	  break;
 	    
-	case SDLK_o :
+	case SDLK_f :
 	  full();
 	  break;
 	
@@ -149,7 +152,10 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	switch (event.key.keysym.sym) 
 	{
 	  case SDLK_m:
-	    *mode =1;
+	    if (*mode==4)
+	    {
+	      *mode =1;
+	    }
 	    break;
 	  default:
 	    break;

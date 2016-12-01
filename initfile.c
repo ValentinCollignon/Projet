@@ -563,9 +563,8 @@ void level_sup()
     char* sup;
     char supprec;
     int i = 0 ,lx=0,ly=affichage->h/2;
-  /*SDL_Surface *levelsup;
+  SDL_Surface *levelsup;
   SDL_Rect rclevelsup;
-  int colorkey;*/
   
   /*prepare le level suivant*/
   x = pos_base;
@@ -577,14 +576,12 @@ void level_sup()
     compL++;
   }
   
-  /*colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
+  
   rclevelsup.x = 0;
   rclevelsup.y = 0;
-  levelsup = ;
-  SDL_SetColorKey(levelsup, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
+  levelsup = init_sprite_("image/level_sup.bmp");;
   SDL_BlitSurface(levelsup, NULL, affichage, &rclevelsup);
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
-  printf("fonction level_sup\n");*/
 
   supprec = 't';
   
