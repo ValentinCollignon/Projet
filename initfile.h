@@ -39,5 +39,5 @@ void initsprite();
 void afflevel();
 void affobjet();
 void option();
-
+void affvie();
 #endif
