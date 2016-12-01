@@ -38,5 +38,6 @@ SDL_Surface* init_sprite_(char *nomSprite);
 void initsprite();
 void afflevel();
 void affobjet();
+void option();
 
 #endif

@@ -17,7 +17,7 @@ int obmap=0;
 SDL_Rect rclettre , rcSrclettre, rcSrcpersonnage, rcpersonnage;
 
 /*mise en place de la fenetre principale*/
-SDL_Surface * affichage ,*lettre, *textures_, *objet_map, *text_sol,*objet_a_chercher, *win, *menu,*mur;
+SDL_Surface * affichage ,*lettre, *textures_, *objet_map,*objet_a_chercher, *win, *menu,*mur;
 char* map;
 
 
@@ -592,7 +592,7 @@ void level_sup(int *mode)
   
   rclevelsup.x = 0;
   rclevelsup.y = 0;
-  levelsup = init_sprite_("image/level_sup.bmp");;
+  levelsup = init_sprite_("image/level_sup.bmp");
   SDL_BlitSurface(levelsup, NULL, affichage, &rclevelsup);
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
 
@@ -931,6 +931,8 @@ void affnum(int num,int lx, int ly)
 
 void end()
 {
+  SDL_FreeSurface(mur);
+  SDL_FreeSurface(lettre);
   SDL_FreeSurface(objet_map);
   SDL_FreeSurface(objet_a_chercher);
   SDL_FreeSurface(textures_);
@@ -963,14 +965,11 @@ SDL_Surface* init_sprite_(char *nomSprite)
 
 void initsprite()
 {
-
   lettre = init_sprite_("spritealfanum/lettre.bmp");
-
   colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
   SDL_SetColorKey(lettre, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
   rcSrclettre.w = 24;
   rcSrclettre.h = 24;
-  
   textures_ = init_sprite_("image/porte.bmp");
   objet_map = init_sprite_("image/objet_carte.bmp");
   objet_a_chercher = init_sprite_("image/obj.bmp");
@@ -1197,6 +1196,18 @@ void affobjet()
       break;
   }
   SDL_BlitSurface(lettre, &rcSrclettre, affichage, &rclettre);
+}
+
+void option()
+{
+  SDL_Surface *option_;
+  SDL_Rect rcoption;
+  rcoption.x = 0;
+  rcoption.y = 0;
+  option_= init_sprite_("image/option.bmp");
+  SDL_BlitSurface(option_, NULL, affichage, &rcoption);
+  SDL_UpdateRect(affichage, 0, 0, 0, 0);
+  SDL_FreeSurface(option_);
 }
 
 

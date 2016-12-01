@@ -12,9 +12,6 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 {
   
   SDL_Rect depl;
-  /*keystate = SDL_GetKeyState(NULL);*/
-
-
   switch (event.type) 
   {
     /* close button clicked */
@@ -92,7 +89,20 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	case SDLK_f :
 	  full();
 	  break;
-	
+	case SDLK_o:
+	  if (*mode == 0)
+	  {
+	    option();
+	    *mode = 5;
+	  }
+	  break;
+	case SDLK_r:
+	  if (*mode == 5)
+	  {
+	    init_menu();
+	    *mode = 0;
+	  }
+	  break;
 	
       }
       break;
