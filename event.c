@@ -12,9 +12,6 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 {
   
   SDL_Rect depl;
-  /*keystate = SDL_GetKeyState(NULL);*/
-
-
   switch (event.type) 
   {
     /* close button clicked */
@@ -43,7 +40,6 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	case SDLK_KP_ENTER:
 	  if ((*mode == 0) && (pause == 0))
 	  {
-	    printf("diff \n");
 	    choixdiffi();
 	    *mode = 2;
 	  }
@@ -126,7 +122,6 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	    if( ((posSx >= 128 && posSx <= 256 && posSy >= 128 && posSy <= 256)))
 	      {
 		num_difficulte=0;
-		 printf("facile\n");
 		*mode =1;
 		creamap(num_difficulte);
 		draw_screen();
@@ -134,7 +129,6 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	      if( ((posSx >= AFFICHAGE_WIDTH/2 + 128 && posSx <= AFFICHAGE_WIDTH/2 +256 && posSy >= 128 && posSy <= 256)))
 	      {
 		num_difficulte=1;
-		printf("moyen\n");
 		*mode =1;
 		creamap(num_difficulte);
 		draw_screen();
@@ -142,7 +136,6 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	      if( ((posSx >= 128 && posSx <= 256 && posSy >= AFFICHAGE_HEIGHT/2+75  && posSy <= AFFICHAGE_HEIGHT/2+75 +128)))
 	      {
 		num_difficulte=2;
-		printf("diffi\n");
 		*mode =1;
 		creamap(num_difficulte);
 		draw_screen();
@@ -150,7 +143,6 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	      if( ((posSx >= AFFICHAGE_WIDTH/2 + 128 && posSx <= AFFICHAGE_WIDTH/2 + 256 && posSy >= AFFICHAGE_HEIGHT/2+75  && posSy <= AFFICHAGE_HEIGHT/2+75+128)))
 	      {
 		num_difficulte=3;
-		printf("alea\n");
 		*mode =1;
 		creamap(num_difficulte);
 		draw_screen();

@@ -17,7 +17,7 @@ int obmap=0;
 SDL_Rect rclettre , rcSrclettre, rcSrcpersonnage, rcpersonnage;
 
 /*mise en place de la fenetre principale*/
-SDL_Surface * affichage ,*lettre, *textures_, *objet_map, *text_sol,*objet_a_chercher, *win, *menu,*mur;
+SDL_Surface * affichage ,*lettre, *textures_, *objet_map,*objet_a_chercher, *win, *menu,*mur;
 char* map;
 
 
@@ -427,35 +427,29 @@ void mapalea()
   nummap=rand()%(6);
   switch (nummap)
   {
-    case 6:
-      printf("map_6");
+    case 5:
       map = lireMap("map/map_6.txt");
       break;
       
     case 4:
-      printf("map_5\n");
       map = lireMap("map/map_5.txt");
       break;
       
     case 3:
-      printf("map_4\n");
       map = lireMap("map/map_4.txt");
       break;
       
     case 2:
-      printf("map_3\n");
       map = lireMap("map/map_3.txt");
       /*normal*/
       break;
       
     case 1:
-      printf("map\n");
       map=lireMap("map/map.txt");
       /*difficile*/
       break;
       
     case 0:
-      printf("map_2\n");
       map=lireMap("map/map_2.txt");
       /*facile*/
       break;
@@ -932,6 +926,8 @@ void affnum(int num,int lx, int ly)
 
 void end()
 {
+  SDL_FreeSurface(mur);
+  SDL_FreeSurface(lettre);
   SDL_FreeSurface(objet_map);
   SDL_FreeSurface(objet_a_chercher);
   SDL_FreeSurface(textures_);
@@ -964,14 +960,11 @@ SDL_Surface* init_sprite_(char *nomSprite)
 
 void initsprite()
 {
-
   lettre = init_sprite_("spritealfanum/lettre.bmp");
-
   colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
   SDL_SetColorKey(lettre, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
   rcSrclettre.w = 24;
   rcSrclettre.h = 24;
-  
   textures_ = init_sprite_("image/porte.bmp");
   objet_map = init_sprite_("image/objet_carte.bmp");
   objet_a_chercher = init_sprite_("image/obj.bmp");
@@ -1209,7 +1202,7 @@ void option()
   option_= init_sprite_("image/option.bmp");
   SDL_BlitSurface(option_, NULL, affichage, &rcoption);
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
-  free (option_);
+  SDL_FreeSurface(option_);
 }
 
 void affvie()
