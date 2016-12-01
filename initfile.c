@@ -71,6 +71,36 @@ void init_menu()
   
 }
 
+void WIN_game_over(int* mode, int w_g_o) /*w_g_o : bouleen win=0,  game over=!0*/
+{
+
+  SDL_Surface *win;
+  SDL_Rect rcwin;
+  int colorkey;
+  *mode = 0;
+  colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
+  rcwin.x = 0;
+  rcwin.y = 0;
+  if(w_g_o == 0)
+  {
+    win = init_sprite_("image/win.bmp"); 
+  }
+  else
+  {
+    win = init_sprite_("image/game_over3.bmp");
+  }
+  SDL_SetColorKey(win, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
+  SDL_BlitSurface(win, NULL, affichage, &rcwin);
+  SDL_UpdateRect(affichage, 0, 0, 0, 0);
+  SDL_Delay(2000);
+  SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
+  SDL_Flip(affichage);
+  SDL_FreeSurface(win);
+  initialisation();
+  init_menu();
+
+}
+/*
 void gameover(int *mode)
 {
     SDL_Surface *gamover;
@@ -78,7 +108,7 @@ void gameover(int *mode)
     colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
     rcgameover.x = 0;
     rcgameover.y = 0;
-    gamover = init_sprite_("image/game_over3.bmp");
+    gamover = 
     SDL_SetColorKey(gamover, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
     SDL_BlitSurface(gamover, NULL, affichage, &rcgameover);
     SDL_UpdateRect(affichage, 0, 0, 0, 0);
@@ -86,11 +116,11 @@ void gameover(int *mode)
     SDL_Delay(2000);
     *mode = 0;
     printf("mode = %d\n",*mode);
-    initialisation();
+    
     init_menu();
     SDL_FreeSurface(gamover);
 } 
-
+*/
 void putpixel(int x, int y, Uint32 pixel) 
 {
   int i, bpp;
@@ -295,7 +325,14 @@ void deplacement(float a, SDL_Rect position,int*mode)
   }
   if ((map[nx+ny*mapl]=='+') && (nombre_objet == 0))
   {
-    WIN(mode);
+    if(level < 2)
+    {
+      level_sup(mode);
+    }
+    else
+    {
+      WIN_game_over(mode,0);
+    }
   }
   if ((map[nx+ny*mapl]=='-') && (nombre_objet == 0))
   {
@@ -304,8 +341,7 @@ void deplacement(float a, SDL_Rect position,int*mode)
     comptPorteN ++;
     if (comptPorteN == 2)
     {
-      gameover(mode);
-      
+      WIN_game_over(mode, 1);
     }
     else
     {
@@ -558,11 +594,12 @@ void creamap(int num_difficulte)
 }
 
 /*prossedure inter level*/
-void level_sup()
+void level_sup(int *mode)
 {
     char* sup;
     char supprec;
     int i = 0 ,lx=0,ly=affichage->h/2;
+    *mode = 3;
   /*SDL_Surface *levelsup;
   SDL_Rect rclevelsup;
   int colorkey;*/
@@ -918,30 +955,6 @@ void affnum(int num,int lx, int ly)
 
 }
 
-void WIN(int* mode)
-{
-
-  SDL_Surface *win;
-  SDL_Rect rcwin;
-  int colorkey;
-  *mode = 3;
-  colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
-  rcwin.x = 0;
-  rcwin.y = 0;
-  win = init_sprite_("image/win.bmp");
-
-  SDL_FreeSurface(affichage);
-  SDL_SetColorKey(win, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
-  SDL_BlitSurface(win, NULL, affichage, &rcwin);
-  SDL_UpdateRect(affichage, 0, 0, 0, 0);
-  printf("fonction win\n");
-  SDL_Delay(2000);
-  SDL_FillRect(affichage, NULL, SDL_MapRGB(affichage->format, 255, 255, 255));
-  SDL_Flip(affichage);
-  SDL_FreeSurface(win);
-  level_sup();
-
-}
 
 void end()
 {
