@@ -282,6 +282,7 @@ void draw_screen()
     
     afflevel();
     affobjet();
+    affvie();
     SDL_UpdateRect(affichage, 0, 0, 0, 0);
     SDL_Flip(affichage);
 }
@@ -426,35 +427,29 @@ void mapalea()
   nummap=rand()%(6);
   switch (nummap)
   {
-    case 6:
-      printf("map_6");
+    case 5:
       map = lireMap("map/map_6.txt");
       break;
       
     case 4:
-      printf("map_5\n");
       map = lireMap("map/map_5.txt");
       break;
       
     case 3:
-      printf("map_4\n");
       map = lireMap("map/map_4.txt");
       break;
       
     case 2:
-      printf("map_3\n");
       map = lireMap("map/map_3.txt");
       /*normal*/
       break;
       
     case 1:
-      printf("map\n");
       map=lireMap("map/map.txt");
       /*difficile*/
       break;
       
     case 0:
-      printf("map_2\n");
       map=lireMap("map/map_2.txt");
       /*facile*/
       break;
@@ -1210,4 +1205,36 @@ void option()
   SDL_FreeSurface(option_);
 }
 
+void affvie()
+{
+  int i=20,j;
+  rclettre.x=AFFICHAGE_WIDTH - (AFFICHAGE_WIDTH/4);
+  rclettre.y = 54;
+  
+  rcSrclettre.x = rcSrclettre.w*6;
+  rcSrclettre.y = rcSrclettre.w*5;
+  SDL_BlitSurface(lettre, &rcSrclettre, affichage, &rclettre);
+  
+  rclettre.x=AFFICHAGE_WIDTH - (AFFICHAGE_WIDTH/4)+i;
+  rcSrclettre.x = rcSrclettre.w*9;
+  rcSrclettre.y = rcSrclettre.w*6;
+  SDL_BlitSurface(lettre, &rcSrclettre, affichage, &rclettre);
+  
+  rclettre.x=AFFICHAGE_WIDTH - (AFFICHAGE_WIDTH/4)+2*i;
+  rcSrclettre.x = rcSrclettre.w*5;
+  rcSrclettre.y = rcSrclettre.w*6;
+  SDL_BlitSurface(lettre, &rcSrclettre, affichage, &rclettre);
+  
+  rclettre.x=AFFICHAGE_WIDTH - (AFFICHAGE_WIDTH/4)+3*i;
+  rcSrclettre.x = rcSrclettre.w*10;
+  rcSrclettre.y = rcSrclettre.w*3;
+  SDL_BlitSurface(lettre, &rcSrclettre, affichage, &rclettre);
+  
+  j = AFFICHAGE_WIDTH - (AFFICHAGE_WIDTH/4)+4*i;
+  affnum((2-comptPorteN)/10,j, rclettre.y);
+  
+  j = AFFICHAGE_WIDTH - (AFFICHAGE_WIDTH/4)+5*i;
+  affnum((2-comptPorteN)%10,j, rclettre.y);
+  
+}
 
