@@ -57,8 +57,20 @@ void init_window()
 void init_menu()
 {
   SDL_Rect rcmenu;
+  int intx, inty;
   x = pos_base;
   y = pos_base;
+  intx = x;
+  inty = y;
+  /*
+  while(map[intx+inty*mapl] != ' ')
+  {
+    x = x+1;
+    y = y+1;
+    intx = x;
+    inty = y;
+    printf("%d\n%d\n",intx,inty);
+  }*/
   colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
   rcmenu.x = 0;
   rcmenu.y = 0;
@@ -164,12 +176,9 @@ void draw_minicarte()
 	      }
 	  }
       }
-  
-    
-    putpixel( (w)+1+x*8, y*8, SDL_MapRGB(affichage->format, 255,255,0));
-    putpixel( (w)+x*8, y*8, SDL_MapRGB(affichage->format, 255,255,0));
-    putpixel( (w)+x*8, 1+y*8, SDL_MapRGB(affichage->format, 255,255,0));
-    putpixel( (w)+x*8+1, y*8+1, SDL_MapRGB(affichage->format, 255,255,0));
+    tmp.x = x*8 + w;
+    tmp.y = y*8;
+    SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 255, 0,255));
     SDL_Flip(affichage);
     }
 }
@@ -216,7 +225,6 @@ void draw_screen()
       for (t=0; t<20; t+=.05)
       {
 	h = affichage->h/t;
-      
 	cx = x+cos(ca)*t;
         cy = y+sin(ca)*t;
 	cxx=cx;
@@ -260,16 +268,13 @@ void draw_screen()
 	    {
 	      if (((map[idx]!=' ') && ( nombre_objet != 0)) || ((map[idx]=='#') && ( nombre_objet == 0)))
 	      {
-
-
-		for (ty=0; ty<h; ty++) { 
+		for (ty=0; ty<h; ty++) 
+		{ 
 		  putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*mur->h)/h,mur));
-
 		}
 		break;
+		
 	      }
-	      
-	      
 	    }
 	  }
 	  
@@ -460,7 +465,7 @@ void difficulte(int niv_difficulte)
 {
   int alea;
   srand(time(NULL));
-  alea = rand()%(2);
+  alea = rand()%(1);
   switch(niv_difficulte)
   {
     case 0:
@@ -638,7 +643,7 @@ void level_sup(int *mode)
 void afflettre(char Lettre,int lx, int ly)
 {
   /* coordonné de la lettre dans la fenetre*/
-  rclettre.x=lx;
+  rclettre.x = lx;
   rclettre.y = ly;
   
   /* choix de la lettre*/
