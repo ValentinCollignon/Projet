@@ -63,10 +63,6 @@ void init_window()
 void init_menu()
 {
   SDL_Rect rcmenu;
-  int intx, inty;
-  x = pos_base;
-  y = pos_base;
-  
   colorkey = SDL_MapRGB(affichage->format, 255, 0, 255);
   rcmenu.x = 0;
   rcmenu.y = 0;
@@ -461,7 +457,7 @@ void difficulte(int niv_difficulte)
 {
   int alea;
   srand(time(NULL));
-  alea = rand()%(1);
+  alea = rand()%(2);
   switch(niv_difficulte)
   {
     case 0:
@@ -548,7 +544,7 @@ void choixdiffi ()
 void creamap(int num_difficulte)
 {
   
-  int i;
+  int i, intx, inty;
   difficulte(num_difficulte);
   obmap = 0;
   for (i = 1 ;i <= level; i++)
@@ -560,6 +556,17 @@ void creamap(int num_difficulte)
   for (i=1;i<=(levelporteN);i++)
   {
     porteAlea('-');
+  }
+  x = pos_base;
+  y = pos_base;
+  intx = x;
+  inty = y;
+  while(map[intx+inty*mapl] != ' ')
+  {
+   x = x+1;
+   y = y+1;
+   intx = x;
+   inty = y;
   }
 }
 
@@ -930,6 +937,7 @@ void affnum(int num,int lx, int ly)
 
 void end()
 {
+  free(map);
   SDL_FreeSurface(mur);
   SDL_FreeSurface(lettre);
   SDL_FreeSurface(objet_map);
