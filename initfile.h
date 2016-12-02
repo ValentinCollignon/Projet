@@ -40,4 +40,6 @@ void afflevel();
 void affobjet();
 void option();
 void affvie();
+void affphrase(char *phrase,int px,int py);
+void aff_param(int param);
 #endif
