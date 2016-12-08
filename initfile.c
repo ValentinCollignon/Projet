@@ -157,7 +157,7 @@ void draw_minicarte()
 	}
       tmp.x = x*8 + w;
       tmp.y = y*8;
-      SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 255, 0,255));
+      SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 255,255,0));
       SDL_Flip(affichage);
     }
 }
@@ -339,8 +339,8 @@ void objet_cherche(char objet)
 
 void porteAlea(char porte)
 {
-  int xp=16;
-  int yp=16;
+  int xp = x;
+  int yp = y;
   srand(time(NULL));
   while (map[xp+yp*mapl]!='#')
     {
@@ -348,33 +348,33 @@ void porteAlea(char porte)
       yp=rand()%(32);
       if ((map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
 	{
-	  xp = 16;
-	  yp = 16;
+	  xp = x;
+	  yp = y;
 	}
       if ((xp == 0) && (map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
 	{
-	  xp = 16;
-	  yp = 16;
+	  xp = x;
+	  yp = y;
 	}
       if ((xp == 31) && (map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#'))
 	{
-	  xp = 16;
-	  yp = 16;
+	  xp = x;
+	  yp = y;
 	}
       if ((yp == 0) && (map[xp+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#') && (map[(xp+1)+yp*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
 	{
-	  xp = 16;
-	  yp = 16;
+	  xp = x;
+	  yp = y;
 	}
       if ((yp == 31) && (map[xp+yp*mapl]=='#') && (map[(xp-1)+yp*mapl]=='#') && (map[xp+(yp-1)*mapl]=='#') && (map[xp+(yp+1)*mapl]=='#'))
 	{
-	  xp = 16;
-	  yp = 16;
+	  xp = x;
+	  yp = y;
 	}
       if (((xp == 0) && (yp == 0)) || ((xp == 0) && (yp == 31)) || ((xp == 31) && (yp == 0)) || ((xp == 31) && (yp == 31)))
 	{
-	  xp = 16;
-	  yp = 16;
+	  xp = x;
+	  yp = y;
 	}
     }
   map[xp+yp*mapl]= porte;
@@ -1014,6 +1014,6 @@ void position_initial(float aX, float aY)
 	    }
 	}
     }
-  x = newX;
-  y = newY;    
+  x = newX + 0.5;
+  y = newY + 0.5;    
 }
