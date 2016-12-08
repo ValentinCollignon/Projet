@@ -18,7 +18,7 @@ SDL_Rect rclettre , rcSrclettre, rcSrcpersonnage, rcpersonnage;
 
 /*mise en place de la fenetre principale*/
 SDL_Surface * affichage ,*lettre, *textures_, *objet_map,*objet_a_chercher, *win, *menu,*mur;
-char* map;
+char* map, *map_obj;
 
 
 char* lireMap(char* nomFichier)
@@ -148,8 +148,7 @@ void draw_minicarte()
 	      if (map[i+j*mapl]!=' ')
 	      {
 	      tmp.x = i*8 + w;
-	      tmp.y = j*8;
-	      
+	      tmp.y = j*8;    
 	      SDL_FillRect(affichage, &tmp, SDL_MapRGB(affichage->format, 0,128,0));
 	      }
 	      if (((map[i+j*mapl]=='+') || (map[i+j*mapl]=='-')) && ( nombre_objet == 0))
@@ -228,6 +227,7 @@ void draw_screen()
 	{
             for (ty=0; ty<(h); ty++) 
 	    { 
+	      if ((getpixel(0, tx, (ty*objet_a_chercher->h)/h,objet_a_chercher) & 0x00FFFFFF))
                 putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*objet_a_chercher->h)/h,objet_a_chercher));
             }
 
@@ -251,6 +251,7 @@ void draw_screen()
 	    if (map[idx]=='M') 
 	    {
 	      for (ty=0; ty<(h); ty++) { 
+		if (getpixel(0, tx, (ty*objet_map->h)/h,objet_map) & 0x00FFFFFF)
 		  putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*objet_map->h)/h,objet_map));
 	      }
 
@@ -271,6 +272,45 @@ void draw_screen()
 	  }
 	  
 
+	}     
+    }
+    }
+    for (i=0; i<w; i++) 
+    {
+     
+      ca = (1.-i/w) * (a2-fov/2.) + i/w*(a2+fov/2.);
+      
+      for (t=0; t<20; t+=.05)
+      {
+	h = affichage->h/t;
+	cx = x+cos(ca)*t;
+        cy = y+sin(ca)*t;
+	cxx=cx;
+	cyy=cy;
+        idx = cxx+cyy*mapl;
+	tx = fmax(fabs(cx-floor(cx+.1)), fabs(cy-floor(cy+.1)))*texsize; 
+        
+	if (map_obj[idx]=='O') 
+	{
+            for (ty=0; ty<(h); ty++) 
+	    { 
+	      if ((getpixel(0, tx, (ty*objet_a_chercher->h)/h,objet_a_chercher) & 0x00FFFFFF))
+                putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*objet_a_chercher->h)/h,objet_a_chercher));
+            }
+
+	  break;
+	}
+	else
+	{
+	  
+
+	    if (map_obj[idx]=='M') 
+	    {
+	      for (ty=0; ty<(h); ty++) { 
+		if (getpixel(0, tx, (ty*objet_map->h)/h,objet_map) & 0x00FFFFFF)
+		  putpixel(i, ty+(affichage->h-h)/2, getpixel(0, tx, (ty*objet_map->h)/h,objet_map));
+	      }
+	    }
 	}     
     }
       
@@ -329,7 +369,7 @@ void deplacement(float a, SDL_Rect position,int*mode)
       }
     }
   }
-  if (map[nx+ny*mapl]=='O')
+  if (map_obj[nx+ny*mapl]=='O')
   {
     x += nxx;
     y += nyy;
@@ -337,7 +377,7 @@ void deplacement(float a, SDL_Rect position,int*mode)
     map[nx+ny*mapl]=' ';
     
   }
-  if (map[nx+ny*mapl]=='M')
+  if (map_obj[nx+ny*mapl]=='M')
   {
     x += nxx;
     y += nyy;
@@ -369,7 +409,7 @@ void objet_cherche(char objet)
     {
      obmap += 1; 
     }
-    map[xob+yob*mapl] = objet;
+    map_obj[xob+yob*mapl] = objet;
     
 }
 
@@ -546,6 +586,7 @@ void creamap(int num_difficulte)
   
   int i, intx, inty;
   difficulte(num_difficulte);
+  map_obj=lireMap("map/mapV.txt");
   obmap = 0;
   for (i = 1 ;i <= level; i++)
   {
