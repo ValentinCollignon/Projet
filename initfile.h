@@ -20,6 +20,7 @@ void WIN(int *mode, int w_g_o);
 void putpixel(int x, int y, Uint32 pixel);
 Uint32 getpixel(int itex, int x, int y, SDL_Surface * textures) ;
 void draw_minicarte();
+void draw_texture(SDL_Surface *nom_texture, int h, int tx, int i);
 void draw_screen();
 void deplacement(float a, SDL_Rect position,int *mode);
 void objet_cherche(char objet);
