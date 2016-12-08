@@ -40,5 +40,4 @@ void initsprite();
 void option();
 void affphrase(char *phrase,int px,int py);
 void aff_param(int param);
-void position_initial(float aX, float aY);
 #endif
