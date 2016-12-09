@@ -420,7 +420,7 @@ void difficulte(int niv_difficulte)
 {
   int alea;
   srand(time(NULL));
-  alea = rand()%(2);
+  alea = rand()%(1);
   switch(niv_difficulte)
     {
     case 0:
