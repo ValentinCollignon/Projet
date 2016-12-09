@@ -46,6 +46,7 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	  if (pause == 1)
 	  {
 	    *mode = 1;
+	    pause = 0;
 	  }
 	  if ((*mode == 3) )
 	  {
@@ -97,7 +98,7 @@ void HandleEvent(SDL_Event event,int* game_over,int* mode)
 	  }
 	  break;
 	case SDLK_r:
-	  if (*mode == 5)
+	  if (*mode != 0)
 	  {
 	    init_menu();
 	    *mode = 0;
