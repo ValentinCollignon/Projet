@@ -63,6 +63,7 @@ void init_menu()
   SDL_SetColorKey(menu, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
   SDL_BlitSurface(menu, NULL, affichage, &rcmenu);
   SDL_UpdateRect(affichage, 0, 0, 0, 0);
+  initialisation();
   SDL_FreeSurface(menu);
 }
 
